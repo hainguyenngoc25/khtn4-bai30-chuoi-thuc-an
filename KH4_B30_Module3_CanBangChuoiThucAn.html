@@ -1,0 +1,2538 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Bài 30 – Vai trò của thực vật trong chuỗi thức ăn | YooBook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<style>
+html,body{height:100%;margin:0}
+body{font-family:'Roboto',system-ui,-apple-system,Segoe UI,sans-serif;background:#195658;overflow:hidden;overscroll-behavior:none}
+
+/* ===== Module 3 – namespace: kh4b30-m03- (root class) / m3- (lớp con) ===== */
+.kh4b30-m03-root{
+  --brand:#195658;--brand-dark:#0f3f3d;--brand-light:#2f827d;--brand-soft:#e6f0ee;
+  --ink:#10302d;--muted:#5f8b89;--line:#dbe8e5;--bg:#eaf3f1;--gold:#a8814a;
+  --ok:#2e9d5b;--bad:#d4493f;--r:16px;--r-sm:11px;
+  --sh-1:0 1px 2px rgba(13,42,40,.05);
+  --sh-2:0 2px 6px rgba(13,42,40,.06),0 18px 34px -22px rgba(13,42,40,.45);
+  --sh-3:0 10px 30px -12px rgba(13,42,40,.32);
+  position:fixed;inset:0;height:100dvh;display:flex;flex-direction:column;overflow:hidden;
+  font-family:'Roboto',system-ui,-apple-system,Segoe UI,sans-serif;font-size:15px;line-height:1.45;color:var(--ink);
+  background:#195658;-webkit-tap-highlight-color:transparent;z-index:1;
+}
+.kh4b30-m03-root.m3-embedded{position:relative;inset:auto;height:100%}
+.kh4b30-m03-root *{box-sizing:border-box}
+.kh4b30-m03-root button{font-family:inherit}
+.kh4b30-m03-root[hidden]{display:none}
+.m3-defs{position:absolute;width:0;height:0;overflow:hidden;pointer-events:none}
+
+/* header */
+.m3-top{display:flex;align-items:center;gap:12px;padding:8px 16px;background:#fff;border-bottom:1px solid var(--line);box-shadow:var(--sh-1);flex:0 0 auto;z-index:20}
+.m3-logo{height:27px;display:block;flex:0 0 auto}
+.m3-titles{flex:1;min-width:0}
+.m3-badge{display:inline-block;max-width:100%;font-size:11px;font-weight:600;letter-spacing:.02em;color:var(--brand);background:var(--brand-soft);border-radius:99px;padding:1px 9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;vertical-align:top}
+.m3-titles h1{margin:1px 0 0;font-size:17px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m3-tbtn{width:38px;height:38px;border-radius:11px;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--brand-dark)}
+.m3-tbtn:hover{background:var(--brand-soft);border-color:var(--brand-light)}
+
+/* khung chính */
+.m3-main{flex:1;min-height:0;display:flex;flex-direction:column;padding:12px;overflow:hidden}
+.m3-frame{background:#fff;border-radius:var(--r);box-shadow:var(--sh-2);display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden}
+.m3-stage{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) clamp(290px,25vw,360px);background:#195658}
+.m3-view{position:relative;min-width:0;min-height:0;overflow:hidden;background:#cfe6ea;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}
+.m3-view.dragging{cursor:grabbing}
+.m3-host{position:absolute;inset:0}
+.m3-scene{position:absolute;inset:0;width:100%;height:100%;display:none}
+.m3-scene.on{display:block}
+.m3-scene .L-bg{transform:translate(calc(var(--px,0) * -12px),calc(var(--py,0) * -3px))}
+.m3-scene .L-mid{transform:translate(calc(var(--px,0) * -6px),calc(var(--py,0) * -2px))}
+.m3-scene .L-fore{transform:translate(calc(var(--px,0) * 6px),calc(var(--py,0) * 3px))}
+.m3-scene .L-act{transform:translate(calc(var(--px,0) * 6px),calc(var(--py,0) * 3px))}
+.m3-scene .L-mice{transform:translate(calc(var(--px,0) * 6px),calc(var(--py,0) * 3px))}
+.m3-scene .L-snakes{transform:translate(calc(var(--px,0) * 6px),calc(var(--py,0) * 3px))}
+.m3-scene .L-w1{transform:translate(calc(var(--px,0) * -10px),calc(var(--py,0) * -2px))}
+.m3-scene .L-w2{transform:translate(calc(var(--px,0) * -4px),calc(var(--py,0) * -1px))}
+.m3-scene .L-w3{transform:translate(calc(var(--px,0) * 8px),calc(var(--py,0) * 2px))}
+.m3-gl{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;display:none}
+.kh4b30-m03-root .mp0{fill:var(--mc0,#3f8a3e)}.kh4b30-m03-root .mp1{fill:var(--mc1,#5fae4a)}.kh4b30-m03-root .mp2{fill:var(--mc2,#4ea044)}
+.m3-paused *{animation-play-state:paused!important}
+.m3-frozen *{animation-play-state:paused!important}
+
+/* thanh công cụ */
+.m3-tools{position:absolute;left:12px;top:12px;z-index:6;display:flex;gap:8px;flex-wrap:wrap;max-width:calc(100% - 24px)}
+.m3-ghost{background:rgba(255,255,255,.92);backdrop-filter:blur(8px) saturate(1.3);border:1px solid var(--line);border-radius:var(--r-sm);padding:6px 11px;font-size:12.5px;font-weight:500;color:var(--brand-dark);cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:var(--sh-1);white-space:nowrap}
+.m3-ghost:hover{background:#fff;border-color:var(--brand-light)}
+.m3-ghost[aria-pressed="true"]{background:var(--brand);color:#fff;border-color:var(--brand)}
+.m3-ghost svg{flex:0 0 auto}
+.m3-ghost[hidden]{display:none}
+.m3-wave{display:none;width:14px;height:12px;align-items:flex-end;gap:2px}
+.m3-wave i{display:block;width:2px;background:#fff;border-radius:2px;animation:m3wave .8s ease-in-out infinite}
+.m3-wave i:nth-child(2){animation-delay:.2s}.m3-wave i:nth-child(3){animation-delay:.4s}
+.m3-playing .m3-wave{display:flex}
+@keyframes m3wave{0%,100%{height:3px}50%{height:12px}}
+
+.m3-nav{position:absolute;top:50%;z-index:30;transform:translateY(-50%);width:38px;height:38px;border-radius:99px;border:1px solid var(--line);background:rgba(255,255,255,.9);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--brand-dark);box-shadow:var(--sh-1);font-size:16px}
+.m3-nav.prev{left:10px}.m3-nav.next{right:10px}.m3-nav[disabled]{opacity:.3;pointer-events:none}
+.m3-nav:hover{background:#fff;border-color:var(--brand-light)}
+
+/* tab step 10 */
+.m3-tabs{position:absolute;right:12px;top:12px;z-index:6;display:none;gap:6px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:4px;border-radius:99px;box-shadow:var(--sh-1);border:1px solid var(--line)}
+.m3-tabs.on{display:flex}
+.m3-tabs.on~.m3-clock{top:58px}
+.m3-tab{border:none;background:transparent;padding:6px 14px;border-radius:99px;font-weight:600;font-size:13px;color:var(--brand-dark);cursor:pointer;display:flex;align-items:center;gap:6px}
+.m3-tab[aria-selected="true"]{background:var(--brand);color:#fff}
+.m3-tab .ck{width:16px;height:16px;border-radius:99px;background:var(--ok);color:#fff;display:none;align-items:center;justify-content:center}
+.m3-tab.done .ck{display:flex}
+
+/* đồng hồ */
+.m3-clock{position:absolute;right:12px;top:12px;z-index:6;display:none;align-items:center;gap:8px;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-radius:var(--r-sm);padding:6px 12px;box-shadow:var(--sh-1);border:1px solid var(--line);font-size:12.5px;font-weight:600;color:var(--brand-dark)}
+.m3-clock.on{display:flex}
+.m3-clock .bar{width:78px;height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.m3-clock .bar span{display:block;height:100%;width:0;background:var(--brand);border-radius:99px}
+.m3-badge-st{position:absolute;left:12px;bottom:12px;z-index:6;background:rgba(255,255,255,.93);border:1px solid var(--line);border-radius:99px;padding:5px 12px;font-size:12px;font-weight:600;color:var(--brand-dark);box-shadow:var(--sh-1);display:none;max-width:60%}
+.m3-badge-st.on{display:block}
+
+/* panel phải */
+.m3-panel{background:linear-gradient(180deg,#f8fcfb,#eef6f4);border-left:1px solid var(--line);min-height:0;overflow:auto;padding:10px 14px;scrollbar-width:thin}
+.m3-pane{display:none;flex-direction:column;gap:7px}
+.m3-pane.on{display:flex}
+.m3-kick{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.m3-ptitle{font-size:15.5px;font-weight:800;color:var(--brand-dark);line-height:1.25;margin:0}
+.m3-pdesc{margin:0;font-size:13px;color:#2d5552;line-height:1.45}
+.m3-card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:8px 12px;box-shadow:var(--sh-1)}
+.m3-sl-head{display:flex;align-items:baseline;justify-content:space-between;font-weight:700;font-size:14px;color:var(--brand-dark)}
+.m3-sl-head b{font-size:21px;color:var(--brand)}
+.m3-range{width:100%;margin:6px 0 0;accent-color:var(--brand);height:24px;cursor:pointer}
+.m3-sl-scale{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin-top:-2px;padding:0 3px}
+.m3-note{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.35}
+.m3-btnrow{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.m3-btn{border:none;border-radius:11px;background:var(--brand);color:#fff;font-weight:700;font-size:13px;padding:9px 12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 2px 0 rgba(0,0,0,.14);transition:background .15s,transform .1s}
+.m3-btn:hover{background:var(--brand-light)}
+.m3-btn:active{transform:translateY(1px)}
+.m3-btn.full{grid-column:1/-1}
+.m3-btn.alt{background:#fff;color:var(--brand-dark);border:1.5px solid var(--brand-light);box-shadow:none}
+.m3-btn.alt:hover{background:var(--brand-soft)}
+.m3-btn.gold{background:var(--gold)}.m3-btn.gold:hover{background:#b8925a}
+.m3-btn[disabled]{opacity:.42;pointer-events:none}
+.m3-btn[hidden]{display:none}
+.m3-live{display:flex;flex-direction:column;gap:7px}
+.m3-row{display:flex;align-items:center;gap:8px;font-size:12.5px}
+.m3-row .ic{width:26px;height:26px;border-radius:8px;background:var(--brand-soft);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.m3-row .ic svg{width:20px;height:20px}
+.m3-row .nm{font-weight:600;min-width:62px;color:var(--brand-dark)}
+.m3-row .bar{flex:1;height:8px;border-radius:99px;background:#e4eeec;overflow:hidden}
+.m3-row .bar span{display:block;height:100%;width:50%;border-radius:99px;background:linear-gradient(90deg,#5aa86e,#2e8c58);transition:width .5s}
+.m3-row .bar span.warn{background:linear-gradient(90deg,#e0a24a,#d6742f)}
+.m3-row .bar span.bad{background:linear-gradient(90deg,#e0695a,#c8372e)}
+.m3-row .st{min-width:68px;text-align:right;font-weight:600;font-size:11.5px;color:#356a66}
+.m3-prog{height:6px;border-radius:99px;background:#e4eeec;overflow:hidden}
+.m3-prog span{display:block;height:100%;width:0;background:var(--brand)}
+.m3-res{border-radius:13px;padding:10px 12px;background:#fff7e8;border:1px solid #f0d9a8;animation:m3in .35s ease}
+.m3-res h4{margin:0 0 4px;font-size:12.5px;color:#7a5a1d;font-weight:800;letter-spacing:.02em}
+.m3-res ul{margin:0;padding-left:17px;font-size:12.5px;color:#4a3a14}
+.m3-res li{margin:1px 0}
+.m3-res.ref{background:#eaf6f0;border-color:#bfe0cf}.m3-res.ref h4{color:#1d6b46}.m3-res.ref ul{color:#1e4a37}
+.m3-res.up{background:#eaf3fb;border-color:#bcd6ee}.m3-res.up h4{color:#235f8d}.m3-res.up ul{color:#1d4261}
+.m3-res[hidden]{display:none}
+@keyframes m3in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.m3-info{border-radius:13px;padding:9px 12px;background:#fff7e8;border:1px solid #f0d9a8;font-size:12.5px;color:#4a3a14;animation:m3in .35s ease}
+.m3-info.good{background:#eaf6f0;border-color:#bfe0cf;color:#1e4a37}
+.m3-info[hidden]{display:none}
+.m3-switch{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.m3-switch .lbl{font-weight:700;font-size:13.5px;color:var(--brand-dark)}
+.m3-sw{position:relative;width:96px;height:34px;border-radius:99px;border:none;background:#b9c9c6;cursor:pointer;padding:0;transition:background .25s;flex:0 0 auto;color:#fff;font-weight:700;font-size:12px}
+.m3-sw::after{content:"";position:absolute;left:3px;top:3px;width:28px;height:28px;border-radius:99px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .25s}
+.m3-sw span{position:absolute;top:0;bottom:0;display:flex;align-items:center}
+.m3-sw .t-off{right:12px}.m3-sw .t-on{left:12px;opacity:0}
+.m3-sw[aria-checked="true"]{background:#d6742f}
+.m3-sw[aria-checked="true"].safe{background:var(--ok)}
+.m3-sw[aria-checked="true"]::after{left:65px}
+.m3-sw[aria-checked="true"] .t-off{opacity:0}.m3-sw[aria-checked="true"] .t-on{opacity:1}
+.m3-ba{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.m3-ba figure{margin:0;position:relative;border-radius:9px;overflow:hidden;border:1px solid var(--line);background:#dfeee9;aspect-ratio:5/3}
+.m3-ba figure svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.m3-ba figcaption{position:absolute;left:5px;top:5px;background:rgba(15,63,61,.82);color:#fff;font-size:10.5px;font-weight:700;border-radius:99px;padding:1px 8px}
+.m3-ba .empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);text-align:center;padding:6px}
+.m3-chips{display:flex;gap:6px;flex-wrap:wrap}
+.m3-chip{font-size:11.5px;font-weight:600;border-radius:99px;padding:3px 10px;background:#e9f0ee;color:#5c7a77;display:flex;align-items:center;gap:5px}
+.m3-chip.done{background:#dff3e6;color:#1d6b46}
+.m3-chip svg{display:none}.m3-chip.done svg{display:block}
+
+/* popup */
+.m3-ov{position:absolute;inset:0;z-index:40;display:none;align-items:center;justify-content:center;padding:20px 60px;background:rgba(10,45,43,.5);backdrop-filter:blur(3px)}
+.m3-ov.on{display:flex;animation:m3fade .25s ease}
+@keyframes m3fade{from{opacity:0}to{opacity:1}}
+.m3-kn{width:min(600px,100%);background:#fff;border-radius:18px;box-shadow:var(--sh-3);overflow:hidden;animation:m3in .3s ease}
+.m3-kn header{background:var(--brand);color:#fff;padding:13px 20px;display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.06em;font-size:15px}
+.m3-kn header svg{flex:0 0 auto}
+.m3-kn .bd{padding:18px 22px 8px;display:flex;flex-direction:column;gap:12px}
+.m3-kn blockquote{margin:0;padding:12px 16px;background:var(--brand-soft);border-left:5px solid var(--brand);border-radius:10px;font-size:17px;line-height:1.5;color:var(--brand-dark);font-weight:500}
+.m3-kn .ft{display:flex;gap:8px;justify-content:flex-end;padding:8px 22px 18px}
+.m3-kn .ft .m3-btn{padding:9px 18px}
+.m3-cmp{width:min(860px,100%);max-height:100%;background:#fff;border-radius:18px;box-shadow:var(--sh-3);display:flex;flex-direction:column;overflow:hidden;animation:m3in .3s ease}
+.m3-cmp header{background:var(--brand);color:#fff;padding:10px 18px;display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.05em;font-size:14px}
+.m3-cmp header .sp{flex:1}
+.m3-cmp header select{font-family:inherit;border-radius:8px;border:none;padding:3px 6px;font-size:12px;font-weight:600}
+.m3-cmp .bd{padding:12px 16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;min-height:0;overflow:auto}
+.m3-cs{border:1.5px solid var(--line);border-radius:13px;padding:8px 10px;display:flex;flex-direction:column;gap:6px}
+.m3-cs .tag{font-weight:800;font-size:13px;color:var(--brand-dark);display:flex;justify-content:space-between}
+.m3-cs .tag em{font-style:normal;font-size:11px;color:var(--muted);font-weight:600}
+.m3-cs .th{position:relative;border-radius:9px;overflow:hidden;aspect-ratio:5/3;background:#dfeee9}
+.m3-cs .th svg{position:absolute;inset:0;width:100%;height:100%}
+.m3-cs .kv{display:flex;align-items:center;gap:7px;font-size:12.5px}
+.m3-cs .kv .ic{width:22px;height:22px;display:flex;align-items:center;justify-content:center}
+.m3-cs .kv .ic svg{width:18px;height:18px}
+.m3-cs .kv b{min-width:56px;color:var(--brand-dark)}
+.m3-cs .kv .dots{display:flex;flex-wrap:wrap;gap:1px;flex:1}
+.m3-cs .kv .dots svg{width:14px;height:14px}
+.m3-cs .kv .tx{font-weight:600}
+.m3-cs .chg{font-size:11px;font-weight:700;border-radius:99px;padding:1px 7px}
+.m3-cs .chg.up{background:#fde8d4;color:#a8501b}.m3-cs .chg.dn{background:#dcebf7;color:#235f8d}.m3-cs .chg.eq{background:#e8efed;color:#5c7a77}
+.m3-cmp .sum{margin:0 16px;padding:9px 12px;background:#fff7e8;border:1px solid #f0d9a8;border-radius:11px;font-size:12.5px;color:#4a3a14}
+.m3-cmp .ft{display:flex;gap:8px;justify-content:flex-end;padding:10px 16px 14px}
+.m3-toast{position:absolute;left:50%;bottom:16px;transform:translate(-50%,20px);z-index:50;background:rgba(15,63,61,.94);color:#fff;font-size:12.5px;font-weight:500;padding:8px 16px;border-radius:99px;opacity:0;pointer-events:none;transition:all .3s;max-width:80%;text-align:center}
+.m3-toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* thanh step */
+.m3-steps{display:flex;gap:8px;padding:8px 12px;overflow-x:auto;overflow-y:hidden;border-top:1px solid var(--line);scrollbar-width:none;flex:0 0 auto;background:#fff}
+.m3-steps::-webkit-scrollbar{display:none}
+.m3-step{flex:0 0 auto;display:flex;align-items:center;gap:7px;padding:6px 13px 6px 7px;border-radius:99px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:13px;font-weight:500;color:var(--ink);white-space:nowrap}
+.m3-step b{width:20px;height:20px;border-radius:99px;background:var(--brand-soft);color:var(--brand-dark);font-size:11px;display:flex;align-items:center;justify-content:center}
+.m3-step[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
+.m3-step[aria-pressed="true"] b{background:rgba(255,255,255,.25);color:#fff}
+
+/* step 11 – luyện tập */
+.m3-practice{position:absolute;inset:0;z-index:4;display:none;flex-direction:column;padding:60px 64px 14px;background:linear-gradient(180deg,#e7f3ee,#d5e9e1);cursor:default;touch-action:auto;overflow:hidden}
+.m3-practice.on{display:flex}
+.m3-practice::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 12% 88%,rgba(111,168,91,.22),transparent 38%),radial-gradient(circle at 92% 12%,rgba(255,255,255,.7),transparent 35%);pointer-events:none}
+.m3-pcard{position:relative;flex:1;min-height:0;background:#fff;border-radius:18px;box-shadow:var(--sh-2);padding:12px 18px 12px;display:flex;flex-direction:column;gap:8px;overflow:hidden}
+.m3-qhead{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.m3-qdots{display:flex;gap:6px}
+.m3-qdot{width:26px;height:26px;border-radius:99px;border:2px solid var(--line);background:#fff;color:var(--muted);font-weight:700;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+.m3-qdot.cur{border-color:var(--brand);background:var(--brand);color:#fff}
+.m3-qdot.done{border-color:var(--ok);background:var(--ok);color:#fff}
+.m3-qdot[disabled]{opacity:.4;cursor:default}
+.m3-qtitle{font-size:18px;font-weight:800;color:var(--brand-dark);margin:0;line-height:1.25}
+.m3-qsub{font-size:12.5px;color:var(--muted);margin:0}
+.m3-board{display:flex;flex-direction:column;gap:8px;flex:1;min-height:0}
+.m3-tray{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;min-height:128px;padding:8px;border-radius:13px;background:#f1f7f5;border:1.5px dashed #b9d3cd;flex:0 0 auto}
+.m3-zones{display:grid;grid-template-columns:1fr 1fr;gap:12px;flex:1;min-height:0}
+.m3-zone{border-radius:14px;border:2.5px dashed;padding:6px 8px;display:flex;flex-direction:column;gap:6px;min-height:0;transition:background .15s,box-shadow .15s}
+.m3-zone.good{border-color:#6fbf8c;background:#effaf3}
+.m3-zone.bad{border-color:#e39a8f;background:#fdf2f0}
+.m3-zone.hl{box-shadow:0 0 0 4px rgba(47,130,125,.28)}
+.m3-zone h4{margin:0;font-size:13px;font-weight:800;letter-spacing:.07em;text-align:center}
+.m3-zone.good h4{color:#1d6b46}.m3-zone.bad h4{color:#b03a2f}
+.m3-zone .slot{flex:1;min-height:0;display:grid;grid-template-columns:repeat(2,1fr);gap:8px;align-content:start}
+.m3-card11{position:relative;border-radius:12px;border:2.5px solid var(--line);background:#fff;box-shadow:var(--sh-1);display:flex;flex-direction:column;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;overflow:hidden;transition:border-color .15s,box-shadow .15s}
+.m3-card11 .art{background:#eaf3ef;height:72px;display:flex;align-items:center;justify-content:center}
+.m3-card11 .art svg{height:100%;width:100%}
+.m3-card11 .cap{padding:4px 8px 5px;font-size:12px;font-weight:600;line-height:1.25;color:var(--ink);text-align:center;min-height:32px;display:flex;align-items:center;justify-content:center}
+.m3-card11.sel{border-color:var(--brand);box-shadow:0 0 0 4px rgba(47,130,125,.28)}
+.m3-card11.ok{border-color:var(--ok)}.m3-card11.no{border-color:var(--bad)}
+.m3-card11 .mk{position:absolute;right:5px;top:5px;width:22px;height:22px;border-radius:99px;display:none;align-items:center;justify-content:center;color:#fff}
+.m3-card11.ok .mk{display:flex;background:var(--ok)}.m3-card11.no .mk{display:flex;background:var(--bad)}
+.m3-card11.ghostc{position:fixed;z-index:9999;pointer-events:none;opacity:.92;transform:rotate(-2deg) scale(1.04);box-shadow:var(--sh-3)}
+.m3-hint{font-size:12.5px;border-radius:10px;padding:6px 11px;background:#fdf2f0;color:#8f2f26;border:1px solid #f1c4bd}
+.m3-hint[hidden]{display:none}
+.m3-acts{display:flex;gap:8px;justify-content:flex-end;align-items:center;flex:0 0 auto}
+.m3-acts .m3-btn{padding:9px 20px}
+.m3-situation{font-size:15.5px;line-height:1.55;color:var(--ink);background:#f1f7f5;border-radius:13px;padding:12px 16px;border-left:5px solid var(--brand);font-weight:500}
+.m3-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.m3-opt{display:flex;align-items:center;gap:10px;text-align:left;border-radius:13px;border:2px solid var(--line);background:#fff;padding:10px 12px;font-size:14px;font-weight:500;color:var(--ink);cursor:pointer;line-height:1.35;transition:all .15s;min-height:56px}
+.m3-opt:hover{border-color:var(--brand-light);background:#f4faf8}
+.m3-opt b{flex:0 0 auto;width:28px;height:28px;border-radius:99px;background:var(--brand-soft);color:var(--brand-dark);display:flex;align-items:center;justify-content:center}
+.m3-opt.wrong{border-color:#e39a8f;background:#fdf2f0;animation:m3shake .35s}
+.m3-opt.right{border-color:var(--ok);background:#e9f8ef;box-shadow:0 0 0 3px rgba(46,157,91,.25)}
+.m3-opt.right b{background:var(--ok);color:#fff}.m3-opt.wrong b{background:var(--bad);color:#fff}
+@keyframes m3shake{0%,100%{transform:none}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.m3-fb{font-size:14px;font-weight:600;border-radius:11px;padding:9px 13px}
+.m3-fb.ok{background:#e9f8ef;color:#1b6b43;border:1px solid #b9e2c9}
+.m3-fb.no{background:#fdf2f0;color:#8f2f26;border:1px solid #f1c4bd}
+.m3-fb[hidden]{display:none}
+.m3-sum{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;flex:1;min-height:0;align-items:center}
+.m3-sum h2{margin:0 0 8px;font-size:24px;letter-spacing:.06em;color:var(--brand);font-weight:800}
+.m3-sum ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.m3-sum li{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.45;background:#f1f7f5;border-radius:12px;padding:9px 13px}
+.m3-sum li i{flex:0 0 auto;width:24px;height:24px;border-radius:99px;background:var(--brand);color:#fff;font-style:normal;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.m3-sumart{border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#bfe4f2,#e5f4de);aspect-ratio:5/4;max-height:100%;position:relative;box-shadow:inset 0 0 0 1px var(--line)}
+.m3-sumart svg{position:absolute;inset:0;width:100%;height:100%}
+.m3-msg{margin-top:10px;text-align:center;font-weight:800;color:var(--brand-dark);font-size:14.5px;background:#fff7e8;border:1px solid #f0d9a8;border-radius:99px;padding:7px 14px}
+
+/* intro */
+.m3-intro{position:absolute;inset:0;z-index:100;display:none;overflow:hidden;background:#195658}
+.m3-intro.on{display:block}
+.m3-intro svg.bgs{position:absolute;inset:0;width:100%;height:100%}
+.m3-intro::before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at 50% 50%,rgba(25,86,88,.82) 0%,rgba(25,86,88,.6) 50%,rgba(25,86,88,.25) 100%)}
+.m3-introbox{position:absolute;z-index:2;left:0;right:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;text-align:center;color:#fff;padding:0 24px}
+.m3-introbox .k{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#d6e78c;text-shadow:0 1px 4px rgba(0,0,0,.45)}
+.m3-introbox h1{font-size:clamp(28px,4.6vw,52px);margin:8px 0 10px;line-height:1.12;font-weight:800;letter-spacing:-.01em;text-shadow:0 4px 18px rgba(0,0,0,.5)}
+.m3-introbox p{max-width:640px;margin:0 auto;font-size:clamp(13px,1.25vw,16px);line-height:1.6;color:rgba(255,255,255,.95);text-shadow:0 2px 8px rgba(0,0,0,.5)}
+.m3-explore{margin-top:18px;min-width:210px;padding:12px 24px;border-radius:12px;border:1px solid rgba(255,255,255,.4);cursor:pointer;background:rgba(25,88,86,.9);backdrop-filter:blur(10px);color:#fff;font-weight:700;font-size:15px;transition:background .2s,transform .15s}
+.m3-explore:hover{background:rgba(47,130,125,.98);transform:translateY(-1px)}
+.m3-credit{position:absolute;z-index:2;left:0;right:0;bottom:12px;text-align:center;color:rgba(255,255,255,.9);font-size:12px;text-shadow:0 1px 5px rgba(0,0,0,.6)}
+
+.kh4b30-m03-root .lfl{fill:var(--lf,#4ea044)}
+.kh4b30-m03-root .lfl2{fill:var(--lf2,#3b8738)}
+@keyframes m3puff{from{opacity:.7;transform:scale(.3)}to{opacity:0;transform:scale(1.6)}}
+.m3-scene .puff{fill:#f3efdc;transform-box:fill-box;transform-origin:center;animation:m3puff .5s ease-out forwards;pointer-events:none}
+/* animation sinh vật */
+@keyframes m3sway{from{transform:rotate(-2.2deg)}to{transform:rotate(2.2deg)}}
+.m3-scene .sw{transform-origin:0 0;animation:m3sway 4.2s ease-in-out infinite alternate}
+@keyframes m3cloud{from{transform:translateX(-40px)}to{transform:translateX(70px)}}
+.m3-scene .cloud{animation:m3cloud 70s ease-in-out infinite alternate}
+@keyframes m3leg{from{transform:rotate(-38deg)}to{transform:rotate(38deg)}}
+@keyframes m3legr{from{transform:rotate(38deg)}to{transform:rotate(-38deg)}}
+.m3-scene .lgA,.m3-scene .lgB{transform-origin:0 0}
+.m3-scene .mo.run .lgA{animation:m3leg .16s linear infinite alternate}
+.m3-scene .mo.run .lgB{animation:m3legr .16s linear infinite alternate}
+.m3-scene .mo.gnaw .lgA,.m3-scene .mo.gnaw .lgB{animation:none}
+@keyframes m3sniff{0%,100%{transform:rotate(0)}50%{transform:rotate(-9deg)}}
+@keyframes m3gnaw{0%,100%{transform:rotate(14deg)}50%{transform:rotate(26deg)}}
+.m3-scene .hd{transform-origin:0 0}
+.m3-scene .mo.sniff .hd{animation:m3sniff .35s ease-in-out infinite}
+.m3-scene .mo.gnaw .hd{animation:m3gnaw .16s ease-in-out infinite}
+@keyframes m3whisk{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.8)}}
+.m3-scene .whisk{transform-origin:0 0;animation:m3whisk .3s infinite}
+@keyframes m3tail{from{transform:rotate(-8deg)}to{transform:rotate(8deg)}}
+.m3-scene .mtail{transform-origin:0 0;animation:m3tail .6s ease-in-out infinite alternate}
+@keyframes m3flick{0%,70%,100%{transform:scaleX(0)}78%,92%{transform:scaleX(1)}}
+.m3-scene .tg{transform-origin:0 0;animation:m3flick 2.6s infinite}
+@keyframes m3wag{from{transform:rotate(-14deg)}to{transform:rotate(14deg)}}
+.m3-scene .ftail{transform-origin:0 0;animation:m3wag .45s ease-in-out infinite alternate}
+@keyframes m3weed{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+.m3-scene .weed{transform-origin:0 0;animation:m3weed 3.4s ease-in-out infinite alternate}
+@keyframes m3pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+.m3-scene .warn{transform-origin:0 0;animation:m3pulse 1s ease-in-out infinite}
+@keyframes m3ray{0%,100%{opacity:.25}50%{opacity:.6}}
+.m3-scene .ray{animation:m3ray 6s ease-in-out infinite}
+.m3-scene .ray:nth-child(2){animation-delay:-2s}.m3-scene .ray:nth-child(3){animation-delay:-4s}
+@keyframes m3flap{from{transform:scaleX(1)}to{transform:scaleX(.25)}}
+.m3-scene .wing{transform-origin:0 0;animation:m3flap .14s ease-in-out infinite alternate}
+@keyframes m3neckdip{0%,100%{transform:rotate(0)}40%,70%{transform:rotate(38deg)}}
+.m3-scene .neck{transform-origin:0 0}
+.m3-scene .b-dip .neck{animation:m3neckdip 2.8s ease-in-out infinite}
+@keyframes m3look{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(10deg)}}
+.m3-scene .b-search .neck{animation:m3look 1.6s ease-in-out infinite}
+@keyframes m3tailw{from{transform:rotate(-10deg)}to{transform:rotate(16deg)}}
+.m3-scene .stail{transform-origin:0 0;animation:m3tailw 1.4s ease-in-out infinite alternate}
+@keyframes m3ear{0%,80%,100%{transform:rotate(0)}88%{transform:rotate(-14deg)}}
+.m3-scene .rear{transform-origin:0 0;animation:m3ear 3s infinite}
+@keyframes m3nose{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.8)}}
+.m3-scene .nose{transform-origin:0 0;animation:m3nose .4s infinite}
+@keyframes m3crumb{0%{opacity:0;transform:translate(0,0)}30%{opacity:1}100%{opacity:0;transform:translate(8px,10px)}}
+.m3-scene .crumb{animation:m3crumb .5s linear infinite;opacity:0;display:none}
+.m3-scene .gnaw .crumb{display:block}
+.m3-scene .ent{transition:opacity .5s}
+@media (max-width:900px){.m3-stage{grid-template-columns:minmax(0,1fr) 260px}.m3-practice{padding:56px 50px 10px}}
+@media (max-width:1180px){.m3-tabs{top:58px}.m3-tabs.on~.m3-clock{top:104px}}
+@media (max-width:760px){.m3-tabs{top:8px}.m3-tabs.on~.m3-clock{top:52px}
+  .m3-stage{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(0,46%)}
+  .m3-panel{border-left:none;border-top:1px solid var(--line)}
+  .m3-practice{padding:52px 12px 8px}
+  .m3-tray{grid-template-columns:repeat(2,1fr)}
+  .m3-ov{padding:12px 12px}
+  .m3-titles h1{font-size:13px}
+  .m3-clock{top:52px;right:8px}.m3-tabs{top:8px;left:auto;right:8px;transform:none}.m3-tab{padding:5px 9px;font-size:12px}.m3-ghost span{display:none}.m3-ghost{padding:6px 8px}
+  .m3-cmp .bd{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){.kh4b30-m03-root *{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<script>
+(function(){
+'use strict';
+/* =====================================================================
+   MODULE 3 – CÂN BẰNG CHUỖI THỨC ĂN  (Bài 30, Khoa học 4)  – Step 9, 10, 11
+   Namespace: kh4b30-m03-   |   window.LessonModules.canBangChuoiThucAn
+   Toàn bộ hình ảnh là HTML/CSS/SVG nội tuyến – không GLB/Three.js/WebGL.
+   ===================================================================== */
+const P='kh4b30-m03-';
+const u=n=>`url(#${P}${n})`;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const $=(r,s)=>r.querySelector(s);
+const $$=(r,s)=>[...r.querySelectorAll(s)];
+function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function hexRgb(h){return[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]}
+function mix(c1,c2,t){const a=hexRgb(c1),b=hexRgb(c2);return `rgb(${Math.round(lerp(a[0],b[0],t))},${Math.round(lerp(a[1],b[1],t))},${Math.round(lerp(a[2],b[2],t))})`}
+const f1=n=>n.toFixed(1);
+function blob(cx,cy,rx,ry,n,seed,jit){
+  const r=rng(seed),p=[];
+  for(let i=0;i<n;i++){const a=i/n*Math.PI*2,k=1+(r()-.5)*jit;p.push([cx+Math.cos(a)*rx*k,cy+Math.sin(a)*ry*k])}
+  let d=`M${f1(p[0][0])} ${f1(p[0][1])}`;
+  for(let i=0;i<n;i++){
+    const p0=p[(i-1+n)%n],p1=p[i],p2=p[(i+1)%n],p3=p[(i+2)%n];
+    d+=`C${f1(p1[0]+(p2[0]-p0[0])/6)} ${f1(p1[1]+(p2[1]-p0[1])/6)} ${f1(p2[0]-(p3[0]-p1[0])/6)} ${f1(p2[1]-(p3[1]-p1[1])/6)} ${f1(p2[0])} ${f1(p2[1])}`;
+  }
+  return d+'Z';
+}
+
+/* ---------------- AUDIO_REGISTRY: nơi DUY NHẤT lưu tên file + URL ---------------- */
+const AUDIO_REGISTRY={
+  S09_Voice:{filename:"KH4_B30_M03_S09_Voice.mp3",url:"https://assets.yoolife.com.vn/yootek/1792045080006-3710.mp3"},
+  S09_RanGiam:{filename:"KH4_B30_M03_S09_RanGiam.mp3",url:"https://assets.yoolife.com.vn/yootek/1792045071804-5917.mp3"},
+  S09_RanTang:{filename:"KH4_B30_M03_S09_RanTang.mp3",url:"https://assets.yoolife.com.vn/yootek/1792045075896-5030.mp3"},
+  S09_KetLuan:{filename:"KH4_B30_M03_S09_KetLuan.mp3",url:"https://assets.yoolife.com.vn/yootek/1792045067218-1319.mp3"},
+  S10_Voice:{filename:"KH4_B30_M03_S10_Voice.mp3",url:"https://assets.yoolife.com.vn/yootek/1792045100083-6633.mp3"},
+  S10_SanBatRan:{filename:"KH4_B30_M03_S10_SanBatRan.mp3",url:"https://assets.yoolife.com.vn/yootek/1792045096137-1197.mp3"},
+  S10_DanhBatDien:{filename:"KH4_B30_M03_S10_DanhBatDien.mp3",url:"https://assets.yoolife.com.vn/yootek/1792045087949-8299.mp3"},
+  S10_BaoVeRung:{filename:"KH4_B30_M03_S10_BaoVeRung.mp3",url:"https://assets.yoolife.com.vn/yootek/1792045083948-7931.mp3"},
+  S10_KetLuan:{filename:"KH4_B30_M03_S10_KetLuan.mp3",url:"https://assets.yoolife.com.vn/yootek/1792045091934-3379.mp3"},
+  S11_Voice:{filename:"KH4_B30_M03_S11_Voice.mp3",url:"https://assets.yoolife.com.vn/yootek/1792045116010-3357.mp3"},
+  S11_Q01:{filename:"KH4_B30_M03_S11_Q01.mp3",url:"https://assets.yoolife.com.vn/yootek/1792045108128-4986.mp3"},
+  S11_Q02:{filename:"KH4_B30_M03_S11_Q02.mp3",url:"https://assets.yoolife.com.vn/yootek/1792045112026-1833.mp3"},
+  S11_KetLuan:{filename:"KH4_B30_M03_S11_KetLuan.mp3",url:"https://assets.yoolife.com.vn/yootek/1792045104168-1463.mp3"}
+};
+
+/* ---------------- Trạng thái chung ---------------- */
+const S={
+  root:null,built:false,active:false,step:0,
+  narrationEnabled:true,isPlaying:false,paused:false,
+  px:0,py:0,tpx:0,tpy:0,auto:false,autoT:0,raf:0,last:0,
+  lastKey:null,introOn:false,cam:{yaw:0,pitch:.36,dist:640,tyaw:0,tpitch:.36,tdist:640}
+};
+const T={ids:new Set(),
+  set(fn,ms){const id=setTimeout(()=>{T.ids.delete(id);fn()},ms);T.ids.add(id);return id},
+  clearAll(){T.ids.forEach(clearTimeout);T.ids.clear()}};
+
+/* ---------------- Âm thanh: quản lý duy nhất ---------------- */
+const Aud={el:null,token:0,
+  stop(){
+    this.token++;
+    if(this.el){const a=this.el;this.el=null;a.onended=a.onerror=a.onplaying=null;try{a.pause()}catch(e){}}
+    setPlaying(false);
+  },
+  /* trả về true nếu có file thật được phát */
+  play(key,opt){
+    opt=opt||{};
+    this.stop();
+    const tok=this.token;
+    S.lastKey=key;
+    if(!opt.force&&!S.narrationEnabled)return false;
+    const url=(AUDIO_REGISTRY[key]||{}).url;
+    if(!url){ // chưa có audio: bỏ qua nhưng luồng bài học vẫn tiếp tục
+      if(opt.onEnd)T.set(()=>{if(tok===this.token)opt.onEnd()},0);
+      return false;
+    }
+    const a=new Audio();a.preload='auto';a.src=url;this.el=a;
+    a.onplaying=()=>{if(tok===this.token)setPlaying(true)};
+    const fin=()=>{if(tok!==this.token)return;this.el=null;setPlaying(false);if(opt.onEnd)opt.onEnd()};
+    a.onended=fin;a.onerror=fin;
+    const pr=a.play();
+    if(pr&&pr.catch)pr.catch(err=>{
+      if(tok!==this.token)return;
+      setPlaying(false);
+      if(err&&err.name==='NotAllowedError')toast('Nhấn nút Thuyết minh để nghe giọng đọc.');
+    });
+    return true;
+  }
+};
+function setPlaying(v){
+  S.isPlaying=!!v;
+  if(S.root)S.root.classList.toggle('m3-playing',!!v&&S.narrationEnabled);
+}
+
+/* ---------------- Âm báo đúng/sai (WebAudio, không phải giọng đọc) ---------------- */
+let actx=null;
+function beep(ok){
+  try{
+    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    const seq=ok?[[660,0],[880,.12]]:[[220,0],[170,.14]];
+    seq.forEach(([f,d])=>{
+      const o=actx.createOscillator(),g=actx.createGain();
+      o.type=ok?'sine':'triangle';o.frequency.value=f;
+      g.gain.setValueAtTime(0,actx.currentTime+d);
+      g.gain.linearRampToValueAtTime(.12,actx.currentTime+d+.02);
+      g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+d+.22);
+      o.connect(g);g.connect(actx.destination);o.start(actx.currentTime+d);o.stop(actx.currentTime+d+.25);
+    });
+  }catch(e){}
+}
+
+/* =====================================================================
+   DEFS DÙNG CHUNG (gradient + icon)
+   ===================================================================== */
+function defsMarkup(){
+  const lg=(id,st,x2,y2)=>`<linearGradient id="${P}${id}" x1="0" y1="0" x2="${x2||0}" y2="${y2==null?1:y2}">${st.map(s=>`<stop offset="${s[0]}" stop-color="${s[1]}"${s[2]!=null?` stop-opacity="${s[2]}"`:''}/>`).join('')}</linearGradient>`;
+  const rg=(id,st)=>`<radialGradient id="${P}${id}">${st.map(s=>`<stop offset="${s[0]}" stop-color="${s[1]}"${s[2]!=null?` stop-opacity="${s[2]}"`:''}/>`).join('')}</radialGradient>`;
+  return `<defs>
+  ${lg('sky',[[0,'#6fbfee'],[.62,'#b9e3f6'],[1,'#e9f7fb']])}
+  ${rg('sun',[[0,'#fffbd0'],[.3,'#ffe98f'],[1,'#ffe58a',0]])}
+  ${lg('hillFar',[[0,'#a5cfb4'],[1,'#c6e2cb']])}
+  ${lg('hillNear',[[0,'#7fb97a'],[1,'#a9d194']])}
+  ${lg('ground',[[0,'#b4d287'],[.22,'#a9c777'],[.55,'#c9b37b'],[1,'#b98f5d']])}
+  ${lg('ridge',[[0,'#7b5737'],[.45,'#a67d52'],[1,'#85603d']],1,0)}
+  ${lg('blockTop',[[0,'#93b862'],[1,'#78a04c']])}
+  ${lg('soilF',[[0,'#82583a'],[.5,'#6a4429'],[1,'#47291a']])}
+  ${lg('tuber',[[0,'#ebc78a'],[.55,'#d2a266'],[1,'#a97b45']])}
+  ${lg('mouse',[[0,'#aa917d'],[1,'#6f5a4a']])}
+  ${lg('wood',[[0,'#d3a96d'],[1,'#a67d49']])}
+  ${lg('trunk',[[0,'#6e4b33'],[.5,'#946947'],[1,'#5a3b29']],1,0)}
+  ${lg('water',[[0,'#98e4e8'],[.4,'#49b6c2'],[1,'#1b6c84']])}
+  ${lg('mud',[[0,'#8d7552'],[1,'#5d4a33']])}
+  ${lg('bank',[[0,'#8bb45e'],[.12,'#7aa150'],[.13,'#82593a'],[1,'#4d2f1d']])}
+  ${lg('ray',[[0,'#fffbe0',.75],[1,'#fffbe0',0]])}
+  ${lg('rayW',[[0,'#ffffff',.5],[1,'#ffffff',0]])}
+  ${lg('forestBg',[[0,'#d3ead6'],[.55,'#e6f2dc'],[1,'#b7d79a']])}
+  ${lg('forestGnd',[[0,'#91bd6c'],[1,'#5a8c4c']])}
+  ${lg('canLight',[[0,'#8fcf72'],[1,'#58a653']])}
+  ${lg('canDark',[[0,'#3f8c47'],[1,'#2b6838']])}
+  ${lg('barn',[[0,'#c25a46'],[1,'#a2432f']])}
+  ${lg('lawn',[[0,'#d3e8c2'],[.25,'#9fc67a'],[1,'#62944a']])}
+  ${lg('goldHaze',[[0,'#fff6c8',.0],[1,'#ffe8a0',.5]])}
+  </defs>
+  <symbol id="${P}i-mouse" viewBox="0 0 24 24"><path d="M3 17c4 3 10 3 14 0 3-2 4-5 2-7-1-1-2-1-2-1l-2 3-6-2c-3 0-5 3-6 7z" fill="#8c7563"/><circle cx="15" cy="8" r="3.2" fill="#a38c7a"/><circle cx="15" cy="8" r="1.8" fill="#e6b4ab"/><circle cx="19.5" cy="12.5" r="1.1" fill="#e08f93"/><path d="M2 18c-1 2 1 3 2 2" stroke="#c7a597" stroke-width="1.3" fill="none"/></symbol>
+  <symbol id="${P}i-snake" viewBox="0 0 24 24"><path d="M3 18c3-4 6 3 9-1s4-8 8-7" fill="none" stroke="#6b6a32" stroke-width="3.2" stroke-linecap="round"/><circle cx="20.5" cy="9.5" r="2.4" fill="#6b6a32"/><circle cx="21" cy="9" r=".7" fill="#fff"/></symbol>
+  <symbol id="${P}i-potato" viewBox="0 0 24 24"><ellipse cx="12" cy="13" rx="9" ry="6.5" fill="#d2a266" transform="rotate(-18 12 13)"/><circle cx="9" cy="12" r=".9" fill="#8a6234"/><circle cx="14" cy="15" r=".9" fill="#8a6234"/><circle cx="16" cy="11" r=".8" fill="#8a6234"/><path d="M12 6c0-2 1-3 2-3" stroke="#4ea044" stroke-width="2" fill="none"/></symbol>
+  <symbol id="${P}i-fish" viewBox="0 0 24 24"><ellipse cx="11" cy="12" rx="8" ry="5" fill="#e8a03c"/><path d="M18 12l5-4v8z" fill="#d97f2b"/><circle cx="7" cy="11" r="1" fill="#222"/></symbol>
+  <symbol id="${P}i-weed" viewBox="0 0 24 24"><path d="M6 22c-3-6 3-10 0-18M12 22c-3-7 3-12 1-19M18 22c-2-6 2-9 0-15" stroke="#3f9a58" stroke-width="2.4" fill="none" stroke-linecap="round"/></symbol>
+  <symbol id="${P}i-tree" viewBox="0 0 24 24"><rect x="10.5" y="13" width="3" height="9" fill="#7a5638"/><circle cx="12" cy="9" r="7" fill="#58a653"/><circle cx="8.5" cy="11" r="4.5" fill="#3f8c47"/><circle cx="15" cy="7.5" r="4" fill="#7fc06a"/></symbol>
+  <symbol id="${P}i-bird" viewBox="0 0 24 24"><ellipse cx="11" cy="14" rx="7" ry="5" fill="#f4f4f1" stroke="#c9cfcc"/><path d="M16 11l6-2-5 5z" fill="#f2b62e"/><circle cx="15.5" cy="11" r=".9" fill="#222"/><path d="M9 19v4M13 19v4" stroke="#333" stroke-width="1.2"/></symbol>
+  <symbol id="${P}i-shrimp" viewBox="0 0 24 24"><path d="M5 17c0-8 10-12 15-6" fill="none" stroke="#e58a6a" stroke-width="3.6" stroke-linecap="round"/><circle cx="19" cy="11" r="1.1" fill="#222"/><path d="M3 18l4 3M5 19l-2 3" stroke="#e58a6a" stroke-width="1.4"/></symbol>
+  <symbol id="${P}i-home" viewBox="0 0 24 24"><path d="M3 12l9-8 9 8v9H3z" fill="#a8814a"/><rect x="10" y="14" width="4" height="7" fill="#fff3d2"/></symbol>
+  <symbol id="${P}i-animal" viewBox="0 0 24 24"><ellipse cx="11" cy="15" rx="7" ry="4.5" fill="#b5936b"/><circle cx="18" cy="10" r="3.5" fill="#b5936b"/><path d="M17 4l1 4M20 5l-1 4" stroke="#b5936b" stroke-width="1.6"/><path d="M5 18v4M9 19v3M13 19v3" stroke="#8a6c47" stroke-width="1.6"/></symbol>
+  `;
+}
+
+/* =====================================================================
+   NGHỆ THUẬT: CÁC THÀNH PHẦN CẢNH ĐỒNG KHOAI TÂY
+   ===================================================================== */
+function treeRound(x,y,s,seed,far){
+  const c1=far?'#a3cba9':'#3f8d47',c2=far?'#b9d9bd':'#58a652',c3=far?'#cfe6cf':'#8acb6e',tr=far?'#a09c88':'#6b4a33';
+  return `<g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="0" cy="2" rx="26" ry="5" fill="#2c5a30" opacity="${far?.1:.22}"/>
+  <path d="M-4 0C-3-22-3-40-6-62L6-62C3-40 3-22 4 0Z" fill="${tr}"/><path d="M0-40L-16-62M0-48L15-68" stroke="${tr}" stroke-width="3" stroke-linecap="round"/>
+  <path d="${blob(0,-82,30,26,12,seed,.22)}" fill="${c1}"/><path d="${blob(-12,-72,20,17,10,seed+1,.2)}" fill="${c2}"/>
+  <path d="${blob(14,-76,19,17,10,seed+2,.2)}" fill="${c2}"/><path d="${blob(-6,-95,18,13,10,seed+3,.2)}" fill="${c3}" opacity=".85"/></g>`;
+}
+function treePine(x,y,s,far){
+  const c1=far?'#98c3a2':'#2f7a4a',c2=far?'#b2d4b8':'#4d9a5d';
+  return `<g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="0" cy="2" rx="20" ry="4" fill="#2c5a30" opacity="${far?.1:.2}"/><rect x="-3" y="-14" width="6" height="16" fill="${far?'#a09c88':'#6b4a33'}"/>
+  <path d="M0-104L-16-66L-8-68L-24-36L-13-38L-30-8L30-8L13-38L24-36L8-68L16-66Z" fill="${c1}"/>
+  <path d="M0-104L16-66L8-68L24-36L13-38L30-8L4-8Z" fill="${c2}" opacity=".7"/></g>`;
+}
+function tuft(x,y,s,c){return `<path transform="translate(${x} ${y}) scale(${s})" d="M0 0Q-3-8-6-15M0 0Q0-10 1-17M0 0Q3-8 7-14M0 0Q-5-5-10-8" stroke="${c}" stroke-width="1.8" fill="none" stroke-linecap="round"/>`}
+function bush(x,y,s,seed){
+  return `<g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="0" cy="2" rx="34" ry="6" fill="#2c5a30" opacity=".25"/>
+  <path d="${blob(0,-12,32,17,12,seed,.25)}" fill="#3f8a47"/><path d="${blob(-9,-17,19,11,10,seed+1,.2)}" fill="#5aa656"/><path d="${blob(12,-14,17,10,10,seed+2,.2)}" fill="#4d9a4f"/>
+  <path d="${blob(-4,-22,12,6,8,seed+3,.2)}" fill="#8acb6e" opacity=".8"/>
+  <circle cx="-14" cy="-10" r="2.2" fill="#c94a3c"/><circle cx="8" cy="-8" r="2.2" fill="#c94a3c"/><circle cx="18" cy="-15" r="2" fill="#d9573f"/></g>`;
+}
+function rock(x,y,s,seed){
+  return `<g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="2" cy="3" rx="26" ry="5" fill="#000" opacity=".2"/>
+  <path d="${blob(0,-9,24,13,9,seed,.28)}" fill="#8f9593"/><path d="${blob(-5,-13,14,7,8,seed+1,.25)}" fill="#b8bdbb" opacity=".85"/></g>`;
+}
+function cloud(x,y,s,dur,delay){
+  return `<g class="cloud" style="animation-duration:${dur}s;animation-delay:${delay}s"><g transform="translate(${x} ${y}) scale(${s})">
+  <ellipse cx="0" cy="8" rx="48" ry="11" fill="#cfe4ee" opacity=".75"/><ellipse cx="-22" cy="-2" rx="24" ry="15" fill="#fff"/><ellipse cx="6" cy="-10" rx="28" ry="19" fill="#fff"/>
+  <ellipse cx="32" cy="0" rx="22" ry="13" fill="#fff"/><ellipse cx="0" cy="3" rx="46" ry="10" fill="#fff"/></g></g>`;
+}
+function barnMarkup(){
+  let planks='';for(let i=-30;i<=30;i+=7)planks+=`M${i} -44L${i} 0`;
+  return `<g transform="translate(775 260)" opacity=".96"><ellipse cx="6" cy="2" rx="60" ry="6" fill="#2c5a30" opacity=".2"/>
+  <rect x="42" y="-56" width="16" height="56" fill="#cdd5d3"/><path d="M42-56Q50-68 58-56Z" fill="#8f9b99"/><rect x="42" y="-40" width="16" height="2" fill="#aab4b2"/>
+  <rect x="-34" y="-44" width="68" height="44" fill="${u('barn')}"/><path d="${planks}" stroke="#8c3a2a" stroke-width=".8" opacity=".55"/>
+  <path d="M-42-44L-22-66L22-66L42-44Z" fill="#5d4b47"/><path d="M-22-66L22-66L26-60L-26-60Z" fill="#7b6762"/>
+  <rect x="-9" y="-60" width="18" height="13" fill="#3a2b27"/><path d="M-9-60h18" stroke="#f1e4d0" stroke-width="1.5"/>
+  <rect x="-13" y="-28" width="26" height="28" fill="#f2e6d2"/><path d="M-13-28L13 0M13-28L-13 0M-13-28h26M-13 0h26" stroke="#8c3a2a" stroke-width="1.8" fill="none"/>
+  <rect x="-30" y="-36" width="11" height="9" fill="#f2e6d2"/><rect x="19" y="-36" width="11" height="9" fill="#f2e6d2"/>
+  <ellipse cx="-50" cy="-5" rx="9" ry="6" fill="#d9b85c"/><ellipse cx="-50" cy="-5" rx="9" ry="6" fill="none" stroke="#b8963f"/></g>`;
+}
+function fenceMarkup(){
+  let s=`<rect x="-40" y="251" width="1080" height="5" fill="${u('wood')}"/><rect x="-40" y="262" width="1080" height="5" fill="${u('wood')}"/>`;
+  for(let x=-30;x<1040;x+=42)s+=`<ellipse cx="${x+4}" cy="274" rx="8" ry="2" fill="#000" opacity=".15"/><path d="M${x} 274L${x} 247L${x+3.5} 243L${x+7} 247L${x+7} 274Z" fill="${u('wood')}"/><path d="M${x+5} 247L${x+5} 274" stroke="#7d5a30" stroke-width="1" opacity=".5"/>`;
+  return s;
+}
+function compLeaf(L,seed){
+  const r=rng(seed);
+  let s=`<path d="M0 0L${L} 0" stroke="#4a8738" stroke-width="2.2" stroke-linecap="round"/>`;
+  const n=4;
+  for(let k=0;k<n;k++){
+    const t=L*(.16+.62*k/(n-1)),big=k%2?.62:1,w=15*big+3;
+    for(const side of[-1,1]){
+      const ang=side*(50+r()*14);
+      s+=`<g transform="translate(${f1(t)} 0) rotate(${f1(ang)})"><ellipse cx="${f1(w*.9)}" cy="0" rx="${f1(w)}" ry="${f1(w*.52)}" class="${side<0?'lfl2':'lfl'}"/><path d="M1 0L${f1(w*1.7)} 0" stroke="#2f6b2c" stroke-width=".8" opacity=".45"/><ellipse cx="${f1(w*.9)}" cy="-${f1(w*.12)}" rx="${f1(w*.75)}" ry="${f1(w*.2)}" fill="#fff" opacity=".13"/></g>`;
+    }
+  }
+  s+=`<g transform="translate(${L} 0)"><ellipse cx="14" cy="0" rx="17" ry="9.5" class="lfl"/><path d="M0 0L28 0" stroke="#2f6b2c" stroke-width=".9" opacity=".45"/><ellipse cx="14" cy="-2" rx="12" ry="3.4" fill="#fff" opacity=".14"/></g>`;
+  return s;
+}
+const LEAVES=[[0,-98,-95,56],[2,-76,-28,56],[-2,-70,-152,54],[3,-48,-10,60],[-3,-38,-172,60],[34,-86,-52,50],[-33,-90,-128,50],[36,-84,-2,42],[-35,-86,-178,42]];
+function potatoPlant(i,x,base,s,seed,flower){
+  let o=`<g class="plant" data-i="${i}" transform="translate(${x} ${base}) scale(${s})">
+  <ellipse cx="3" cy="3" rx="46" ry="7" fill="#000" opacity=".2"/><path d="${blob(0,0,38,8,10,seed,.2)}" fill="#7a5a37"/><path d="${blob(-4,-2,24,4,8,seed+1,.2)}" fill="#a07a50" opacity=".8"/>
+  <path d="M0 0C-4-30 4-60 0-98M0-46C14-52 28-64 34-86M0-50C-14-56-26-68-33-90" stroke="#4f8b3d" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M0 0C-4-30 4-60 0-98" stroke="#7fbd62" stroke-width="1.6" fill="none" opacity=".6"/>`;
+  LEAVES.forEach((lv,k)=>{
+    const dir=Math.cos(lv[2]*Math.PI/180)>=0?1:-1;
+    o+=`<g transform="translate(${lv[0]} ${lv[1]})"><g class="sw" style="animation-delay:${-(k*.7+i*.4).toFixed(1)}s"><g class="lfr" data-bx="${lv[0]}" data-by="${lv[1]}" data-a="${lv[2]}" data-dir="${dir}" transform="rotate(${lv[2]})">${compLeaf(lv[3],seed+k*7)}</g></g></g>`;
+  });
+  if(flower)for(const[fx,fy]of[[22,-112],[-20,-116]]){
+    o+=`<g transform="translate(${fx} ${fy})"><path d="M0 0L${-fx*.4} 14" stroke="#4f8b3d" stroke-width="1.6"/>`;
+    for(let a=0;a<5;a++)o+=`<ellipse cx="0" cy="-6" rx="3.6" ry="6" fill="#f1ebfb" stroke="#c7b7e6" stroke-width=".6" transform="rotate(${a*72})"/>`;
+    o+=`<circle r="2.6" fill="#f6c52a"/></g>`;
+  }
+  return o+'</g>';
+}
+const PLANT_X=[135,310,500,690,865];
+const TUB=[[-30,522,-14,26,17],[6,542,8,23,15],[34,512,26,25,16]];
+function tuberMarkup(k,x,y,rot,rx,ry){
+  return `<g class="tub" data-k="${k}" transform="translate(${x} ${y}) rotate(${rot})"><ellipse cx="2" cy="4" rx="${rx}" ry="${ry}" fill="#2f1b0f" opacity=".3"/>
+  <ellipse cx="0" cy="0" rx="${rx}" ry="${ry}" fill="${u('tuber')}"/><ellipse cx="-${rx*.25}" cy="-${ry*.35}" rx="${rx*.55}" ry="${ry*.28}" fill="#fff" opacity=".2"/>
+  <circle cx="${-rx*.35}" cy="${ry*.15}" r="1.7" fill="#8a6234"/><circle cx="${rx*.2}" cy="${ry*.3}" r="1.7" fill="#8a6234"/><circle cx="${rx*.5}" cy="${-ry*.15}" r="1.5" fill="#8a6234"/><circle cx="${-rx*.05}" cy="${-ry*.1}" r="1.2" fill="#9a7140"/>
+  <g class="b1" style="display:none"><circle cx="${rx*.62}" cy="${-ry*.35}" r="${ry*.52}" fill="#f1dca3" stroke="#7a5530" stroke-width="1"/><circle cx="${rx*.62}" cy="${-ry*.35}" r="${ry*.3}" fill="#e4c47c"/><circle cx="${rx*.95}" cy="${-ry*.05}" r="2.6" fill="#4b2f1c"/><circle cx="${rx*.75}" cy="${-ry*.95}" r="2.4" fill="#4b2f1c"/><circle cx="${rx*.3}" cy="${-ry*.85}" r="2.2" fill="#4b2f1c"/></g>
+  <g class="b2" style="display:none"><circle cx="${-rx*.6}" cy="${ry*.3}" r="${ry*.46}" fill="#f1dca3" stroke="#7a5530" stroke-width="1"/><circle cx="${-rx*.6}" cy="${ry*.3}" r="${ry*.26}" fill="#e4c47c"/><circle cx="${-rx*.95}" cy="${ry*.05}" r="2.4" fill="#4b2f1c"/><circle cx="${-rx*.8}" cy="${ry*.75}" r="2.3" fill="#4b2f1c"/></g></g>`;
+}
+function fieldMarkup(){
+  const r=rng(11);
+  let bg=`<g class="L-bg"><rect x="-60" y="-40" width="1120" height="330" fill="${u('sky')}"/>
+  <circle cx="850" cy="64" r="86" fill="${u('sun')}"/><circle cx="850" cy="64" r="27" fill="#fff6b5"/>
+  ${cloud(170,70,1,90,0)}${cloud(470,48,.8,110,-30)}${cloud(690,98,.7,80,-50)}
+  <path d="M-60 238C100 180 250 214 400 204C560 194 700 160 860 192C950 208 1010 200 1060 196L1060 280L-60 280Z" fill="${u('hillFar')}"/>
+  <path d="M-60 258C140 214 300 240 460 230C640 220 780 240 1060 224L1060 290L-60 290Z" fill="${u('hillNear')}"/>`;
+  for(let x=-20;x<1040;x+=26+r()*14){const far=1;bg+=r()>.42?treeRound(x,262,.46+r()*.22,Math.floor(r()*999),far):treePine(x,262,.4+r()*.2,far)}
+  bg+=barnMarkup()+`</g>`;
+  let mid=`<g class="L-mid"><rect x="-60" y="256" width="1120" height="200" fill="${u('ground')}"/><rect x="-60" y="256" width="1120" height="26" fill="#d7ecd0" opacity=".28"/>`;
+  const VX=500,TOPY=262,BOTY=445;
+  for(let k=-5;k<=5;k++){
+    const xb=VX+k*130,xt=VX+(xb-VX)*.0804,hw=36,hwt=hw*.0804;
+    mid+=`<path d="M${f1(xt-hwt)} ${TOPY}L${f1(xt+hwt)} ${TOPY}L${xb+hw} ${BOTY}L${xb-hw} ${BOTY}Z" fill="${u('ridge')}"/>
+    <path d="M${f1(xt-hwt)} ${TOPY}L${xb-hw} ${BOTY}" stroke="#c9a47a" stroke-width="1.4" opacity=".5"/>`;
+    for(const y of[282,300,324,354,392,428]){
+      const t=(y-TOPY)/(BOTY-TOPY),px=xt+(xb-xt)*t,sc=.22+.7*t;
+      mid+=`<g transform="translate(${f1(px)} ${y}) scale(${f1(sc)})"><ellipse cx="2" cy="2" rx="22" ry="5" fill="#000" opacity=".2"/>
+      <path d="${blob(0,-12,20,13,9,k*13+y,.25)}" fill="#3f8a3e"/><path d="${blob(-7,-15,12,8,8,k*7+y,.2)}" fill="#5fae4a"/><path d="${blob(8,-13,11,8,8,k*5+y,.2)}" fill="#4ea044"/></g>`;
+    }
+  }
+  for(let i=0;i<46;i++){const x=-20+r()*1040,y=270+r()*170;mid+=tuft(x,y,.5+r()*.5,r()>.5?'#6f9d4a':'#8fb25b')}
+  mid+=`<path d="M-60 256L60 256L100 445L-60 445Z" fill="#8bbf63" opacity=".55"/><path d="M1060 256L940 256L900 445L1060 445Z" fill="#8bbf63" opacity=".55"/>
+  ${fenceMarkup()}${bush(62,326,1.15,5)}${bush(938,344,1.05,9)}${rock(130,412,.7,3)}${rock(880,422,.8,6)}${rock(580,300,.35,8)}${bush(240,272,.55,2)}${bush(690,272,.5,12)}
+  <path d="M600 262L1060 262L1060 440L700 440Z" fill="#fff" opacity=".05"/></g>`;
+  let fore=`<g class="L-fore"><rect x="-60" y="438" width="1120" height="40" fill="${u('blockTop')}"/><rect x="-60" y="438" width="1120" height="4" fill="#b6d68a" opacity=".6"/>`;
+  for(let x=-40;x<1040;x+=14)fore+=tuft(x+r()*8,445+r()*26,.6+r()*.5,r()>.5?'#5f9040':'#7aa94d');
+  fore+=`<rect x="-60" y="476" width="1120" height="170" fill="${u('soilF')}"/><rect x="-60" y="476" width="1120" height="3" fill="#b88a5c" opacity=".7"/>
+  <path d="M-60 520Q150 508 330 522T700 514T1060 524L1060 540Q820 530 640 538T300 540T-60 538Z" fill="#3a2214" opacity=".22"/>
+  <path d="M-60 566Q200 556 420 568T820 560T1060 570L1060 600L-60 600Z" fill="#2c180d" opacity=".25"/>`;
+  for(let i=0;i<90;i++){const x=r()*1100-40,y=482+r()*130;fore+=`<circle cx="${f1(x)}" cy="${f1(y)}" r="${f1(.8+r()*2.2)}" fill="${r()>.5?'#2f1a0e':'#b08358'}" opacity="${f1(.25+r()*.3)}"/>`}
+  fore+=`<path d="${blob(60,590,26,13,8,4,.3)}" fill="#6f6860" opacity=".8"/><path d="${blob(930,570,20,10,8,5,.3)}" fill="#7d766e" opacity=".8"/>`;
+  PLANT_X.forEach((px,i)=>{
+    TUB.forEach(tb=>{
+      const tx=px+tb[0];
+      fore+=`<path d="M${px} 478C${px} 492 ${tx} 494 ${tx+tb[3]*.1} ${tb[1]-tb[4]+2}" stroke="#e8d7b0" stroke-width="2" fill="none"/><path d="M${px} 480l-9 14M${px} 484l11 12M${px} 490l-5 16" stroke="#e8d7b0" stroke-width="1" opacity=".7"/>`;
+    });
+  });
+  const ORDER=[];for(let j=0;j<3;j++)PLANT_X.forEach((px,p)=>ORDER.push([p,j]));
+  ORDER.forEach(([p,j],k)=>{const tb=TUB[j];fore+=tuberMarkup(k,PLANT_X[p]+tb[0],tb[1],tb[2],tb[3],tb[4])});
+  PLANT_X.forEach((px,i)=>{fore+=potatoPlant(i,px,462,[.95,.88,1,.88,.95][i],100+i*31,i===1||i===3)});
+  fore+=`</g>`;
+    const over=`<g class="L-over"><g class="hunt" style="opacity:0;transition:opacity .6s"><g transform="translate(112 330)"><rect x="-2" y="-34" width="4" height="40" fill="#6a4a2a"/><path d="M0-62L-24-22L24-22Z" fill="#f5c518" stroke="#3a2a00" stroke-width="3" stroke-linejoin="round"/><rect x="-2.5" y="-48" width="5" height="16" rx="2" fill="#3a2a00"/><circle cx="0" cy="-27" r="3" fill="#3a2a00"/></g></g></g>`;
+  return bg+mid+fore+`<g class="L-act"></g>`+over;
+}
+
+/* =====================================================================
+   SINH VẬT ĐỘNG: CHUỘT & RẮN
+   ===================================================================== */
+function mouseMarkup(){
+  const leg=(x,y,c)=>`<g transform="translate(${x} ${y})"><g class="${c}"><path d="M0 0L-1 8L-4 9" stroke="#7b6455" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="-3" cy="9" rx="3.4" ry="1.6" fill="#d3a89c"/></g></g>`;
+  return `<g class="mo run"><ellipse cx="0" cy="1" rx="27" ry="4" fill="#1c3318" opacity=".3"/>
+  <g transform="translate(-22 -12)"><g class="mtail"><path d="M0 0C-14 2-18-14-30-10C-38-7-34 4-44 0" fill="none" stroke="#c7a597" stroke-width="2.6" stroke-linecap="round"/></g></g>
+  ${leg(-13,-8,'lgB')}${leg(-5,-8,'lgA')}
+  <ellipse cx="-2" cy="-14" rx="23" ry="12" fill="${u('mouse')}"/><path d="M-18-9C-6-4 10-4 18-10" fill="none" stroke="#dccbb6" stroke-width="3.5" opacity=".75" stroke-linecap="round"/>
+  <path d="M-16-22C-6-27 8-26 16-20" stroke="#fff" opacity=".2" stroke-width="3" fill="none" stroke-linecap="round"/>
+  ${leg(9,-7,'lgA')}${leg(16,-8,'lgB')}
+  <g transform="translate(14 -15)"><g class="hd"><path d="M0-10C8-13 20-10 28-1C21 3 12 7 1 6C-5 3-5-6 0-10Z" fill="${u('mouse')}"/>
+  <circle cx="3" cy="-10" r="7.5" fill="#8d7766"/><circle cx="3.5" cy="-10" r="4.6" fill="#e6b4ab"/>
+  <circle cx="15" cy="-5" r="2.3" fill="#1d1a19"/><circle cx="15.7" cy="-5.7" r=".8" fill="#fff"/>
+  <g transform="translate(28 -1)"><g class="nose"><circle r="2.4" fill="#e08f93"/></g></g>
+  <g transform="translate(24 0)"><g class="whisk"><path d="M0 0L16-6M0 1L17 2M0 2L14 9" stroke="#5a4b43" stroke-width=".8" fill="none"/></g></g>
+  <rect x="22.5" y="1.5" width="2.4" height="3.2" fill="#fff6dc"/>
+  <g transform="translate(26 4)"><circle class="crumb" r="1.4" fill="#e4c47c"/><circle class="crumb" cx="3" cy="2" r="1.2" fill="#e4c47c" style="animation-delay:-.25s"/></g></g></g></g>`;
+}
+function snakeMarkup(){
+  return `<path class="sh" transform="translate(2 5)" fill="#102010" opacity=".28"/><path class="bd" fill="#6b6a32" stroke="#3a3818" stroke-width=".9" stroke-linejoin="round"/><path class="bl" fill="#b9b073"/><path class="bk" fill="#3d3b1b" opacity=".85"/><path class="hl" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="1.6" stroke-linecap="round"/>
+  <g class="hdg"><path d="M-5-6.5C0-8.5 9-7.5 15-2.5C17.5-.5 17.5.8 15 2.8C9 7.5 0 8.2-5 6.5Z" fill="#6c6a31"/><path d="M-3 1C3 3.6 10 4.4 15.5 1.8C12 6.5 3 7.8-3 5.6Z" fill="#b9b073"/>
+  <path d="M-1-6C3-5 6-4 8-3" stroke="#3d3b1b" stroke-width="1.3" fill="none"/><circle cx="7" cy="-3.2" r="1.9" fill="#efe39e"/><circle cx="7.3" cy="-3.2" r="1.1" fill="#161200"/><circle cx="14" cy="-1.4" r=".7" fill="#2b2706"/>
+  <g transform="translate(17 .5)"><g class="tg"><path d="M0 0L9 0M9 0L13-3M9 0L13 3" stroke="#d5384a" stroke-width="1.1" fill="none" stroke-linecap="round"/></g></g></g>`;
+}
+
+const SVGNS='http://www.w3.org/2000/svg';
+function gEl(cls,html){const g=document.createElementNS(SVGNS,'g');g.setAttribute('class',cls);g.innerHTML=html;return g}
+
+
+/* =====================================================================
+   CÁNH ĐỒNG 3D THẬT (phép chiếu phối cảnh tự viết trên SVG – không WebGL)
+   Thế giới: mặt ruộng y=0, trục Z chạy dọc luống, camera quay quanh (orbit)
+   ===================================================================== */
+const FW=450,FZ0=-300,FZ1=260,FH=0;           /* khối đất: nửa rộng, mép sau/trước, độ cao */
+const PX3=[-340,-170,0,170,340],PZ3=200;        /* vị trí 5 cây khoai lớn */
+const FOCAL=640;
+const CAM0={yaw:0,pitch:.36,dist:640};
+function panMarkup(){
+  const r=rng(31);let o='';
+  o+=`<circle cx="760" cy="-250" r="90" fill="${u('sun')}"/><circle cx="760" cy="-250" r="26" fill="#fff6b5"/>`;
+  o+=[ [200,-260,1.1],[620,-300,.85],[1100,-240,1],[1560,-285,.9],[2000,-250,1.1] ].map(c=>`<g class="cloud" style="animation-duration:${80+r()*40}s"><g transform="translate(${c[0]} ${c[1]}) scale(${c[2]})"><ellipse cx="0" cy="8" rx="48" ry="11" fill="#cfe4ee" opacity=".7"/><ellipse cx="-22" cy="-2" rx="24" ry="15" fill="#fff"/><ellipse cx="6" cy="-10" rx="28" ry="19" fill="#fff"/><ellipse cx="32" cy="0" rx="22" ry="13" fill="#fff"/><ellipse cx="0" cy="3" rx="46" ry="10" fill="#fff"/></g></g>`).join('');
+  o+=`<path d="M0 -6C200 -70 420 -40 600 -62S1000 -92 1300 -52S1900 -75 2400 -6L2400 40L0 40Z" fill="${u('hillFar')}"/>`;
+  o+=`<path d="M0 -2C260 -44 520 -18 800 -34S1500 -40 1800 -18S2200 -36 2400 -2L2400 40L0 40Z" fill="${u('hillNear')}"/>`;
+  for(let x=10;x<2400;x+=22+r()*16)o+=r()>.42?treeRound(x,2,.4+r()*.2,Math.floor(r()*999),1):treePine(x,2,.34+r()*.18,1);
+  return o;
+}
+function faceMarkup(W,H,tub){
+  const r=rng(W+H);
+  let o=`<rect width="${W}" height="${H}" fill="${u('soilF')}"/><path d="M0 ${H*.42}Q${W*.2} ${H*.36} ${W*.4} ${H*.44}T${W*.8} ${H*.4}T${W} ${H*.45}L${W} ${H*.58}Q${W*.7} ${H*.52} ${W*.5} ${H*.6}T0 ${H*.58}Z" fill="#3a2214" opacity=".22"/><path d="M0 ${H*.8}Q${W*.25} ${H*.74} ${W*.5} ${H*.82}T${W} ${H*.78}L${W} ${H}L0 ${H}Z" fill="#2c180d" opacity=".25"/>`;
+  for(let i=0;i<W/9;i++){const x=r()*W,y=8+r()*(H-8);o+=`<circle cx="${f1(x)}" cy="${f1(y)}" r="${f1(.8+r()*2)}" fill="${r()>.5?'#2f1a0e':'#b08358'}" opacity="${f1(.25+r()*.3)}"/>`}
+  o+=`<rect width="${W}" height="7" fill="#8fb35c"/><rect y="7" width="${W}" height="2" fill="#b88a5c" opacity=".7"/>`;
+  if(tub){
+    const ORDER=[];for(let j=0;j<3;j++)PX3.forEach((px,p)=>ORDER.push([p,j]));
+    PX3.forEach(px=>TUB.forEach(tb=>{const tx=px+FW+tb[0]*.9,ty=tb[1]-476;o+=`<path d="M${px+FW} 8C${px+FW} 20 ${tx} 24 ${tx} ${ty-tb[4]+2}" stroke="#e8d7b0" stroke-width="2" fill="none"/>`}));
+    ORDER.forEach(([p,j],k)=>{const tb=TUB[j];o+=tuberMarkup(k,PX3[p]+FW+tb[0]*.9,tb[1]-476,tb[2],tb[3]*.9,tb[4]*.9)});
+  }
+  return o;
+}
+/* =====================================================================
+   RẮN 3D (GLB) – Three.js phủ lên cảnh SVG, cùng camera với phép chiếu SVG.
+   Chuyển động rắn vẫn do mô phỏng điều khiển: các xương của mô hình bám theo
+   đường bò (trail + uốn lượn + ngẩng đầu) của từng con rắn.
+   Nếu không tải được Three.js / GLB thì giữ nguyên rắn SVG dự phòng.
+   ===================================================================== */
+const SNAKE_GLB='https://3d-cdn.yoolife.com.vn/FCVfXG7cE3ZYLRgDB8/FCVfXG7cE3ZYLRgDB8.glb';
+const MOUSE_GLB='https://3d-cdn.yoolife.com.vn/QePAtmWxreuXXf4gTO/QePAtmWxreuXXf4gTO.glb';
+const SNAKE_LEN=190;                                /* chiều dài thân rắn (cố định) trong thế giới */
+const MOUSE_LEN=62;                                 /* chiều dài chuột (gồm đuôi) trong thế giới */
+const SNAKE_CHAIN=['Bone005_018','Bone004_017','Bone003_016','Bone002_015','Bone001_014','Bone006_00','Bone007_01','Bone008_02','Bone009_03','Bone010_04','Bone011_05','Bone012_06','Bone013_07','Bone014_08','Bone015_09','Bone016_010','Bone017_011','Bone018_012','Bone019_013'];
+/* =====================================================================
+   RẮN + CHUỘT 3D (GLB) – Three.js phủ lên cảnh SVG, cùng camera với phép chiếu SVG.
+   • Rắn: các xương bám theo đường bò do mô phỏng điều khiển (độ dài cố định).
+   • Chuột: phát animation "walk" của mô hình theo tốc độ di chuyển, quay theo hướng đi.
+   Nếu không tải được thì giữ nguyên mô hình SVG dự phòng.
+   ===================================================================== */
+const GLS={
+  state:'idle',snake:false,mouse:false,T:null,SU:null,canvas:null,renderer:null,scene:null,camera:null,
+  tplS:null,tplM:null,rest:null,mrest:null,scenes:new Set(),active:null,W:0,H:0,shown:false,
+  init(canvas){
+    if(this.state!=='idle')return;
+    this.canvas=canvas;this.state='loading';
+    Promise.all([import('three'),import('three/addons/loaders/GLTFLoader.js'),import('three/addons/utils/SkeletonUtils.js')]).then(([T,L,SU])=>{
+      this.T=T;this.SU=SU;
+      const loader=new L.GLTFLoader();
+      const ps=loader.loadAsync(SNAKE_GLB).then(g=>{this.base();this.setupSnake(g);this.snake=true;this.state='ready';this.scenes.forEach(s=>s.glAttachAll&&s.glAttachAll())}).catch(e=>console.warn('Không tải được rắn 3D (GLB), dùng rắn SVG dự phòng.',e));
+      const pm=loader.loadAsync(MOUSE_GLB).then(g=>{this.base();this.setupMouse(g);this.mouse=true;this.state='ready';this.scenes.forEach(s=>s.glAttachAll&&s.glAttachAll())}).catch(e=>console.warn('Không tải được chuột 3D (GLB), dùng chuột SVG dự phòng.',e));
+      return Promise.all([ps,pm]);
+    }).catch(e=>{this.state='failed';console.warn('Không tải được Three.js, dùng mô hình SVG dự phòng.',e)});
+  },
+  base(){
+    if(this.renderer)return;
+    const T=this.T;
+    this.renderer=new T.WebGLRenderer({canvas:this.canvas,alpha:true,antialias:true});
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+    this.renderer.setClearColor(0x000000,0);
+    this.scene=new T.Scene();
+    this.scene.add(new T.HemisphereLight(0xffffff,0x6f8a58,1.35));
+    const dl=new T.DirectionalLight(0xfff0cf,1.9);dl.position.set(-300,520,380);this.scene.add(dl);
+    this.scene.updateMatrixWorld(true);this.scene.matrixWorldAutoUpdate=false;   /* ma trận do mình tự cập nhật */
+    this.camera=new T.PerspectiveCamera(40,1,5,7000);
+  },
+  firstSkinned(root){let m=null;root.traverse(n=>{if(n.isSkinnedMesh&&!m)m=n});return m},
+  setupSnake(gltf){
+    const T=this.T;
+    gltf.scene.updateMatrixWorld(true);
+    const mesh=this.firstSkinned(gltf.scene),bones=mesh.skeleton.bones,byName={};bones.forEach((b,i)=>{byName[b.name]=i});
+    const chain=SNAKE_CHAIN.map(n=>byName[n]);
+    if(chain.some(c=>c==null))throw new Error('Khung xương rắn không khớp');
+    const pos=chain.map(i=>new T.Vector3().setFromMatrixPosition(bones[i].matrixWorld)),up0=new T.Vector3(0,1,0);
+    const frameOf=(f,P,sc)=>{
+      const r=new T.Vector3().crossVectors(f,up0).normalize(),u=new T.Vector3().crossVectors(r,f);
+      return new T.Matrix4().makeBasis(r.multiplyScalar(sc),u.multiplyScalar(sc),f.clone().multiplyScalar(sc)).setPosition(P);
+    };
+    const sRest=[0];for(let i=1;i<pos.length;i++)sRest.push(sRest[i-1]+pos[i].distanceTo(pos[i-1]));
+    this.rest={chain,sRest,total:sRest[sRest.length-1],hoff:2.6,
+      inv:chain.map((bi,c)=>{
+        const a=pos[Math.max(0,c-1)],b=pos[Math.min(pos.length-1,c+1)];
+        const f=new T.Vector3().subVectors(a,b);if(f.lengthSq()<1e-8)f.set(0,0,1);f.normalize();
+        return frameOf(f,pos[c],1).invert();
+      }),
+      B:chain.map(bi=>bones[bi].matrixWorld.clone()),frameOf};
+    this.tplS=gltf.scene;
+  },
+  setupMouse(gltf){
+    const T=this.T;
+    gltf.scene.updateMatrixWorld(true);
+    const box=new T.Box3().setFromObject(gltf.scene),sz=box.getSize(new T.Vector3()),c=box.getCenter(new T.Vector3());
+    const k=MOUSE_LEN/Math.max(sz.z,sz.x,1e-6);
+    this.mrest={k,cx:c.x,cz:c.z,clip:gltf.animations.find(a=>/walk|run/i.test(a.name))||gltf.animations[0]||null};
+    this.tplM=gltf.scene;
+  },
+  makeSnake(){
+    const root=this.SU.clone(this.tplS),mesh=this.firstSkinned(root);
+    mesh.frustumCulled=false;
+    this.scene.add(root);root.updateMatrixWorld(true);
+    return{root,mesh,bones:mesh.skeleton.bones};
+  },
+  makeMouse(){
+    const T=this.T,M=this.mrest,root=this.SU.clone(this.tplM),grp=new T.Group(),inner=new T.Group();
+    root.traverse(n=>{if(n.isMesh)n.frustumCulled=false});
+    inner.add(root);inner.scale.setScalar(M.k);inner.position.set(-M.cx*M.k,0,-M.cz*M.k);
+    grp.add(inner);grp.rotation.order='YXZ';
+    let mixer=null,act=null;
+    if(M.clip){mixer=new T.AnimationMixer(root);act=mixer.clipAction(M.clip);act.play()}
+    this.scene.add(grp);grp.updateMatrixWorld(true);
+    return{root:grp,grp,mixer,act,phase:Math.random()*10};
+  },
+  dispose(g){if(g&&g.root)g.root.removeFromParent()},
+  /* đặt các xương rắn dọc theo đường đi (wpts: đầu → đuôi, toạ độ thế giới); độ dài cố định */
+  poseSnake(sn){
+    const T=this.T,R=this.rest,g=sn.gl,pts=sn.wpts;
+    if(!pts||!g)return;
+    const cum=[0];for(let i=1;i<pts.length;i++)cum.push(cum[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1],pts[i][2]-pts[i-1][2]));
+    const L=cum[cum.length-1]||1;
+    const at=(s,out)=>{
+      s=Math.max(0,Math.min(L,s));
+      let k=1;while(k<cum.length-1&&cum[k]<s)k++;
+      const a=pts[k-1],b=pts[k],t=(s-cum[k-1])/((cum[k]-cum[k-1])||1);
+      return out.set(a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t);
+    };
+    const kw=SNAKE_LEN/(R.total+R.hoff+1.5),P=new T.Vector3(),A=new T.Vector3(),B=new T.Vector3(),F=new T.Vector3();
+    R.chain.forEach((bi,c)=>{
+      const s=(R.hoff+R.sRest[c])*kw;
+      at(s,P);at(s-5,A);at(s+5,B);
+      F.subVectors(A,B);if(F.lengthSq()<1e-6)F.set(1,0,0);F.normalize();
+      g.bones[bi].matrixWorld.copy(R.frameOf(F.clone(),P.clone(),kw).multiply(R.inv[c]).multiply(R.B[c]));
+    });
+  },
+  poseMouse(m,dt,t){
+    const g=m.gl;
+    g.grp.position.set(m.x,0,m.z);
+    g.grp.rotation.y=Math.PI/2-m.th;
+    let pitch=0;
+    if(m.state==='gnaw')pitch=.32+.14*Math.sin(t*38+g.phase);
+    else if(m.state==='sniff')pitch=.1+.1*Math.sin(t*9+g.phase);
+    g.grp.rotation.x=lerp(g.grp.rotation.x,pitch,.35);
+    if(g.mixer)g.mixer.update(dt*clamp((m.spd||0)/42,0,2.4));
+    g.grp.updateMatrixWorld(true);
+  },
+  size(){
+    const host=this.canvas.parentElement,W=host.clientWidth,H=host.clientHeight;
+    if(W!==this.W||H!==this.H){
+      this.W=W;this.H=H;this.renderer.setSize(W,H,false);
+      const k=Math.min(W/1000,H/600);
+      this.camera.fov=2*Math.atan((H/2)/(FOCAL*k))*180/Math.PI;
+      this.camera.aspect=W/H;this.camera.updateProjectionMatrix();
+    }
+  },
+  frame(sc,dt){
+    if(this.state!=='ready'||!this.renderer)return;
+    this.active=sc;
+    this.size();
+    if(!this.shown){this.canvas.style.display='block';this.shown=true}
+    const C=sc.camC;
+    this.camera.position.set(C[0],C[1],C[2]);this.camera.up.set(0,1,0);this.camera.lookAt(0,-25,20);this.camera.updateMatrixWorld(true);
+    this.scenes.forEach(s=>{
+      s.snakes.forEach(sn=>{if(sn.gl)sn.gl.root.visible=(s===sc)&&!sn.dying});
+      s.mice.forEach(m=>{if(m.gl)m.gl.root.visible=(s===sc)&&!m.dying});
+    });
+    const t=performance.now()/1000;
+    sc.snakes.forEach(sn=>{if(sn.gl&&!sn.dying)this.poseSnake(sn)});
+    sc.mice.forEach(m=>{if(m.gl&&!m.dying)this.poseMouse(m,dt||0,t)});
+    this.renderer.render(this.scene,this.camera);
+  },
+  hide(){if(this.canvas&&this.shown){this.canvas.style.display='none';this.shown=false;this.active=null}},
+  snapshotImage(sc){
+    if(this.state!=='ready'||this.active!==sc||!this.shown)return '';
+    try{
+      this.renderer.render(this.scene,this.camera);
+      const url=this.canvas.toDataURL('image/png'),k=Math.min(this.W/1000,this.H/600);
+      return `<image href="${url}" x="${f1(500-this.W/(2*k))}" y="${f1(300-this.H/(2*k))}" width="${f1(this.W/k)}" height="${f1(this.H/k)}"/>`;
+    }catch(e){return ''}
+  }
+};
+
+function Field3D(svg){
+  const r=rng(5);
+  svg.setAttribute('preserveAspectRatio','xMidYMid meet');svg.innerHTML=`<rect x="-2000" y="-2000" width="5000" height="4000" fill="${u('sky')}"/>
+   <g class="pan"></g><rect class="lawn" x="-2000" y="0" width="5000" height="3000" fill="${u('lawn')}"/>
+   <g class="gnd"></g><g class="wld"></g><g class="pf"></g>`;
+  const pan=$(svg,'.pan'),lawn=$(svg,'.lawn'),gnd=$(svg,'.gnd'),wld=$(svg,'.wld'),pf=$(svg,'.pf');
+  const W=2400,tile=panMarkup();
+  pan.innerHTML=[-1,0,1].map(k=>`<g transform="translate(${k*W} 0)">${tile}</g>`).join('');
+  /* mặt đất */
+  const mk=(c,cls)=>{const p=document.createElementNS(SVGNS,'path');p.setAttribute('fill',c);if(cls)p.setAttribute('class',cls);gnd.appendChild(p);return p};
+  const faces=[
+    {n:[0,0,1],c:[0,-FH/2,FZ1],o:[-FW,0,FZ1],ux:[1,0,0],W:2*FW,tub:true},
+    {n:[0,0,-1],c:[0,-FH/2,FZ0],o:[FW,0,FZ0],ux:[-1,0,0],W:2*FW},
+    {n:[-1,0,0],c:[-FW,-FH/2,0],o:[-FW,0,FZ0],ux:[0,0,1],W:FZ1-FZ0},
+    {n:[1,0,0],c:[FW,-FH/2,0],o:[FW,0,FZ1],ux:[0,0,-1],W:FZ1-FZ0}
+  ];
+  faces.length=0;      /* bỏ khối đất cắt lớp và củ khoai */
+  const quads=[];
+  const addQuad=(c,pts)=>{quads.push({p:mk(c),pts})};
+  addQuad('#c9ae79',[[-FW,FZ0],[FW,FZ0],[FW,FZ1],[-FW,FZ1]]);
+  addQuad('#8cb35c',[[-FW,190],[FW,190],[FW,FZ1],[-FW,FZ1]]);
+  addQuad('#8cb35c',[[-FW,FZ0],[FW,FZ0],[FW,-266],[-FW,-266]]);
+  addQuad('#86ad58',[[-FW,FZ0],[-424,FZ0],[-424,FZ1],[-FW,FZ1]]);
+  addQuad('#86ad58',[[424,FZ0],[FW,FZ0],[FW,FZ1],[424,FZ1]]);
+  for(let k=-5;k<=5;k++){
+    addQuad('#8d6840',[[80*k-28,-262],[80*k+28,-262],[80*k+28,190],[80*k-28,190]]);
+    addQuad('#a87c4e',[[80*k-16,-262],[80*k+10,-262],[80*k+10,190],[80*k-16,190]]);
+  }
+  /* vật đứng (billboard) */
+  const items=[];
+  function addItem(x,y,z,k,html,cls){const g=gEl('it '+(cls||''),html);wld.appendChild(g);const it={x,y,z,k,g,depth:0,vis:true};items.push(it);return it}
+  const minis=[],miniItems=[];
+  for(let k=-4;k<=4;k++)for(let z=-235;z<=150;z+=62){
+    const jj=(Math.abs(k)*7+Math.floor(z/62)*3)%4;
+    const mi=addItem(80*k-3+(jj-1.5)*2,0,z+jj*3,1,`<ellipse cx="2" cy="2" rx="22" ry="5" fill="#000" opacity=".2"/><path d="${blob(0,-12,20,13,9,k*13+z,.25)}" class="mp0"/><path d="${blob(-7,-15,12,8,8,k*7+z,.2)}" class="mp1"/><path d="${blob(8,-13,11,8,8,k*5+z,.2)}" class="mp2"/>`);mi.mini=true;mi.vis=1;mi.tv=1;minis.push([mi.x,mi.z,k]);miniItems.push(mi);
+  }
+  for(let i=0;i<28;i++){
+    const a=i/28*Math.PI*2+r()*.2,rad=640+r()*420,sc=1.3+r()*1.0;
+    addItem(Math.sin(a)*rad*1.15,-FH,Math.cos(a)*rad,sc,r()>.4?treeRound(0,0,1,Math.floor(r()*999),0):treePine(0,0,1.1,0));
+  }
+  addItem(330,-FH,-640,2.3,barnMarkup().replace('translate(775 260)','translate(0 0)'),'barn');
+  [[-520,-FH,330,1.5,3],[560,-FH,300,1.4,9],[-560,-FH,-120,1.6,2],[540,-FH,-300,1.5,12],[-300,-FH,560,1.3,5],[380,-FH,560,1.4,7]].forEach(b=>addItem(b[0],b[1],b[2],b[3],bush(0,0,1,b[4])));
+  [[-405,0,170,.7,3],[410,0,150,.8,6],[-260,0,-250,.5,8],[250,0,-130,.4,4]].forEach(b=>addItem(b[0],b[1],b[2],b[3],rock(0,0,1,b[4])));
+  for(let i=0;i<40;i++)addItem(-430+r()*860,0,196+r()*60,1,tuft(0,0,1.2,r()>.5?'#5f9040':'#7aa94d'));
+  {const ix=miniItems.map((_,i)=>i);for(let i=ix.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[ix[i],ix[j]]=[ix[j],ix[i]]}miniItems.forEach((m,i)=>{m.rank=ix[i]})}
+  const signIt=addItem(-380,0,-200,1.1,`<g class="hunt" style="opacity:0;transition:opacity .6s"><rect x="-2" y="-34" width="4" height="40" fill="#6a4a2a"/><path d="M0-62L-24-22L24-22Z" fill="#f5c518" stroke="#3a2a00" stroke-width="3" stroke-linejoin="round"/><rect x="-2.5" y="-48" width="5" height="16" rx="2" fill="#3a2a00"/><circle cx="0" cy="-27" r="3" fill="#3a2a00"/></g>`);
+  const sign=$(signIt.g,'.hunt');
+  /* hàng rào 3 cạnh (mặt trước để trống cho cảnh cắt lớp) */
+  const fences=[];
+  const mkFence=(a,b,n)=>{
+    const g=document.createElementNS(SVGNS,'g');g.setAttribute('class','it');g.setAttribute('fill','none');g.setAttribute('stroke-linecap','round');
+    g.innerHTML='<path class="fr" stroke="#a67d49"/><path class="fp" stroke="#c49a62"/>';
+    wld.appendChild(g);
+    const pts=[];for(let i=0;i<=n;i++)pts.push([a[0]+(b[0]-a[0])*i/n,a[1]+(b[1]-a[1])*i/n]);
+    const it={fence:true,pts,g,rail:$(g,'.fr'),post:$(g,'.fp'),depth:0,mid:[(a[0]+b[0])/2,(a[1]+b[1])/2]};
+    items.push(it);fences.push(it);
+  };
+  mkFence([-FW+10,FZ0+10],[FW-10,FZ0+10],24);mkFence([-FW+10,FZ0+10],[-FW+10,FZ1-40],14);mkFence([FW-10,FZ0+10],[FW-10,FZ1-40],14);
+
+  /* ---------- camera ---------- */
+  const cam={yaw:CAM0.yaw,pitch:CAM0.pitch,dist:CAM0.dist};
+  const TG=[0,-25,20];
+  let C=[0,0,0],FWD=[0,0,-1],RT=[1,0,0],UP=[0,1,0];
+  function setupCam(){
+    const cp=Math.cos(cam.pitch),sp=Math.sin(cam.pitch);
+    C=[TG[0]+cam.dist*Math.sin(cam.yaw)*cp,TG[1]+cam.dist*sp,TG[2]+cam.dist*Math.cos(cam.yaw)*cp];
+    let f=[TG[0]-C[0],TG[1]-C[1],TG[2]-C[2]];const l=Math.hypot(...f);FWD=f.map(v=>v/l);
+    let rt=[-FWD[2],0,FWD[0]];const rl=Math.hypot(...rt);RT=rt.map(v=>v/rl);
+    UP=[RT[1]*FWD[2]-RT[2]*FWD[1],RT[2]*FWD[0]-RT[0]*FWD[2],RT[0]*FWD[1]-RT[1]*FWD[0]];
+  }
+  function proj(x,y,z){
+    const vx=x-C[0],vy=y-C[1],vz=z-C[2];
+    const zc=vx*FWD[0]+vy*FWD[1]+vz*FWD[2];
+    const s=FOCAL/Math.max(zc,40);
+    return [500+(vx*RT[0]+vy*RT[1]+vz*RT[2])*s,300-(vx*UP[0]+vy*UP[1]+vz*UP[2])*s,s,zc];
+  }
+  const self={svg,snakes:[],mice:[],P:.85,time:0,wiltK:-1,biteK:-1,cam,is3d:true};
+  svg.__scene=self;GLS.scenes.add(self);
+  function attachSnake(s){
+    if(s.gl||!GLS.snake)return;
+    s.gl=GLS.makeSnake();s.gl.owner=self;
+    ['bd','bl','bk','hl'].forEach(k=>{s[k].style.display='none'});s.hd.style.display='none';
+  }
+  function attachMouse(m){
+    if(m.gl||!GLS.mouse)return;
+    m.gl=GLS.makeMouse();m.gl.owner=self;m.g.style.display='none';
+    m.shd=document.createElementNS(SVGNS,'ellipse');m.shd.setAttribute('fill','#102010');m.shd.setAttribute('opacity','.28');gnd.appendChild(m.shd);
+  }
+  self.glAttachAll=()=>{self.snakes.forEach(attachSnake);self.mice.forEach(attachMouse)};
+  self.setView=(y,p,d)=>{cam.yaw=y;cam.pitch=clamp(p,.08,1.15);cam.dist=clamp(d,380,1500)};
+
+  /* ---------- sức khoẻ cây / củ ---------- */
+  const leaves=$$(svg,'.lfr').map(g=>({g,a:+g.dataset.a,dir:+g.dataset.dir}));
+  const plants=$$(svg,'.plant');
+  const tubs=[];$$(svg,'.tub').forEach(t=>{tubs[+t.dataset.k]={b1:$(t,'.b1'),b2:$(t,'.b2')}});
+  const now=()=>performance.now();
+  self.setHealth=function(Pv){
+    self.P=Pv;
+    const w=clamp((.93-Pv)/.72,0,1),wk=Math.round(w*40);
+    if(wk!==self.wiltK){
+      self.wiltK=wk;
+      const c1=mix('#4ea044','#a79a45',w*.9),c2=mix('#3b8738','#8a7d3a',w*.9);
+      plants.forEach(p=>{p.style.setProperty('--lf',c1);p.style.setProperty('--lf2',c2)});
+      svg.style.setProperty('--mc0',mix('#3f8a3e','#8a7d3a',w*.9));svg.style.setProperty('--mc1',mix('#5fae4a','#a79a45',w*.9));svg.style.setProperty('--mc2',mix('#4ea044','#94873f',w*.9));self.wilt=w;
+      leaves.forEach(L=>L.g.setAttribute('transform',`rotate(${f1(L.a+L.dir*w*40)}) scale(${f1(1-w*.14)})`));
+    }
+    const keep=Math.round(miniItems.length*(.3+.7*clamp((Pv-.2)/.65,0,1)));      /* khoai bị phá hại → ruộng thưa dần */
+    miniItems.forEach(m=>{m.tv=m.rank<keep?1:0});
+    const n=Math.round((1-Pv)*24);
+    if(n!==self.biteK){
+      self.biteK=n;
+      tubs.forEach((t,k)=>{t.b1.style.display=k<n?'':'none';t.b2.style.display=k<n-15?'':'none'});
+    }
+  };
+  self.setHealth(.85);
+
+  /* =================== KHUÔN VIÊN & LỘ TRÌNH (toạ độ thế giới x,z) =================== */
+  const RXM=425,ZT=-262,ZB=232;
+  const ZTOP=-250,ZH0=206,ZH1=226,JM=10,LSP=40;
+  const inReg=(x,z)=>Math.abs(x)<=RXM&&z>=ZT&&z<=ZB;
+  function laneOf(a){
+    if(a.z>ZH0-8)return null;
+    const j=Math.round(a.x/LSP);
+    return Math.abs(j)<=JM&&Math.abs(a.x-LSP*j)<7?j:null;
+  }
+  const rowRand=()=>ZH0+Math.random()*(ZH1-ZH0);
+  const everyone=()=>self.snakes.concat(self.mice);
+  function pickLane(a){
+    const occ=new Array(2*JM+1).fill(0);
+    everyone().forEach(o=>{
+      if(o===a||o.dying)return;
+      const j=laneOf(o);if(j==null)return;
+      occ[j+JM]+=3;if(j+JM>0)occ[j+JM-1]+=1;if(j+JM<occ.length-1)occ[j+JM+1]+=1;
+    });
+    const mn=Math.min(...occ),c=[];occ.forEach((v,i)=>{if(v<=mn+1)c.push(i-JM)});
+    return c[Math.floor(Math.random()*c.length)];
+  }
+  function routeHead(a,hx,row){
+    const pts=[],lj=laneOf(a);row=row||a.row;
+    if(lj!=null)pts.push([LSP*lj,row]);else if(Math.abs(a.z-row)>3)pts.push([a.x,row]);
+    pts.push([clamp(hx,-415,415),row]);return pts;
+  }
+  const CROSS=[-225,-125,-25,75,165,216];        /* các lối đi ngang giữa các luống, rải khắp ruộng */
+  function routeLane(a,j,z){
+    z=clamp(z,ZTOP,ZH0-14);
+    const pts=[];let lj=laneOf(a);
+    if(lj==null){lj=clamp(Math.round(a.x/LSP),-JM,JM);if(Math.abs(a.x-LSP*lj)>3)pts.push([LSP*lj,a.z])}
+    if(lj===j){pts.push([LSP*j,z]);return pts}
+    let best=CROSS[0],bs=1e9;
+    CROSS.forEach(zc=>{const s=Math.abs(a.z-zc)+Math.abs(z-zc)+Math.random()*110;if(s<bs){bs=s;best=zc}});
+    pts.push([LSP*lj,best]);pts.push([LSP*j,best]);pts.push([LSP*j,z]);
+    return pts;
+  }
+  function routeTo(a,x,z){
+    const j=clamp(Math.round(x/LSP),-JM,JM),pts=routeLane(a,j,Math.min(z,ZH0-14));
+    pts.push([x,z]);return pts;
+  }
+  /* chọn điểm đến thưa người nhất để chuột/rắn rải đều khắp ruộng */
+  function pickSpot(a){
+    let best=[0,0],bs=-1;
+    for(let n=0;n<10;n++){
+      const j=Math.floor(Math.random()*(2*JM+1))-JM,z=ZTOP+10+Math.random()*(ZH0-ZTOP-30),x=LSP*j;
+      let md=1e9;
+      everyone().forEach(o=>{
+        if(o===a||o.dying)return;
+        md=Math.min(md,Math.hypot(o.x-x,o.z-z));
+        const e=o.path&&o.path.length?o.path[o.path.length-1]:null;
+        if(e)md=Math.min(md,Math.hypot(e[0]-x,e[1]-z));
+      });
+      md+=Math.min(70,Math.hypot(a.x-x,a.z-z)*.35);
+      if(md>bs){bs=md;best=[j,z]}
+    }
+    return best;
+  }
+  function samples(o){
+    const p=[[o.x,o.z,o.isSnake?11:15]];
+    if(o.isSnake){const L=Math.min(o.trail.length,SNAKE_LEN/3.2);for(let k=9;k<L;k+=9)p.push([o.trail[k][0],o.trail[k][1],9])}
+    return p;
+  }
+  function blocked(a,nx,nz){
+    const ra=a.isSnake?11:15;
+    for(const o of everyone()){
+      if(o===a||o.dying)continue;
+      if(a.state==='hunt'&&o.isSnake)continue;
+      if(a.tgt===o||o.tgt===a)continue;
+      for(const p of samples(o)){
+        const dn=Math.hypot(nx-p[0],nz-p[1]),th=ra+p[2];
+        if(dn<th&&dn<Math.hypot(a.x-p[0],a.z-p[1]))return true;
+      }
+    }
+    return false;
+  }
+  function freeSpot(isSnake){const sp=pickSpot({x:0,z:0});return{x:LSP*sp[0],z:sp[1],j:sp[0]}}
+  function puff(x,z){
+    const p=proj(x,8,z),e=document.createElementNS(SVGNS,'ellipse');
+    e.setAttribute('class','puff');e.setAttribute('cx',f1(p[0]));e.setAttribute('cy',f1(p[1]));e.setAttribute('rx',f1(18*p[2]));e.setAttribute('ry',f1(11*p[2]));
+    pf.appendChild(e);setTimeout(()=>e.remove(),520);
+  }
+
+  /* ---- chuột ---- */
+  function addMouse(fromEdge){
+    const g=gEl('ent mo-ent',mouseMarkup());g.style.opacity='0';wld.appendChild(g);
+    const sp=freeSpot(false),row=rowRand();
+    const m={g,mo:$(g,'.mo'),x:fromEdge?(Math.random()<.5?-415:415):sp.x,z:fromEdge?row:sp.z,dir:1,fx:1,state:'stop',t:Math.random()*1.2,path:[],sp:90,dying:false,exit:0,cls:'',hunted:false,isSnake:false,row,blockT:0,gnaw:false,vx:0,vz:0,depth:0,th:Math.random()*6.28,spd:0};
+    self.mice.push(m);items.push(m);attachMouse(m);
+    setMouseState(m,'stop',m.t);
+    void g.getBoundingClientRect();g.style.opacity='1';
+    return m;
+  }
+  function setMouseState(m,st,t){
+    m.state=st;m.t=t||0;
+    const c=st==='run'||st==='exit'?'run':st;
+    if(c!==m.cls){m.mo.setAttribute('class','mo '+c);m.cls=c}
+  }
+  const nearestPlant=x=>PX3.reduce((b,p)=>Math.abs(p-x)<Math.abs(b-x)?p:b,PX3[0]);
+  function pickTarget(m){
+    m.row=rowRand();
+    const mp=minis[Math.floor(Math.random()*minis.length)];
+    if(mp&&Math.random()<.35&&!everyone().some(o=>o!==m&&!o.dying&&Math.hypot(o.x-mp[0],o.z-mp[1])<70)){
+      m.path=routeLane(m,2*mp[2]+(Math.random()<.5?1:-1),mp[1]);m.gnaw=true;m.gx=mp[0];m.gz=mp[1];
+    }else{
+      const sp=pickSpot(m);m.path=routeLane(m,sp[0],sp[1]);m.gnaw=false;
+    }
+    m.sp=70+Math.random()*25;m.blockT=0;
+    setMouseState(m,'run',0);
+  }
+  const mAct=()=>self.mice.filter(m=>!m.dying&&!m.exit);
+  self.activeMice=()=>mAct().length;
+  self.mouseTarget=0;
+  self.pendingMice=()=>Math.max(0,self.activeMice()-self.mouseTarget);
+  function removeMouse(m,quick){
+    if(m.dying)return;
+    puff(m.x,m.z);
+    m.dying=now()+(quick?60:320);m.g.style.opacity='0';if(m.gl)m.gl.root.visible=false;if(m.shd)m.shd.setAttribute('opacity','0');
+  }
+  self.setMouseCount=function(n,force){
+    self.mouseTarget=n;
+    let a=self.activeMice();
+    while(a<n){const m=addMouse(!force);pickTarget(m);a++}
+    if(force&&a>n){const l=mAct();while(a>n&&l.length){removeMouse(l.pop(),true);a--}}
+  };
+
+  /* ---- rắn ---- */
+  function addSnake(){
+    const g=gEl('ent sn-ent',snakeMarkup());g.style.opacity='0';wld.appendChild(g);
+    const sp=freeSpot(true);
+    const sn={g,bd:$(g,'.bd'),sh:$(g,'.sh'),bl:$(g,'.bl'),bk:$(g,'.bk'),hl:$(g,'.hl'),hd:$(g,'.hdg'),x:sp.x,z:sp.z,th:Math.random()>.5?-Math.PI/2:Math.PI/2,sp:0,trail:[],ph:Math.random()*6,state:'rest',t:Math.random()*1.5,lift:0,path:[],cd:2+Math.random()*3,dying:false,tgt:null,isSnake:true,row:rowRand(),blockT:0,depth:0};
+    for(let i=0;i<70;i++)sn.trail.push([sn.x-Math.cos(sn.th)*i*3.2,sn.z-Math.sin(sn.th)*i*3.2]);
+    self.snakes.push(sn);items.push(sn);attachSnake(sn);
+    void g.getBoundingClientRect();g.style.opacity='1';
+    return sn;
+  }
+  self.activeSnakes=()=>self.snakes.filter(s=>!s.dying).length;
+  self.setSnakeCount=function(n){
+    let a=self.activeSnakes();
+    while(a<n){addSnake();a++}
+    if(a>n){
+      const list=self.snakes.filter(s=>!s.dying);
+      while(a>n&&list.length){const s=list.pop();s.dying=now()+520;s.g.style.opacity='0';if(s.gl)s.gl.root.visible=false;puff(s.x,s.z);a--}
+    }
+  };
+  function steer(s,want,dt,rate){
+    let d=want-s.th;while(d>Math.PI)d-=2*Math.PI;while(d<-Math.PI)d+=2*Math.PI;
+    const m=(rate||2.4)*dt;s.th+=clamp(d,-m,m);
+  }
+  function snakeWander(s){
+    s.row=rowRand();
+    const sp=pickSpot(s);s.path=routeLane(s,sp[0],sp[1]);
+    s.state='wander';s.blockT=0;
+  }
+
+  /* ---- người bắt rắn (Step 10) ---- */
+  const hu={g:gEl('ent hunter',hunterMarkup()),x:-420,z:180,dir:1,state:'off',t:0,ph:0,tgt:null,reach:0,lean:0,vx:0,vz:0,isHunter:true,depth:0,moving:false};
+  hu.g.style.display='none';wld.appendChild(hu.g);items.push(hu);
+  hu.legA=$(hu.g,'.hlegA');hu.legB=$(hu.g,'.hlegB');hu.armA=$(hu.g,'.harmA');hu.armB=$(hu.g,'.harmB');hu.body=$(hu.g,'.hbody');
+  self.huntOn=false;
+  self.setHunting=function(on){self.huntOn=!!on;if(sign)sign.style.opacity=on?'1':'0'};
+  function walkTo(tx,tz,sp,dt){
+    const dx=tx-hu.x,dz=tz-hu.z,d=Math.hypot(dx,dz)||1,mv=Math.min(d,sp*dt);
+    const nx=hu.x+dx/d*mv,nz=hu.z+dz/d*mv;
+    if(inReg(nx,nz)||!inReg(hu.x,hu.z)){hu.x=nx;hu.z=nz}
+    hu.vx=dx/d;hu.vz=dz/d;hu.ph+=mv*.14;hu.moving=true;return d;
+  }
+  function updateHunter(dt){
+    const live=self.snakes.filter(s=>!s.dying);
+    const want=self.huntOn&&live.length>1;
+    hu.moving=false;
+    switch(hu.state){
+      case'off':
+        if(want){const L=Math.random()<.5;hu.x=L?-415:415;hu.z=150+Math.random()*60;hu.state='seek';hu.g.style.display='';hu.reach=0;hu.lean=0}
+        break;
+      case'seek':{
+        if(!want){hu.state='leave';break}
+        if(!hu.tgt||hu.tgt.dying)hu.tgt=live.reduce((a,s)=>Math.hypot(s.x-hu.x,s.z-hu.z)<Math.hypot(a.x-hu.x,a.z-hu.z)?s:a,live[0]);
+        const t=hu.tgt,d=walkTo(t.x-(hu.vx>=0?1:-1)*24,t.z+6,100,dt);
+        if(d<14||Math.hypot(t.x-hu.x,t.z-hu.z)<36){hu.state='act';hu.t=0;t.state='rest';t.t=3;t.path=[];t.hunting=true;hu.moving=false;hu.face=t.x>=hu.x?1:-1}
+        break;}
+      case'act':{
+        hu.t+=dt;const t=hu.tgt;
+        hu.reach=hu.t<.35?hu.t/.35:hu.t<.95?1:Math.max(0,(1.35-hu.t)/.4);hu.lean=hu.reach;
+        if(hu.t>=.65&&t&&!t.dying){puff(t.x,t.z);t.dying=now()+260;t.g.style.opacity='0';if(t.gl)t.gl.root.visible=false;hu.tgt=null}
+        if(hu.t>=1.35){hu.reach=0;hu.lean=0;hu.state='seek'}
+        break;}
+      case'leave':{
+        const tx=hu.x<0?-419:419;
+        walkTo(tx,Math.max(hu.z,150),105,dt);
+        if(Math.abs(hu.x-tx)<5){hu.state='off';hu.g.style.display='none'}
+        else if(want)hu.state='seek';
+        break;}
+    }
+  }
+
+  /* =================== MÔ PHỎNG =================== */
+  self.update=function(dt){
+    const t=now();
+    for(let i=self.snakes.length-1;i>=0;i--){const s=self.snakes[i];if(s.dying&&t>s.dying){s.g.remove();if(s.gl)GLS.dispose(s.gl);items.splice(items.indexOf(s),1);self.snakes.splice(i,1)}}
+    for(let i=self.mice.length-1;i>=0;i--){const m=self.mice[i];if(m.dying&&t>m.dying){m.g.remove();if(m.gl)GLS.dispose(m.gl);if(m.shd)m.shd.remove();items.splice(items.indexOf(m),1);self.mice.splice(i,1)}}
+    self.dtLast=dt;
+    if(dt>0)simulate(dt,t);
+    render();
+  };
+  function simulate(dt,t){
+    self.time+=dt;
+    const live=self.snakes.filter(s=>!s.dying);
+    const pend=self.pendingMice();
+    if(pend>0&&!live.length){
+      self.noSnake=(self.noSnake||0)+dt;
+      if(self.noSnake>4){
+        const m=mAct().find(x=>!x.hunted);
+        if(m){m.exit=t+9000;m.path=routeHead(m,m.x<0?-415:415);setMouseState(m,'exit',0);m.sp=95}
+        self.noSnake=2;
+      }
+    }else self.noSnake=0;
+    self.mice.forEach(m=>{
+      if(m.dying)return;
+      m.vx=0;m.vz=0;m.spd=0;
+      if(m.hunted){if(m.state!=='sniff')setMouseState(m,'sniff',9);m.path=[];return}
+      switch(m.state){
+        case'run':case'exit':{
+          const w=m.path[0];
+          if(!w){
+            if(m.state==='exit'){removeMouse(m,true);break}
+            if(m.gnaw)setMouseState(m,'sniff',.8+Math.random()*.7);
+            else setMouseState(m,'stop',.4+Math.random()*.7);
+            break;
+          }
+          const dx=w[0]-m.x,dz=w[1]-m.z,d=Math.hypot(dx,dz);
+          if(d<2.5){m.path.shift();break}
+          const mv=Math.min(d,m.sp*dt),nx=m.x+dx/d*mv,nz=m.z+dz/d*mv;
+          if(m.state==='exit'&&t>m.exit){removeMouse(m,true);break}
+          if(blocked(m,nx,nz)){
+            m.blockT+=dt;if(m.cls!=='stop'){m.mo.setAttribute('class','mo stop');m.cls='stop'}
+            if(m.blockT>1.4&&m.state==='run'){m.blockT=0;pickTarget(m)}
+          }else{
+            m.blockT=0;if(m.cls!=='run'){m.mo.setAttribute('class','mo run');m.cls='run'}
+            m.x=nx;m.z=nz;m.vx=dx/d;m.vz=dz/d;m.spd=mv/dt;
+          }
+          break;}
+        case'stop':m.t-=dt;if(m.t<=0)pickTarget(m);break;
+        case'sniff':m.t-=dt;if(m.t<=0){
+          if(m.gnaw&&m.gx!=null&&Math.random()<.8){m.faceX=m.gx-m.x;setMouseState(m,'gnaw',1.6+Math.random()*1.4)}
+          else pickTarget(m)}break;
+        case'gnaw':m.t-=dt;if(m.t<=0)pickTarget(m);break;
+      }
+      let want=null;
+      if(m.vx||m.vz)want=Math.atan2(m.vz,m.vx);
+      else if((m.state==='gnaw'||m.state==='sniff')&&m.gx!=null)want=Math.atan2(m.gz-m.z,m.gx-m.x);
+      if(want!=null){let dd=want-m.th;while(dd>Math.PI)dd-=2*Math.PI;while(dd<-Math.PI)dd+=2*Math.PI;m.th+=clamp(dd,-9*dt,9*dt)}
+    });
+    const hunters=live.filter(s=>s.state==='hunt').length;
+    let need=pend-hunters;
+    live.forEach(s=>{
+      if(s.hunting){s.state='rest';s.t=3}
+      if(need>0&&s.state!=='hunt'&&s.state!=='rest'&&!s.hunting){
+        const free=mAct().filter(m=>!m.hunted);
+        if(free.length){
+          const c=free.reduce((a,m)=>Math.hypot(m.x-s.x,m.z-s.z)<Math.hypot(a.x-s.x,a.z-s.z)?m:a,free[0]);
+          c.hunted=true;s.tgt=c;s.state='hunt';s.t=14;need--;s.path=[];s.planT=0;
+        }
+      }
+      s.cd-=dt;s.ph+=(s.sp>1?2.4+s.sp*.06:.7)*dt;
+      let speed=0,tgtLift=0,goal=null;
+      switch(s.state){
+        case'rest':s.t-=dt;if(s.t<=0&&!s.hunting)snakeWander(s);break;
+        case'wander':{
+          goal=s.path[0];speed=38;
+          if(!goal){if(Math.random()<.4){s.state='rest';s.t=1+Math.random()*2}else snakeWander(s);break}
+          if(s.cd<=0){
+            const mice=mAct().filter(m=>!m.hunted);
+            if(mice.length){
+              const c=mice.reduce((a,m)=>Math.hypot(m.x-s.x,m.z-s.z)<Math.hypot(a.x-s.x,a.z-s.z)?m:a,mice[0]);
+              if(Math.hypot(c.x-s.x,c.z-s.z)<280&&Math.random()<.5){s.state='watch';s.t=1.3+Math.random()*.7;s.tgt=c;s.path=[]}
+            }
+            s.cd=3+Math.random()*3;
+          }
+          break;}
+        case'watch':
+          tgtLift=1;s.t-=dt;
+          if(s.tgt)steer(s,Math.atan2(s.tgt.z-s.z,s.tgt.x-s.x),dt,.9);
+          if(s.t<=0){s.state='rest';s.t=.3;s.tgt=null;s.cd=4+Math.random()*3}
+          break;
+        case'hunt':{
+          const m=s.tgt;
+          if(!m||m.dying||m.exit){s.state='rest';s.t=.8;s.tgt=null;break}
+          s.t-=dt;s.planT-=dt;speed=125;tgtLift=.3;
+          if(s.planT<=0||!s.path.length){
+            s.planT=1.2;s.row=clamp(m.z,ZH0,ZH1);
+            const lj=laneOf(m);
+            s.path=lj!=null?routeLane(s,lj,m.z+22):routeTo(s,m.x,m.z+14);
+          }
+          goal=s.path[0];
+          if(Math.hypot(m.x-s.x,m.z-s.z)<28){removeMouse(m);s.tgt=null;s.state='rest';s.t=1.8;s.cd=3;s.path=[];goal=null;speed=0}
+          else if(s.t<=0){m.hunted=false;s.tgt=null;s.state='rest';s.t=1;s.path=[];goal=null;speed=0}
+          break;}
+      }
+      /* rắn chỉ bò thẳng dọc luống (trục Z) hoặc ngang vuông góc (trục X) */
+      let axis=null;
+      if(goal){
+        const dx=goal[0]-s.x,dz=goal[1]-s.z;
+        if(Math.abs(dx)<3&&Math.abs(dz)<3){s.path.shift();goal=null}
+        else{axis=Math.abs(dx)>=Math.abs(dz)?[Math.sign(dx),0]:[0,Math.sign(dz)];s.ax=axis;s.th=Math.atan2(axis[1],axis[0])}
+      }
+      s.lift=lerp(s.lift,tgtLift,Math.min(1,dt*4));
+      let sp=axis?speed:0;
+      if(sp>0){
+        const nx=s.x+axis[0]*sp*dt,nz=s.z+axis[1]*sp*dt;
+        if(blocked(s,nx,nz)||(!inReg(nx,nz)&&inReg(s.x,s.z))){
+          sp=0;s.blockT+=dt;
+          if(s.blockT>1.5){s.blockT=0;if(s.state==='wander')snakeWander(s);else if(s.state==='hunt')s.planT=0}
+        }else s.blockT=0;
+      }
+      s.sp=lerp(s.sp,sp,Math.min(1,dt*3));
+      if(s.sp>.5&&s.ax){
+        const mv=s.sp*dt;
+        s.x+=s.ax[0]*mv;s.z+=s.ax[1]*mv;
+        if(goal){   /* chỉnh nốt độ lệch nhỏ so với trục để đường bò luôn thẳng */
+          if(s.ax[0]!==0){const r=goal[1]-s.z;s.z+=Math.sign(r)*Math.min(Math.abs(r),30*dt)}
+          else{const r=goal[0]-s.x;s.x+=Math.sign(r)*Math.min(Math.abs(r),30*dt)}
+        }
+        const l=s.trail[0];
+        if(Math.hypot(s.x-l[0],s.z-l[1])>=3.2){s.trail.unshift([s.x,s.z]);if(s.trail.length>90)s.trail.pop()}
+        else s.trail[0]=[s.x,s.z];
+      }    });
+    updateHunter(dt);
+  }
+
+  /* =================== VẼ (chiếu phối cảnh) =================== */
+  function poly(el,pts,y){
+    let d='';
+    for(let i=0;i<pts.length;i++){const p=proj(pts[i][0],y||0,pts[i][1]);d+=(i?'L':'M')+f1(p[0])+' '+f1(p[1])}
+    el.setAttribute('d',d+'Z');
+  }
+  function drawSnake(sn){
+    const N=22,SP=3.2,L=GLS.snake?SNAKE_LEN+14:150,step=(L/SP)/(N-1),tr=sn.trail;
+    const wr=[];
+    for(let i=0;i<N;i++){
+      const idx=i*step,k=Math.min(Math.floor(idx),tr.length-2),f=idx-k,a=tr[k],b=tr[k+1];
+      wr.push([a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f]);
+    }
+    const wp=wr.map((p,i)=>{let sx=0,sz=0;for(let k=-2;k<=2;k++){const q=wr[Math.max(0,Math.min(N-1,i+k))];sx+=q[0];sz+=q[1]}return[sx/5,sz/5]});   /* bo tròn nhẹ góc vuông */
+    const A=2.5*(.25+.75*Math.min(1,sn.sp/30)),pts=[],ws=[],sc=[],wpts=[];
+    for(let i=0;i<N;i++){
+      const p0=wp[Math.max(0,i-1)],p1=wp[Math.min(N-1,i+1)];
+      let tx=p0[0]-p1[0],tz=p0[1]-p1[1];const l=Math.hypot(tx,tz)||1;tx/=l;tz/=l;
+      const env=Math.sin(Math.min(1,(i+.5)/6)*Math.PI/2)*(1-.2*i/N),off=A*Math.sin(sn.ph-i*.62)*env;
+      const q=i/(N-1),w=6.4*(1-Math.pow(q,1.7)*.88)+.7;
+      const lf=sn.lift*16*Math.pow(Math.max(0,1-i/9),2);
+      const p=proj(wp[i][0]-tz*off,w*.7+lf,wp[i][1]+tx*off);
+      pts.push([p[0],p[1]]);sc.push(p[2]);ws.push(w*p[2]);wpts.push([wp[i][0]-tz*off,w*.7+lf,wp[i][1]+tx*off]);
+      if(i===0){sn.depth=p[3];sn.s0=p[2]}
+    }
+    sn.wpts=wpts;
+    const nrm=[];
+    for(let i=0;i<N;i++){
+      const p0=pts[Math.max(0,i-1)],p1=pts[Math.min(N-1,i+1)];
+      let tx=p0[0]-p1[0],ty=p0[1]-p1[1];const l=Math.hypot(tx,ty)||1;tx/=l;ty/=l;
+      nrm.push([-ty,tx,tx,ty]);
+    }
+    let hl='',bk='';const left=[],right=[],bA=[],bB=[];
+    for(let i=0;i<N;i++){
+      const n=nrm[i],ds=n[1]>=0?1:-1,w=ws[i],p=pts[i];
+      left.push(`${f1(p[0]+n[0]*w)} ${f1(p[1]+n[1]*w)}`);right.push(`${f1(p[0]-n[0]*w)} ${f1(p[1]-n[1]*w)}`);
+      bA.push(`${f1(p[0]+n[0]*ds*w*.15)} ${f1(p[1]+n[1]*ds*w*.15)}`);bB.push(`${f1(p[0]+n[0]*ds*w*.92)} ${f1(p[1]+n[1]*ds*w*.92)}`);
+      hl+=(i?'L':'M')+`${f1(p[0]-n[0]*ds*w*.5)} ${f1(p[1]-n[1]*ds*w*.5)}`;
+      if(i>=2&&i<N-3&&i%3===2){
+        const seg=step*SP*1.1*sc[i],tx=n[2]*seg,ty=n[3]*seg,bw=w*.78;
+        bk+=`M${f1(p[0]+tx)} ${f1(p[1]+ty)}L${f1(p[0]-n[0]*ds*bw*.9)} ${f1(p[1]-n[1]*ds*bw*.9)}L${f1(p[0]-tx)} ${f1(p[1]-ty)}L${f1(p[0]+n[0]*ds*bw*.2)} ${f1(p[1]+n[1]*ds*bw*.2)}Z`;
+      }
+    }
+    const bdd='M'+left.join('L')+'L'+right.reverse().join('L')+'Z';
+    sn.bd.setAttribute('d',bdd);if(!sn.gl)sn.sh.setAttribute('d',bdd);
+    sn.bl.setAttribute('d','M'+bA.join('L')+'L'+bB.reverse().join('L')+'Z');
+    sn.hl.setAttribute('d',hl);sn.bk.setAttribute('d',bk);
+    const h=pts[0],h2=pts[2],th=Math.atan2(h[1]-h2[1],h[0]-h2[0]),sg=Math.cos(th)>=0?1:-1;
+    sn.hd.setAttribute('transform',`translate(${f1(h[0])} ${f1(h[1])}) rotate(${f1(th*180/Math.PI)}) scale(${f1(sc[0])} ${f1(sc[0]*sg)})`);
+    /* bóng đổ lên đất */
+    if(sn.gl){
+      let d='';wp.forEach((q,i)=>{const p=proj(q[0],0,q[1]);d+=(i?'L':'M')+f1(p[0])+' '+f1(p[1])});
+      sn.sh.setAttribute('d',d);sn.sh.setAttribute('fill','none');sn.sh.setAttribute('stroke','#102010');sn.sh.setAttribute('stroke-width',f1(8*sc[0]));sn.sh.setAttribute('opacity','.2');sn.sh.setAttribute('stroke-linecap','round');sn.sh.removeAttribute('transform');
+    }else{const sp=proj(sn.x,0,sn.z);sn.sh.setAttribute('transform',`translate(${f1(2*sp[2])} ${f1(5*sp[2])})`)}
+  }
+  function render(){
+    setupCam();
+    self.camC=C.slice();
+    const yh=300-FOCAL*Math.tan(cam.pitch);
+    lawn.setAttribute('y',f1(yh));
+    const off=((cam.yaw*FOCAL)%W+W)%W;
+    pan.setAttribute('transform',`translate(${f1(off)} ${f1(yh)})`);
+    /* mặt trên + luống */
+    quads.forEach(q=>poly(q.p,q.pts,0));
+    /* các mặt cắt của khối đất */
+    faces.forEach(f=>{
+      const vis=(C[0]-f.c[0])*f.n[0]+(C[1]-f.c[1])*f.n[1]+(C[2]-f.c[2])*f.n[2]>0;
+      f.g.style.display=vis?'':'none';
+      if(!vis)return;
+      const p0=proj(f.o[0],0,f.o[2]),x0=p0[0],y0=p0[1];
+      const p1=proj(f.o[0]+f.ux[0]*f.W,0,f.o[2]+f.ux[2]*f.W),x1=p1[0],y1=p1[1];
+      const p2=proj(f.o[0],-FH,f.o[2]);
+      f.g.setAttribute('transform',`matrix(${f1((x1-x0)/f.W)} ${f1((y1-y0)/f.W)} ${f1((p2[0]-x0)/FH)} ${f1((p2[1]-y0)/FH)} ${f1(x0)} ${f1(y0)})`);
+    });
+    /* vật thể */
+    items.forEach(it=>{
+      if(it.fence){
+        let rl='',ps='',s0=0,n=0;
+        it.pts.forEach((p,i)=>{
+          const b=proj(p[0],0,p[1]),t=proj(p[0],36,p[1]),r1=proj(p[0],16,p[1]),r2=proj(p[0],28,p[1]);
+          ps+=`M${f1(b[0])} ${f1(b[1])}L${f1(t[0])} ${f1(t[1])}`;s0+=b[2];n++;
+          rl+=(i?'L':'M')+f1(r1[0])+' '+f1(r1[1]);
+          it['r2'+i]=r2;
+        });
+        let rl2='';it.pts.forEach((p,i)=>{const r2=proj(p[0],28,p[1]);rl2+=(i?'L':'M')+f1(r2[0])+' '+f1(r2[1])});
+        const s=s0/n;it.rail.setAttribute('d',rl+rl2);it.rail.setAttribute('stroke-width',f1(3.5*s));
+        it.post.setAttribute('d',ps);it.post.setAttribute('stroke-width',f1(6*s));
+        it.depth=proj(it.mid[0],0,it.mid[1])[3];
+        return;
+      }
+      if(it.isSnake){drawSnake(it);return}
+      if(it.isHunter){
+        if(hu.state==='off')return;
+        const p=proj(it.x,0,it.z),s=p[2];
+        it.depth=p[3];
+        const q=proj(it.x+it.vx*6,0,it.z+it.vz*6),ux=q[0]-p[0];
+        if(it.moving&&Math.abs(ux)>.05)it.dir=ux>0?1:-1;else if(it.face){const pf2=proj(it.x+it.face*30,0,it.z);it.dir=pf2[0]>p[0]?1:-1}
+        const sw=it.moving?Math.sin(it.ph)*30:0;
+        hu.legA.setAttribute('transform',`rotate(${f1(sw)})`);hu.legB.setAttribute('transform',`rotate(${f1(-sw)})`);
+        hu.armB.setAttribute('transform',`rotate(${f1(it.moving?-sw*.8:4)})`);
+        hu.armA.setAttribute('transform',`rotate(${f1(it.moving?sw*.8:4-it.reach*84)})`);
+        hu.body.setAttribute('transform',`translate(0 ${f1(it.moving?-Math.abs(Math.sin(it.ph))*1.6:it.lean*4)}) rotate(${f1(it.lean*20)})`);
+        hu.g.setAttribute('transform',`translate(${f1(p[0])} ${f1(p[1])}) scale(${f1(it.dir*s*.95)} ${f1(s*.95)})`);
+        return;
+      }
+      if(it.mo){
+        const p=proj(it.x,0,it.z),s=p[2];it.depth=p[3];
+        let ux=0,uy=0;
+        if(it.vx||it.vz){const q=proj(it.x+it.vx*8,0,it.z+it.vz*8);ux=q[0]-p[0];uy=q[1]-p[1];const l=Math.hypot(ux,uy)||1;if(Math.abs(ux)>.05)it.dir=ux>0?1:-1;it.fx=lerp(it.fx,.5+.5*Math.abs(ux/l),.3)}
+        else if(it.state==='gnaw'||it.state==='sniff'){if(it.faceX){const q=proj(it.x+it.faceX,0,it.z);it.dir=q[0]>p[0]?1:-1}it.fx=lerp(it.fx,1,.2)}
+        else it.fx=lerp(it.fx,1,.2);
+        if(it.shd){it.shd.setAttribute('cx',f1(p[0]));it.shd.setAttribute('cy',f1(p[1]));it.shd.setAttribute('rx',f1(24*s));it.shd.setAttribute('ry',f1(8*s))}
+        const k=.78*s;
+        it.g.setAttribute('transform',`translate(${f1(p[0])} ${f1(p[1])}) scale(${f1(it.dir*k*it.fx)} ${f1(k)})`);
+        return;
+      }
+      const p=proj(it.x,it.y,it.z);
+      it.depth=p[3];
+      if(it.mini)it.vis+=clamp(it.tv-it.vis,-.8*(self.dtLast||.016),.5*(self.dtLast||.016));
+      const hide=p[3]<90||(it.mini&&it.vis<.03);
+      if(hide!==it.hidden){it.hidden=hide;it.g.style.display=hide?'none':''}
+      if(!hide)it.g.setAttribute('transform',`translate(${f1(p[0])} ${f1(p[1])}) scale(${f1(p[2]*it.k)} ${f1(p[2]*it.k*(it.mini?1-.32*(self.wilt||0):1))})`);
+    });
+    const order=items.slice().sort((a,b)=>b.depth-a.depth);
+    for(let i=0;i<order.length;i++){const g=order[i].g;if(wld.children[i]!==g)wld.insertBefore(g,wld.children[i]||null)}
+    GLS.frame(self,self.dtLast);
+  }
+  render();
+  self.clear=function(){self.snakes.forEach(s=>s.g.remove());self.mice.forEach(m=>m.g.remove());self.snakes=[];self.mice=[]};
+  return self;
+}
+function hunterMarkup(){
+  const leg=(x,c)=>`<g transform="translate(${x} -30)"><g class="${c}"><path d="M0 0L-1 28" stroke="#3a3f4a" stroke-width="7" stroke-linecap="round"/><path d="M-1 29l7 0" stroke="#2a2018" stroke-width="5" stroke-linecap="round"/></g></g>`;
+  return `<g class="hu"><ellipse cx="0" cy="1" rx="20" ry="4" fill="#102010" opacity=".3"/>${leg(-4,'hlegB')}${leg(4,'hlegA')}
+  <g transform="translate(0 -30)"><g class="hbody"><path d="M-9-26C-30-30-30 0-14 2L-6-6Z" fill="#b59a66" stroke="#8a7446" stroke-width="1"/>
+  <g transform="translate(0 -34)"><g class="harmB"><path d="M0 0L-3 22" stroke="#4d6a40" stroke-width="6" stroke-linecap="round"/><circle cx="-3" cy="23" r="3.2" fill="#d2ac86"/></g></g>
+  <path d="M-10 0C-12-18-10-36 0-40C10-36 12-18 10 0Z" fill="#5f7d4f"/><path d="M0-40L0 0" stroke="#4a6540" stroke-width="1" opacity=".6"/>
+  <circle cx="1" cy="-47" r="8.5" fill="#dcb68f"/><path d="M-10-49C-9-61 11-61 12-49Z" fill="#c9a24a"/><rect x="-14" y="-50" width="30" height="3.2" rx="1.6" fill="#b8903a"/><circle cx="5" cy="-47" r="1.1" fill="#222"/>
+  <g transform="translate(0 -34)"><g class="harmA"><path d="M0 0L5 22" stroke="#6a8a58" stroke-width="6.5" stroke-linecap="round"/><circle cx="5.5" cy="23.5" r="3.5" fill="#e3bd96"/></g></g></g></g></g>`;
+}
+function FieldScene(svg){return Field3D(svg)}
+
+
+/* =====================================================================
+   CẢNH AO HỒ (Step 10 – tình huống 2)
+   ===================================================================== */
+function fishMarkup(L,H,c1,c2,c3,stripe){
+  const a=L/2,s=(n)=>n.toFixed(1);
+  let st='';
+  if(stripe)for(let i=0;i<4;i++){const x=-a*.4+i*a*.3;st+=`<path d="M${s(x)} ${s(-H*.45)}Q${s(x+3)} 0 ${s(x)} ${s(H*.4)}" stroke="#4d5a2a" stroke-width="${s(H*.1)}" fill="none" opacity=".5"/>`}
+  let sc='';for(let i=0;i<3;i++)sc+=`<path d="M${s(-a*.1+i*a*.22)} ${s(-H*.22)}q${s(H*.18)} ${s(H*.22)} 0 ${s(H*.44)}" stroke="#fff" stroke-width=".8" fill="none" opacity=".28"/>`;
+  return `<g class="fb"><g transform="translate(${s(-a*.85)} 0)"><g class="ftail"><path d="M0 0C${s(-L*.1)} ${s(-H*.1)} ${s(-L*.22)} ${s(-H*.45)} ${s(-L*.3)} ${s(-H*.55)}C${s(-L*.22)} 0 ${s(-L*.22)} 0 ${s(-L*.3)} ${s(H*.55)}C${s(-L*.22)} ${s(H*.45)} ${s(-L*.1)} ${s(H*.1)} 0 0Z" fill="${c3}"/></g></g>
+  <path d="M${s(-a*.25)} ${s(-H*.45)}C${s(a*.0)} ${s(-H*.95)} ${s(a*.35)} ${s(-H*.8)} ${s(a*.5)} ${s(-H*.4)}Z" fill="${c3}" opacity=".92"/>
+  <path d="M${s(-a*.05)} ${s(H*.4)}C${s(a*.05)} ${s(H*.8)} ${s(a*.2)} ${s(H*.8)} ${s(a*.28)} ${s(H*.4)}Z" fill="${c3}" opacity=".85"/>
+  <path d="M${s(-a*.9)} 0C${s(-a*.5)} ${s(-H*.62)} ${s(a*.55)} ${s(-H*.62)} ${s(a)} ${s(-H*.05)}C${s(a*.55)} ${s(H*.55)} ${s(-a*.5)} ${s(H*.55)} ${s(-a*.9)} 0Z" fill="${c1}"/>
+  ${st}<path d="M${s(-a*.8)} ${s(H*.1)}C${s(-a*.4)} ${s(H*.46)} ${s(a*.5)} ${s(H*.5)} ${s(a*.95)} ${s(H*.02)}C${s(a*.5)} ${s(H*.22)} ${s(-a*.4)} ${s(H*.22)} ${s(-a*.8)} ${s(H*.1)}Z" fill="${c2}" opacity=".85"/>
+  <path d="M${s(-a*.7)} ${s(-H*.3)}C${s(-a*.2)} ${s(-H*.5)} ${s(a*.4)} ${s(-H*.5)} ${s(a*.8)} ${s(-H*.18)}" stroke="#fff" stroke-width="${s(H*.1)}" fill="none" opacity=".25" stroke-linecap="round"/>${sc}
+  <path d="M${s(a*.42)} ${s(-H*.35)}Q${s(a*.52)} 0 ${s(a*.42)} ${s(H*.32)}" stroke="#000" stroke-width=".9" fill="none" opacity=".25"/>
+  <ellipse cx="${s(a*.25)}" cy="${s(H*.14)}" rx="${s(a*.14)}" ry="${s(H*.09)}" fill="${c3}" transform="rotate(25 ${s(a*.25)} ${s(H*.14)})"/>
+  <circle cx="${s(a*.68)}" cy="${s(-H*.12)}" r="${s(Math.max(1.6,H*.1))}" fill="#fff"/><circle cx="${s(a*.7)}" cy="${s(-H*.12)}" r="${s(Math.max(.9,H*.058))}" fill="#111"/></g>`;
+}
+const FISH_T=[[80,34,'#e9a23f','#f7d594','#e2762a',0],[58,25,'#8b9b4c','#dadc9c','#d1523b',1],[36,14,'#cfdde6','#f4f9fb','#a9c3d1',0]];
+const FISH_ORDER=[0,1,2,0,2,1,2,2,0,2];
+const FISH_Y=[[385,470],[330,420],[285,355]];
+function shrimpMarkup(){
+  return `<g class="sh"><path d="M-14 5C-12-6 6-10 15-2" fill="none" stroke="#d9715a" stroke-width="9" stroke-linecap="round"/><path d="M-14 5C-12-6 6-10 15-2" fill="none" stroke="#f0a98d" stroke-width="5" stroke-linecap="round"/>
+  <path d="M-14 5l-9-4l-1 9z" fill="#d9715a"/><path d="M-6-3l1 8M0-6l1 9M6-6l0 8" stroke="#b9553f" stroke-width=".9"/>
+  <path d="M-8 8l-2 6M-3 8l-1 6M3 6l0 6M8 4l1 6" stroke="#d9715a" stroke-width="1.3" stroke-linecap="round"/>
+  <path d="M17-3C26-9 34-10 38-14M17-1C26-1 34 0 40-2" stroke="#c76a51" stroke-width="1" fill="none"/><circle cx="16" cy="-4" r="2" fill="#111"/></g>`;
+}
+function snailMarkup(){
+  return `<g class="sn"><ellipse cx="2" cy="6" rx="16" ry="4.2" fill="#d9cdb3"/><path d="M12 4L19 2" stroke="#d9cdb3" stroke-width="3.6" stroke-linecap="round"/><path d="M15-1l3-8M19 0l5-7" stroke="#d9cdb3" stroke-width="1.4"/><circle cx="18" cy="-9" r="1.4" fill="#222"/><circle cx="24" cy="-7.5" r="1.4" fill="#222"/>
+  <circle cx="-3" cy="-4" r="11" fill="#b8864f"/><circle cx="-3" cy="-4" r="11" fill="none" stroke="#8a6234" stroke-width="1.2"/><path d="M-3-4m0 0a2 2 0 1 1 3 2a5 5 0 1 1-7-6a8 8 0 1 1 8 11" stroke="#8a6234" stroke-width="1.3" fill="none"/><ellipse cx="-6" cy="-9" rx="4" ry="2.5" fill="#fff" opacity=".25"/></g>`;
+}
+function tadpoleMarkup(){
+  return `<g class="tp"><g transform="translate(-6 0)"><g class="ftail"><path d="M0 0C-6-3-10 3-16 0C-10 5-6 3 0 3Z" fill="#4a4a39"/></g></g><ellipse cx="2" cy="0" rx="8" ry="5.2" fill="#4a4a39"/><ellipse cx="3" cy="-2" rx="5" ry="1.8" fill="#fff" opacity=".18"/><circle cx="7" cy="-2" r="1.2" fill="#e9e1b9"/></g>`;
+}
+function weedMarkup(h,seed){
+  const r=rng(seed);let o='';
+  for(let i=0;i<4;i++){
+    const hh=h*(.6+r()*.5),dx=(i-1.5)*9,w=7+r()*4;
+    o+=`<g transform="translate(${dx} 0)"><g class="weed" style="animation-delay:${-(r()*3).toFixed(1)}s"><path d="M0 0C${-w} ${-hh*.3} ${w} ${-hh*.62} 0 ${-hh}C${w*1.6} ${-hh*.6} ${-w*.8} ${-hh*.3} ${w*.6} 0Z" fill="${r()>.5?'#3f9a58':'#2f8a4c'}"/><path d="M0 0C-2 ${-hh*.4} 1 ${-hh*.7} 0 ${-hh*.95}" stroke="#a9e3a8" stroke-width="1" fill="none" opacity=".5"/></g></g>`;
+  }
+  return o;
+}
+function lily(x,y,s,flower){
+  return `<g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="0" cy="2" rx="30" ry="8" fill="#1d6f58" opacity=".35"/><path d="M0 0L28 -2A28 7 0 1 1 0 0Z" fill="#4aa860" transform="translate(0 -1)"/><ellipse cx="-3" cy="-2" rx="22" ry="5" fill="#7fcf86" opacity=".6"/>${flower?`<g transform="translate(-6 -6)">${[-40,-20,0,20,40].map(a=>`<path d="M0 0C-5-8-3-16 0-18C3-16 5-8 0 0Z" fill="#fbd0dd" stroke="#e79ab4" stroke-width=".6" transform="rotate(${a})"/>`).join('')}<circle r="3" cy="-3" fill="#f6c52a"/></g>`:''}</g>`;
+}
+function egretMarkup(){
+  return `<g class="eg"><path d="M-3 0L-3-52M5 0L5-54" stroke="#2f2f2f" stroke-width="2.4"/><path d="M-3 0l-8 2M5 0l-7 2" stroke="#2f2f2f" stroke-width="2" stroke-linecap="round"/>
+  <path d="M-24-60L-52-50L-26-54Z" fill="#fff" stroke="#d3d9d5" stroke-width=".6"/><path d="M-22-58C-10-80 30-80 40-62C30-46 0-44-22-58Z" fill="#fbfbf8" stroke="#dfe3df"/>
+  <path d="M-12-66C8-78 26-72 32-62C16-58-2-58-12-66Z" fill="#eef1ee" stroke="#d3d9d5"/><path d="M-6-64Q10-66 26-63M-4-61Q10-62 22-60" stroke="#cfd6d2" stroke-width=".8" fill="none"/>
+  <g transform="translate(32 -66)"><g class="neck"><path d="M0 0C8-12-6-24 4-38C8-44 8-46 8-48" stroke="#fbfbf8" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M0 0C8-12-6-24 4-38" stroke="#dfe3df" stroke-width="1" fill="none"/><ellipse cx="10" cy="-50" rx="7.5" ry="5" fill="#fbfbf8"/><path d="M16-51L48-47L16-45Z" fill="#f2b62e"/><circle cx="12" cy="-52" r="1.6" fill="#111"/></g></g></g>`;
+}
+function PondScene(svg){
+  const r=rng(77);
+  let w1=`<g class="L-w1"><rect x="-60" y="-40" width="1120" height="290" fill="${u('sky')}"/><circle cx="170" cy="70" r="70" fill="${u('sun')}"/>
+   ${cloud(520,60,.85,100,0)}${cloud(820,100,.65,90,-40)}
+   <path d="M-60 210C120 160 260 190 420 180C600 170 760 150 1060 185L1060 250L-60 250Z" fill="${u('hillFar')}"/>
+   <path d="M-60 232C160 196 340 222 520 214C720 206 860 222 1060 208L1060 262L-60 262Z" fill="${u('hillNear')}"/>`;
+  for(let x=-10;x<1040;x+=30+r()*20)w1+=r()>.4?treeRound(x,238,.5+r()*.25,Math.floor(r()*900),1):treePine(x,238,.42+r()*.2,1);
+  w1+=`</g>`;
+  let w2=`<g class="L-w2"><rect x="90" y="236" width="820" height="330" fill="${u('water')}"/>`;
+  w2+=`<g class="rays">${[0,1,2,3].map(i=>`<path class="ray" d="M${260+i*150} 240L${290+i*150} 240L${190+i*150} 560L${120+i*150} 560Z" fill="${u('rayW')}" opacity=".35"/>`).join('')}</g>`;
+  w2+=`<path d="M-60 548Q200 532 400 546T800 542T1060 550L1060 640L-60 640Z" fill="${u('mud')}"/>`;
+  for(let i=0;i<40;i++){const x=100+r()*800,y=552+r()*38;w2+=`<ellipse cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" rx="${(2+r()*5).toFixed(1)}" ry="${(1.5+r()*3).toFixed(1)}" fill="${r()>.5?'#9b8a6c':'#6c5a42'}" opacity=".8"/>`}
+  const WX=[185,250,380,520,640,765,830];
+  w2+=`<g class="weeds">`;
+  WX.forEach((x,i)=>{w2+=`<g class="wg" data-i="${i}" transform="translate(${x} 556)">${weedMarkup(80+r()*95,i*17+3)}</g>`});
+  w2+=`</g></g>`;
+  const bankPath=(m)=>m?`M1060 226L890 226L865 240L835 330L800 480L740 560L1060 560Z`:`M-60 226L110 226L135 240L165 330L200 480L260 560L-60 560Z`;
+  w2+=`<g class="ents"></g><g class="L-w2b"><path d="${bankPath(0)}" fill="${u('bank')}"/><path d="${bankPath(1)}" fill="${u('bank')}"/>`;
+  for(let i=0;i<24;i++){const left=i%2===0,x=left?-40+r()*180:880+r()*160,y=290+r()*260;w2+=`<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${(1.5+r()*3).toFixed(1)}" fill="${r()>.5?'#2f1a0e':'#b08358'}" opacity=".35"/>`}
+  for(let x=-50;x<140;x+=11)w2+=tuft(x+r()*5,229,.7+r()*.5,'#6fa046');
+  for(let x=880;x<1050;x+=11)w2+=tuft(x+r()*5,229,.7+r()*.5,'#6fa046');
+  w2+=`</g>`;
+
+  let w3=`<g class="L-w3"><path d="M118 238C300 252 520 240 700 250C780 254 840 244 880 238L872 266C700 276 500 270 300 274C220 276 160 268 126 262Z" fill="#b5efee" opacity=".55"/>
+   <path d="M130 250Q220 245 300 252T470 250T660 254T860 248" stroke="#fff" stroke-width="1.6" fill="none" opacity=".5"/>
+   ${lily(320,256,1,1)}${lily(450,262,.75,0)}${lily(560,255,.9,1)}${lily(690,262,.8,0)}
+   <g class="bird" transform="translate(0 0)"><g class="bird-in b-dip"><g transform="translate(735 262) scale(-1.1 1.1)">${egretMarkup()}</g></g></g>
+   <g class="warnSign" style="opacity:0;transition:opacity .5s"><g transform="translate(70 226)"><rect x="-2.5" y="-22" width="5" height="26" fill="#6a4a2a"/><g class="warn"><g transform="translate(0 -52)"><path d="M0-30L-32 24L32 24Z" fill="#f5c518" stroke="#3a2a00" stroke-width="4" stroke-linejoin="round"/><path d="M3-14L-9 6L-1 6L-4 19L10-2L2-2Z" fill="#3a2a00"/></g></g></g></g>
+   <rect class="elec" x="90" y="236" width="820" height="330" fill="#b9a8ff" opacity="0"/>
+   <rect class="desat" x="90" y="236" width="820" height="330" fill="#7b8a86" opacity="0"/>
+   ${[0,1,2,3,4].map(i=>`<g transform="translate(${100+i*210} 232)">${[0,1,2].map(k=>`<path d="M${k*7} 0Q${k*7-3} -28 ${k*7+2-4} -52" stroke="#5f9a46" stroke-width="2.4" fill="none"/>`).join('')}<ellipse cx="9" cy="-52" rx="3" ry="9" fill="#7a4a2a"/></g>`).join('')}</g>`;
+  svg.innerHTML=w1+w2+w3;
+  const ents=$(svg,'.ents'),bird=$(svg,'.bird'),birdIn=$(svg,'.bird-in'),elec=$(svg,'.elec'),desat=$(svg,'.desat'),sign=$(svg,'.warnSign');
+  const wgs=$$(svg,'.wg');
+  const self={svg,time:0,fish:[],small:[],birdSt:'dip',bx:0,by:0,bo:1,st:{fish:10,small:6,plant:1,bird:'dip',elec:0,desat:0}};
+  FISH_ORDER.forEach((t,i)=>{
+    const d=FISH_T[t],g=gEl('ent',fishMarkup(d[0],d[1],d[2],d[3],d[4],d[5]));ents.appendChild(g);
+    const y=FISH_Y[t],f={g,t,x:150+r()*700,y0:y[0]+r()*(y[1]-y[0]),dir:r()>.5?1:-1,sp:(t===2?42:t===1?30:24)+r()*12,ph:r()*6,amp:6+r()*8,s:t===2?1:1,alive:true};
+    self.fish.push(f);
+  });
+  [['sh',shrimpMarkup,538],['sh',shrimpMarkup,540],['sn',snailMarkup,542],['sn',snailMarkup,544],['tp',tadpoleMarkup,470],['tp',tadpoleMarkup,500]].forEach((d,i)=>{
+    const g=gEl('ent',d[1]());ents.appendChild(g);
+    self.small.push({g,k:d[0],x:230+r()*540,y:d[2],dir:r()>.5?1:-1,sp:d[0]==='sn'?5:d[0]==='sh'?9:18,ph:r()*6,alive:true});
+  });
+  self.set=function(st){
+    Object.assign(self.st,st);
+    self.fish.forEach((f,i)=>{const a=i<st.fish;if(a!==f.alive){f.alive=a;if(!a){f.dir=f.x<500?-1:1}else if(f.gone){f.gone=false;f.dir=f.x<500?1:-1;f.g.style.opacity='1'}}});
+    self.small.forEach((f,i)=>{const a=i<st.small;if(a!==f.alive){f.alive=a;f.g.style.opacity=a?'1':'0'}});
+    const k=1-.4*(1-st.plant);
+    wgs.forEach(g=>{const m=/translate\(([\d.]+) /.exec(g.getAttribute('transform'));g.setAttribute('transform',`translate(${m[1]} 556) scale(1 ${k.toFixed(2)})`)});
+    sign.style.opacity=st.elec>.05?'1':'0';
+    desat.setAttribute('opacity',(st.desat*.3).toFixed(2));
+    if(st.bird!==self.birdSt){
+      self.birdSt=st.bird;
+      birdIn.setAttribute('class','bird-in '+(st.bird==='dip'?'b-dip':st.bird==='search'?'b-search':''));
+    }
+  };
+  self.update=function(dt){
+    if(dt<=0)return;
+    self.time+=dt;const t=self.time;
+    self.fish.forEach(f=>{
+      if(f.gone)return;
+      if(!f.alive){f.x+=f.dir*150*dt;if(f.x<105||f.x>895){f.gone=true;f.g.style.opacity='0';return}}
+      else{f.x+=f.dir*f.sp*dt;
+      if(f.x>850){f.dir=-1}else if(f.x<160){f.dir=1}}
+      const y=f.y0+Math.sin(t*.9+f.ph)*f.amp;
+      f.g.setAttribute('transform',`translate(${f.x.toFixed(1)} ${y.toFixed(1)}) scale(${f.dir} 1) rotate(${(Math.cos(t*.9+f.ph)*5).toFixed(1)})`);
+    });
+    self.small.forEach(f=>{
+      if(!f.alive)return;
+      f.x+=f.dir*f.sp*dt;if(f.x>800){f.dir=-1}else if(f.x<210){f.dir=1}
+      const y=f.k==='tp'?f.y+Math.sin(t*1.3+f.ph)*10:f.y;
+      f.g.setAttribute('transform',`translate(${f.x.toFixed(1)} ${y.toFixed(1)}) scale(${f.dir} 1)`);
+    });
+    const away=self.st.bird==='away';
+    self.bx=lerp(self.bx,away?330:0,Math.min(1,dt*1.2));self.by=lerp(self.by,away?-300:0,Math.min(1,dt*1.2));self.bo=lerp(self.bo,away?0:1,Math.min(1,dt*1.5));
+    bird.setAttribute('transform',`translate(${self.bx.toFixed(1)} ${self.by.toFixed(1)})`);bird.style.opacity=self.bo.toFixed(2);
+    const e=self.st.elec;
+    elec.setAttribute('opacity',(e>.05&&e<.7?(.1+.08*Math.sin(t*14))*(1-e):0).toFixed(3));
+  };
+  return self;
+}
+
+/* =====================================================================
+   CẢNH RỪNG XANH (Step 10 – tình huống 3)
+   ===================================================================== */
+function bigTree(x,y,s,seed,far){
+  const r=rng(seed);
+  let canopy='';
+  const dk=far?'#8fbf98':u('canDark'),lt=far?'#a9d1ae':u('canLight');
+  canopy+=`<path d="${blob(0,-190,96,60,14,seed,.22)}" fill="${dk}"/><path d="${blob(-58,-168,56,40,12,seed+1,.2)}" fill="${dk}"/><path d="${blob(60,-172,56,40,12,seed+2,.2)}" fill="${dk}"/>`;
+  canopy+=`<path d="${blob(0,-216,62,42,12,seed+3,.2)}" fill="${far?'#9ccaa3':'#4b9a4b'}"/><path d="${blob(-34,-204,42,26,10,seed+4,.2)}" fill="${lt}" opacity=".9"/><path d="${blob(34,-190,38,22,10,seed+5,.2)}" fill="${lt}" opacity=".8"/>`;
+  if(!far)for(let i=0;i<16;i++){const a=r()*6.28,d=r()*.8;canopy+=`<path d="${blob(Math.cos(a)*d*80,-190+Math.sin(a)*d*48,9+r()*6,5+r()*3,7,seed+10+i,.3)}" fill="${r()>.5?'#9ad37c':'#2f7a3e'}" opacity=".55"/>`}
+  return `<g class="ftree" transform="translate(${x} ${y}) scale(${s})">
+   <g class="stp"><ellipse cx="0" cy="-2" rx="22" ry="8" fill="#6d4b33"/><ellipse cx="0" cy="-8" rx="17" ry="6" fill="#d8b98a"/><ellipse cx="0" cy="-8" rx="10" ry="3.5" fill="none" stroke="#a98757" stroke-width="1.2"/></g>
+   <g class="trk"><ellipse cx="2" cy="3" rx="46" ry="9" fill="#1f3d1d" opacity=".28"/>
+    <path d="M-22 4C-12-2-12-6-10-20C-8-60-6-100-10-135L10-135C6-100 8-60 12-20C14-6 14-2 26 4Z" fill="${far?'#9d9a86':u('trunk')}"/>
+    <path d="M-2-130C-26-150-40-160-62-190M2-120C24-140 40-150 64-186M-4-100C-18-120-30-128-40-146" stroke="${far?'#9d9a86':'#7a5638'}" stroke-width="7" fill="none" stroke-linecap="round"/>
+    ${far?'':`<path d="M-5-10C-6-50-4-90-6-120M4-10C5-50 5-90 4-120" stroke="#4a3022" stroke-width="1.2" fill="none" opacity=".5"/>`}</g>
+   <g class="cnp">${canopy}</g></g>`;
+}
+function songbird(){
+  return `<g class="bd2"><path d="M-3 0L-3 10M4 0L4 10" stroke="#5a4a3a" stroke-width="1.6"/><g transform="translate(-14 -6) rotate(10)"><g class="stail"><path d="M0 0L-22 4L-20 9L0 6Z" fill="#3f6f9c"/></g></g>
+  <ellipse cx="0" cy="-8" rx="14" ry="9.5" fill="#f2c94c"/><path d="M-12-10C-4-20 10-18 14-8C6-14-4-14-12-10Z" fill="#5b9bd5"/><ellipse cx="-3" cy="-8" rx="9" ry="5" fill="#4a86bd"/><path d="M-9-8Q-2-13 5-8" stroke="#2f5f8d" stroke-width="1" fill="none"/>
+  <circle cx="11" cy="-16" r="6.5" fill="#fbfbf3"/><path d="M5-20Q11-25 17-19Q11-21 5-20Z" fill="#4a86bd"/><circle cx="13" cy="-16.5" r="1.5" fill="#111"/><path d="M17-15L24-13L17-12Z" fill="#e7a23a"/></g>`;
+}
+function squirrelMk(){
+  return `<g class="sq"><g transform="translate(-14 -22)"><g class="stail"><path d="M0 14C-22 14-28-10-14-30C-6-42 6-34 2-22C-4-8 2 2 8 6Z" fill="#c4743a"/><path d="M-6 8C-18 6-20-12-12-26" stroke="#e3a15f" stroke-width="3" fill="none" opacity=".7"/></g></g>
+  <ellipse cx="0" cy="-16" rx="13" ry="17" fill="#b8622e"/><ellipse cx="4" cy="-12" rx="7" ry="11" fill="#f0dcc0"/><path d="M-6-4L-6 2M4-2L4 3" stroke="#8a4a22" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="7" cy="-36" r="9" fill="#b8622e"/><path d="M1-43L-1-53L7-46ZM10-45L14-54L16-44Z" fill="#b8622e"/><path d="M2-43L1-50L6-45Z" fill="#e6b389"/><ellipse cx="12" cy="-33" rx="5" ry="4" fill="#f0dcc0"/><circle cx="10" cy="-38" r="1.8" fill="#111"/><circle cx="16" cy="-34" r="1.5" fill="#3a2418"/>
+  <ellipse cx="15" cy="-22" rx="5" ry="3.5" fill="#8a5a2a"/><path d="M11-24L16-20M12-21L17-18" stroke="#b8622e" stroke-width="3" stroke-linecap="round"/></g>`;
+}
+function rabbitMk(){
+  return `<g class="rb"><ellipse cx="0" cy="2" rx="30" ry="5" fill="#1f3d1d" opacity=".25"/><ellipse cx="-22" cy="-14" rx="9" ry="9" fill="#fbfbf8" stroke="#e1e1da"/>
+  <ellipse cx="-4" cy="-17" rx="24" ry="16" fill="#cdb79b"/><ellipse cx="-6" cy="-9" rx="17" ry="8" fill="#ece0cd"/><path d="M-14-6Q-6 6 6 2" fill="#bda585"/><ellipse cx="10" cy="-4" rx="8" ry="4" fill="#bda585"/><ellipse cx="-16" cy="-4" rx="10" ry="5" fill="#bda585"/>
+  <g transform="translate(16 -26)"><circle cx="0" cy="0" r="12" fill="#cdb79b"/><ellipse cx="6" cy="4" rx="8" ry="6" fill="#ece0cd"/><g transform="translate(-2 -8)"><g class="rear"><path d="M0 0C-4-14-2-32 4-36C10-30 8-12 4 0Z" fill="#cdb79b"/><path d="M1-2C-1-14 0-27 4-30C7-26 6-12 4-2Z" fill="#e8b9b0"/></g></g><g transform="translate(5 -8)"><g class="rear" style="animation-delay:-.5s"><path d="M0 0C-3-14 0-32 6-34C11-26 8-12 4 0Z" fill="#b9a284"/><path d="M1-2C0-14 2-26 6-28C8-22 6-12 4-2Z" fill="#e8b9b0"/></g></g>
+  <circle cx="7" cy="-2" r="2.2" fill="#2a1d14"/><circle cx="7.7" cy="-2.7" r=".7" fill="#fff"/><g transform="translate(14 3)"><g class="nose"><ellipse rx="2.4" ry="1.8" fill="#e08f93"/></g></g><path d="M14 4Q12 8 8 8M14 4Q16 8 19 7" stroke="#8a7560" stroke-width=".9" fill="none"/><path d="M14 2L28-2M14 3L28 4" stroke="#fff" stroke-width=".8" opacity=".8"/></g></g>`;
+}
+function butterflyMk(c1,c2){
+  return `<g class="bf"><g class="wing"><path d="M0 0C-8-14-20-12-18-2C-16 4-6 4 0 0Z" fill="${c1}"/><path d="M0 0C-6 8-16 12-12 18C-8 20-2 10 0 0Z" fill="${c2}"/></g><g class="wing" style="transform:scaleX(-1)"><path d="M0 0C-8-14-20-12-18-2C-16 4-6 4 0 0Z" fill="${c1}"/><path d="M0 0C-6 8-16 12-12 18C-8 20-2 10 0 0Z" fill="${c2}"/></g><path d="M0-3L0 8" stroke="#333" stroke-width="1.6"/></g>`;
+}
+function beeMk(){
+  return `<g class="bee"><g transform="translate(0 -4)"><g class="wing"><ellipse cx="-4" cy="-6" rx="7" ry="3.4" fill="#fff" opacity=".7"/></g></g><ellipse cx="0" cy="0" rx="7" ry="4.6" fill="#f2c13a"/><path d="M-2-4.4L-2 4.4M2-4.4L2 4.4" stroke="#222" stroke-width="2.2"/><circle cx="7" cy="-.5" r="3" fill="#333"/></g>`;
+}
+function flowerMk(c,s){
+  let o=`<g><path d="M0 0L0 ${14*s}" stroke="#4f8b3d" stroke-width="1.6"/>`;
+  for(let a=0;a<6;a++)o+=`<ellipse cx="0" cy="${-4*s}" rx="${2.6*s}" ry="${4.6*s}" fill="${c}" transform="rotate(${a*60})"/>`;
+  return o+`<circle r="${2.4*s}" fill="#f6c52a"/></g>`;
+}
+const FOREST_TREES=[[150,432,.8,0,.2],[400,436,.82,1,.35],[640,432,.78,2,.5],[850,436,.84,3,.65],[55,585,1.3,4,.8],[950,590,1.3,5,.9]];
+function ForestScene(svg){
+  const r=rng(2024);
+  let w1=`<g class="L-w1"><rect x="-60" y="-40" width="1120" height="700" fill="${u('forestBg')}"/><ellipse cx="500" cy="300" rx="560" ry="140" fill="#fff" opacity=".35"/>`;
+  for(let i=0;i<9;i++)w1+=bigTree(30+i*125+r()*30,330+r()*20,.5+r()*.12,300+i,true).replace('class="ftree"','class="far"');
+  w1+=`<g class="rays">${[0,1,2].map(i=>`<path class="ray" d="M${230+i*210} -20L${300+i*210} -20L${150+i*210} 520L${20+i*210} 520Z" fill="${u('ray')}" opacity=".4"/>`).join('')}</g></g>`;
+  let w2=`<g class="L-w2"><path d="M-60 405C200 392 420 410 640 398S900 400 1060 404L1060 660L-60 660Z" fill="${u('forestGnd')}"/>`;
+  for(let i=0;i<8;i++){const x=r()*1000,y=420+r()*140;w2+=`<ellipse cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" rx="${(40+r()*60).toFixed(0)}" ry="${(7+r()*10).toFixed(0)}" fill="${r()>.5?'#a68a58':'#4f7f41'}" opacity=".3"/>`}
+  const trees=[];
+  FOREST_TREES.slice(0,4).forEach(t=>{trees.push(t);w2+=bigTree(t[0],t[1],t[2],500+t[3]*13,false).replace('<g class="ftree"',`<g class="ftree" data-i="${t[3]}"`)});
+  w2+=`<g class="ents-a"></g>`;
+  const BUSH=[[90,470,.8],[300,456,.7],[520,448,.6],[740,462,.8],[930,475,.7],[640,480,.55]];
+  BUSH.forEach((b,i)=>{w2+=`<g class="bsh" data-i="${i}">${bush(b[0],b[1],b[2],40+i)}</g>`});
+  const SAP=[[260,500,.4],[560,520,.42],[800,515,.38]];
+  SAP.forEach((b,i)=>{w2+=bigTree(b[0],b[1],b[2],900+i,false).replace('<g class="ftree"',`<g class="ftree sap" data-i="${i}"`)});
+  const FL=[];const fc=['#f4a6c6','#fff3a0','#ffffff','#c9a9ec','#ffb066'];
+  for(let i=0;i<16;i++){const x=40+r()*920,y=490+r()*100;FL.push([x,y,fc[i%5],.8+r()*.5,.08+i*.055]);w2+=`<g class="fl" data-i="${i}" transform="translate(${x.toFixed(0)} ${y.toFixed(0)})">${flowerMk(fc[i%5],.8+r()*.5)}</g>`}
+  w2+=`<g class="ents-b"></g>`;
+  w2+=`</g>`;
+  let w3=`<g class="L-w3">`;
+  FOREST_TREES.slice(4).forEach(t=>{trees.push(t);w3+=bigTree(t[0],t[1],t[2],500+t[3]*13,false).replace('<g class="ftree"',`<g class="ftree" data-i="${t[3]}"`)});
+  w3+=`<rect class="bare" x="-60" y="380" width="1120" height="280" fill="#c9a24a" opacity="0"/>`;
+  for(let i=0;i<60;i++){const x=-30+r()*1060,y=560+r()*60;w3+=`<path transform="translate(${x.toFixed(0)} ${y.toFixed(0)}) scale(${(1+r()*.8).toFixed(2)})" d="M0 0Q-4-14-9-24M0 0Q1-16 2-28M0 0Q5-12 11-22" stroke="${r()>.5?'#4f8b3d':'#6fa046'}" stroke-width="2.2" fill="none" stroke-linecap="round"/>`}
+  w3+=`</g>`;
+  svg.innerHTML=w1+w2+w3;
+  const trEls={};$$(svg,'.ftree').forEach(g=>{if(g.classList.contains('sap'))return;trEls[g.dataset.i]={g,trk:$(g,'.trk'),cnp:$(g,'.cnp'),stp:$(g,'.stp'),v:1}});
+  const saps=$$(svg,'.sap').map((g,i)=>({g,trk:$(g,'.trk'),cnp:$(g,'.cnp'),stp:$(g,'.stp'),v:1,thr:[.05,.1,.15][i],base:SAP[i]}));
+  const bushes=$$(svg,'.bsh').map((g,i)=>({g,v:1,thr:[.15,.3,.45,.6,.72,.86][i]}));
+  const flw=$$(svg,'.fl').map((g,i)=>({g,v:1,thr:FL[i][4],x:FL[i][0],y:FL[i][1]}));
+  const bare=$(svg,'.bare');
+  trees.forEach(t=>{trEls[t[3]].thr=t[4]});
+  /* động vật */
+  const entsA=$(svg,'.ents-a'),entsB=$(svg,'.ents-b');
+  function animal(parent,markup,x,y,sc,flip,leave,dx){
+    const g=gEl('ent',markup);parent.appendChild(g);
+    return{g,x,y,sc,flip,leave,dx,ox:0,oy:0,o:1,away:false};
+  }
+  const A={
+    bird:animal(entsA,songbird(),355,312,1.25,-1,.25,-420),
+    bird2:animal(entsA,songbird(),0,0,.9,1,.4,420),
+    sq:animal(entsB,squirrelMk(),720,452,.9,-1,.5,420),
+    rb:animal(entsB,rabbitMk(),480,512,1,1,.72,-460),
+    bf1:animal(entsB,butterflyMk('#f6a94a','#d9622b'),0,0,1,1,.55,420),
+    bf2:animal(entsB,butterflyMk('#8fc6f0','#4a86bd'),0,0,1,1,.55,-420),
+    bee:animal(entsB,beeMk(),0,0,1,1,.55,420)
+  };
+  const self={svg,time:0,h:0,growth:.3,A,trEls,saps,bushes,flw,stats:{trees:1,shelter:1,animals:1}};
+  self.setH=function(h){self.h=h};
+  function applyTree(t,v,sc){
+    t.v=v;
+    t.trk.style.opacity=Math.min(1,v*3.5).toFixed(2);
+    t.stp.style.opacity=clamp(1-v*2.5,0,1).toFixed(2);
+    const k=(.55+.45*v)*(sc||1);
+    t.cnp.setAttribute('transform',`translate(0 -190) scale(${k.toFixed(3)}) translate(0 190)`);
+    t.cnp.style.opacity=clamp(v*1.4,0,1).toFixed(2);
+  }
+  self.update=function(dt){
+    if(dt<=0)return;
+    self.time+=dt;const t=self.time,h=self.h;
+    let tv=0,tn=0;
+    Object.values(trEls).forEach(T0=>{
+      const alive=h<T0.thr,target=alive?1:0;
+      const rate=alive?.07:.55;
+      const v=T0.v+clamp(target-T0.v,-rate*dt,rate*dt);
+      if(Math.abs(v-T0.v)>.0005||T0.first===undefined){applyTree(T0,v);T0.first=1}
+      tv+=v;tn++;
+    });
+    if(h<.08)self.growth=Math.min(1,self.growth+.012*dt);
+    saps.forEach(s=>{
+      const alive=h<s.thr,target=alive?1:0,rate=alive?.07:.6;
+      const v=s.v+clamp(target-s.v,-rate*dt,rate*dt);
+      applyTree(s,v,.55+.45*self.growth);
+    });
+    let sh=0;
+    bushes.forEach(b=>{const alive=h<b.thr;b.v+=clamp((alive?1:0)-b.v,-(alive?.1:.7)*dt,(alive?.1:.7)*dt);b.g.style.opacity=b.v.toFixed(2);b.g.setAttribute('transform',`translate(0 ${((1-b.v)*10).toFixed(1)})`);sh+=b.v});
+    flw.forEach(f=>{const alive=h<f.thr;f.v+=clamp((alive?1:0)-f.v,-(alive?.15:.8)*dt,(alive?.15:.8)*dt);f.g.setAttribute('transform',`translate(${f.x.toFixed(0)} ${f.y.toFixed(0)}) scale(${f.v.toFixed(2)})`);f.g.style.opacity=f.v.toFixed(2)});
+    bare.setAttribute('opacity',(h*.38).toFixed(2));
+    const fq=Math.round(h*25);
+    if(fq!==self.fq){self.fq=fq;Object.values(trEls).forEach(T0=>{T0.cnp.style.filter=h>.02?`saturate(${(1-.5*h).toFixed(2)}) sepia(${(.4*h).toFixed(2)})`:''})}
+    let an=0;
+    const ents=Object.entries(A);
+    ents.forEach(([k,a])=>{
+      if(!a.away&&h>=a.leave)a.away=true;
+      else if(a.away&&h<a.leave-.12)a.away=false;
+      a.ox=lerp(a.ox,a.away?a.dx:0,Math.min(1,dt*(a.away?.9:.5)));
+      a.oy=lerp(a.oy,a.away?(k==='rb'||k==='sq'?0:-260):0,Math.min(1,dt*.9));
+      a.o=lerp(a.o,a.away?0:1,Math.min(1,dt*(a.away?.8:.6)));
+      if(!a.away)an+=a.o;
+      let x=a.x+a.ox,y=a.y+a.oy,rot=0;
+      if(k==='bf1'){x=285+Math.sin(t*.9)*60+a.ox;y=492+Math.cos(t*1.7)*26+a.oy}
+      else if(k==='bf2'){x=700+Math.sin(t*.7+2)*70+a.ox;y=480+Math.cos(t*1.4)*30+a.oy}
+      else if(k==='bee'){x=540+Math.sin(t*1.5)*50+a.ox;y=500+Math.sin(t*2.6)*22+a.oy}
+      else if(k==='bird2'){x=(120+(t*38)%880)+a.ox;y=150+Math.sin(t*1.1)*18+a.oy}
+      else if(k==='rb'){const hop=a.away?Math.abs(Math.sin(t*7))*14:0;y-=hop}
+      if(a.o>.02){a.g.style.display='';a.g.style.opacity=a.o.toFixed(2);
+        const fx=(k==='bf1'||k==='bf2'||k==='bee')?(Math.cos(t*.9)>=0?1:-1):a.flip;
+        a.g.setAttribute('transform',`translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${(a.sc*fx).toFixed(2)} ${a.sc})`)}
+      else a.g.style.display='none';
+    });
+    self.stats={trees:tv/tn,shelter:(tv/tn*4+sh/bushes.length*2)/6,animals:an/ents.length};
+  };
+  self.reset=function(){
+    self.h=0;self.growth=.3;self.fq=-1;
+    Object.values(trEls).forEach(T0=>{T0.v=1;applyTree(T0,1)});
+    saps.forEach(s=>{s.v=1;applyTree(s,1,.55+.45*self.growth)});
+    bushes.forEach(b=>{b.v=1});flw.forEach(f=>{f.v=1});
+    Object.values(A).forEach(a=>{a.away=false;a.ox=0;a.oy=0;a.o=1});
+    self.update(.0001);
+  };
+  self.update(.0001);
+  return self;
+}
+
+
+/* =====================================================================
+   GIAO DIỆN, STEP 9 / 10 / 11
+   ===================================================================== */
+const STEP_LABELS=['Cân bằng tự nhiên','Tác động con người','Bảo vệ cân bằng'];
+const GLOBAL_NO=[1,2,3];
+const KN={
+  0:{key:'S09_KetLuan',lines:['Các sinh vật trong chuỗi thức ăn có mối quan hệ phụ thuộc lẫn nhau.','Khi số lượng một loài thay đổi quá nhiều, các loài khác cũng có thể bị ảnh hưởng, làm mất cân bằng chuỗi thức ăn trong tự nhiên.']},
+  1:{key:'S10_KetLuan',lines:['Hoạt động của con người có thể làm thay đổi số lượng sinh vật và gây mất cân bằng chuỗi thức ăn.','Bảo vệ thực vật, động vật và môi trường sống góp phần duy trì cân bằng chuỗi thức ăn trong tự nhiên.']}
+};
+const LOGO='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAaMAAABPCAYAAABGZKq5AAAPSUlEQVR42u1dabBUxRX+Zp6IW4FgFDUgxH1L3MUlaMTSZ6qC0Vg+lEWgJHGNgTzigiIKYkhExKiooIgbGrRwrRKjJrhbIkZNiaIxaiIRiQF3XxSZ/Jg7Or6amXtP733n+6qm3ry53adPd5/ur7tv9+nCFm3HgSAIgiB8osgiIAiCIGIio1MBlDJ82nNYThMy5n0wTYogCMI8GY2v6mivyihzWlWcSyIum7lV+ZiUMc7tVXG4/kkQBKFJRrOSDnWKpvxxiZz5EZXJ4kTnEZpybkvknEMzIwiCaIxCjQ0MJZvpBVwW3QF80KR5JwiCCGZmdKllIkLAs6RllomokvdTaXIEQRCNZ0Yl12kHUgbNmm+CIIggZ0b75pwESEQEQRARkNFiAD9qIkIiEREEQQRIRgDwaJMQEomIIAgiYDKqENIROSYH10TUjWZGEAQhJyMAeBDAqBwSkg8i+phmRhAEoUZGQNkDwc9zREiuiag7iYggCEKfjADgOgAn5oCQXBPRJgA+onkRBEGYISMAmAPgpIgJyTUR9QGwiqZFEARhloyAsq8610t2HRES0SAA79CsCIIg7JARUF6yczlD6qpJSK6J6EgA99OkCIIg7JJRZYbkmpA+iYCIjgZwH82JIAjCDRn5IKQNAXwWMBEdA+BumhJBEIRbMqoQkksP1Osj26YA10Q0HMACmhFBEIQfMgKAqwH80qGuPQA8HBARjQVwC02IIIjA8Si+uYE67bNHjGQEAFcCmOpQ30MBLAyAiMYBmEEbJwgiAnwqCPtFrGQElK/VnuZQ51YAD3is2N+gfBFhGkoKn7ct666iE+EWJc+fYayC3EHSzxdiUDKtg57uUO8j8O0lsvUdEtE0i5W6leVOTorr2Y6bDjdXEdPmLI5cQNIXtcRORgDQ7piQhqK8kw0on0d6KSAick0aaRipGG8023FT413OjpuOjKKYvmUlpBkO9b+z6vtuARKRqhF0Naz/DQpxdmQbJqoGSBNZDE2BYp4SHgvgMccNpYJNLcg/S3NGdKNCnA6D+j+hGG8Z2yVRhQsArGYxELGx4MEAnnOYj8nJ3/cNyx0P4PeaMkYqxjN1n9SBeZ3WE86xMYA3WAzRoSUGJW1OyfYB8IKjfJxX9b23QSL6rSFZWyvEmWN41pgV7GyINFtuZTGQuGIiI6B8gOpFR3mpEMdyA7IuMkhEAPCmYrxHPNjEtmyPRAoWsgiI2MgIAHaH/Z1uAHB21fdnNORcA2CCBf1Ulr4GOp4VncgmQWTErSwCckIoCUsORu4Gt/f87K8Y7zoAp1jU63VHpHKkon5z2BaJjBjCIiDB+FZyYY0OMgsp9YH93Tg61zhcB/sXCG7vqF7vcTRzI/yjoPE5mMVHxDgzaksIpzVlFN/IeWhPAB9YzM9PAiaiClTcrUhmR/PZnoiMeEyTlPZjEUaBXO2mKwH4Y8awQ5PwO9V53sMyIVWwXNAgXV6prrrWflDGcMdyVkQokNIuCvGOZdERrshIx1nm0gZxXRDSvAxhXoOfpQqVzv9RwzMoFzOprhETXQvMe8IIGUsV4vjwXVeMvF5C1z24Zbq/wpxPqhKAFXUI6WPLo71G+DuAHSIz5NkWZA42IGMaanuA7gCwtsbva6G3U9Ak9kwGRp11XJPoXytfc3NKSNLZ0WcWdekHYGWNsv+qQb3MC6gsr23QJmr9/jmAQwIY/AZzzujypGB2N5xOr0TulZ1+7wbZXRsSNDq8+SaA7Twbq8qMYbThWdE+GvoPqWpI7Qp5fwR+r6mopL0EQHdh3BFV8c9v4tnRPRZ0WJ2U65uQu/c6vqpepnkov1Oq0v+FMO56AP6MeK9uuQua19N0JqMzLCt8Wo3fNnJcaP+AmkcEG7haIc4nNX47QDF9FZdNeyeGZPKcicsGaDqtCxN5Z6D5cL+FetnYkLz2RN4kB+XQmqQ1M9I2oTtIHgXgKN10ijUC2Frjb/T+wEaafWr89imAbQJqzKcqxNmwxm9POjK6EoDFlolitiXZR1tu3Jcj/usWjvCQ5gDL5TbBsvwS7HqkKAG4OGCb2Q/y84k1+55ig8CmfLxdlMjrfJ3t3E5GYpqQOjsIXeNhFqZKmlkMtAKV0dhyzTRtYrSFtFYCWOBw5rVlpGQkuUH5UgPpvQh3Hv5LAHa2INMFztFMq8VSWAB42tQguJjSYRU0jO7zJH4t1zqTUV53B4B7q35/3mAFHl/1fS2ALoF2AKqeKdZJ/qp4jOgdaKOzkWYJdq4WSSP7gYgL0pf/4wzUyw8c5/FlfNupsirWjbxN+NKn4YSjmNHoCkmHLkl0gzrPLuxkEIOqvu9lsKAqGxQ+RfiHvlRmhV8qGmd7RA2gFHHjfQTqbqlcY2mnwZsNew2lXiZD/wbj/0XWJgoB6JGqg2RPeUsGgf1TwkxA7d1H1RmboVFAtRyybhRJh7DEUTrTI+k0dHV4OgDdnwrY3vZEecdaowPqNjq22wPI+2yNfMTcJrJgHR9EJCWjasH7dvrtjuT3ZxvEG43GO1v6Jn/HahRkRa9uFkcEtrC3gzRaImt0FUhvy/0OwnFVU3IgX+WzBOWzPK5H2IMDqZe1AdalBFM9lUvJls2onrZdnCQyPvnblhJ+FNJ3Sb1V9V3VoWpl+vwR4jz53xZIAwzNzcsJwvD/CUz/DxE37jbUnmJ+59EemO5nWRqEFg3WX18YSjgLslxANxLyrX89FXR5BvHjDouyJZ2Jjougm1HbQ3R36N0im7Uh6J5/2quO/jqdUbeIbbKA8rZ4XehuHBhYp15c3cGlc4h2Vh3de2oOnFySe0mhHf3TJRmlYQSAGwThH9BIa3/kAzZmdHcLwqo6jZ2Z6F5vFvMRyrfIFlDeam0LQzTKvYD6OzqnJ893zMmswLXekzXr5S91ns9Jnm9qMX+XaeS5AOCkOs9XA9gsCROyfawRhh8HhZ3RNsloGOQ+vFQP3b0KohEkI9tZih3GaYLwvfDN1n4JVqQ8b1WQ+YVwALAMzeflXNcbwPcdDMzet1gvYxR1l7iKKkLthulnDffznY/ALIJsmW8mFI8D2SKjnVBertHBJcL08gSTjeqQQHW9CfKlr14pz1VOwnd1mO/RkdtlCcAVCvFecmhXKvHOC6RNXISyJw8J9rFY3xdDdqvBEuGg1DoZfQ9q7ug7I+sW5M1yOhq93JCcRYKwvxbKnu+ojkMlfWn82Tmwy9Nhf0nJdb00WkKU+o/U9U83xkJ5Svr5ylGYESh7fsiKNdDcEWyajPqh7IhUB8OTvysyhH0K4e2c8rk0oNsopdPrwR50vNBQ+f4KhO4syQZmBZbPk4XhT/PQJk4wmN/Ku7m5wnjaHm5MklFflA/R6WKAIOyBOW/wW2nEXWlZt6WeyqTeksqRQjl/MKRPNzQv7swQRupV5aRAZlcqeCiwNqFSFith8SyRCzLqjW+fE9LBNgEbm2v8SyNuL8u6mfS9NtOAzQ7xVEcfe7aRgqGPynvXYzKEaUPz4HCDsu4ThN0ug40EP0s2QUYtmp1mLKMen52NFC4O6L1nUJaJ92P9I5jVAcAmgdrZq4mtSZfZSwbrpcNj/vcIrD6mIy5M8U1GRcj3oKch7aBUs22rbQZDfs2ADMmSpk+/dX0CrwvT931Jzv88xHr5Gssia8PjfZJREeX76E1jEYmIUIDE15jPEfhXEZSltJ1dZnHA26woNZvORY14thpVxZ1LPxJR08DEpWeSzTM/9JjXf+ew/sY0eLZKIGeAxzy8E1iZ7mpQlssrdJQvS1QlI5uju8qy3ygSUdAw+e7jbAMyXhCE3c1juf03kvpdYUjOE4KwG3vM7/OBlf/ZkfYLygMKKRmt43D6eD6JKGg8bFDWcEHYektst+VgBBsSTB0mv8OT/j08pHmzQVmHCsIuDcx2lDhC6rPoS8uZ6OwMkUQULnb3lG69e1zuEsoZZUifv+W0fk2963lOGH6KoXRXeSizYZ7q6neW63IPAJsL43xmy+DWRdmhpG0MJBF5hdRHl4lbO6WjKFMeGOYYkNEjp3bg8yDv+MDK4iph+Cs9tImbLOb/YpSXwN+DbOl2fQAHmCajFvi9851wB+modDDUHY2aarjOlxM0Rt/DIrGDDyOvF2n8Mxs8O10oS9cd0L0BzXLvBXBu1f9bCOM/aVJJG+eI6mEvEDGiQ5GQJio03LQdT4c57PhU4t0aeF12VczX+ynPdwm8Xi4xXI6qul8DYJAwzrOWbOE1AD+t8XvBVlmkkZHLMxHPgwgBJyvE6QDwoNBAL1BIJ+1gouqmCknnMRTxXpRXj4DOTfKkev4qbRCw1EG9HGqxXi5Q1H2OMLyKX74sHi5UXnnsYLA8xuiSkcsGx/dD4eBaxXiHJzbzSh1Drjy3bVeq6+cV3Wo1nBaUd4WVANwSmI2XND8dKN+jo4MXMoQ5TzN/4+sQ6bzk+cMW60X1PeWoqjaxbY3nRztqEwXD4aXlkemm3MIWbcf5JqIFyOZwsZnh2ovuINhZu3bVoEKbuaxC9nNZsc26rkf2SwNDzFtWuxoD9evHfeu+DMD2GcO2AviTj36pGIDBkIjCw32B6XOjMHyvwPTfJMe2Irm9tiUw3SUDnBmB6W7L/+R3BWGlnlNul5BRKWBjIJq3bkYKw6+E2UO5tHEzeVubzKRCQM/I61LimV8yCJBwwCuQuVEanJWMSEREiHWkqsNhAeh+VI5t48caMynfd0ANB7C6idqEzY1oUm/npawzIxIREVJdFSLW/WcA7smpTRwAYKFG/G4APvek+0Sob0LRmVX5bBMtgen0RhoZFSDzEaaCM0lEJCTHaRZg7yxGPewKuXuimGzBxH1QG8D9/UUHAZhkQM7qyNpEwUEaknLdGkDftJnRLRYLuQDzh8uI/BHSbRbS6p90RK7K6eUc1v8CC/VyOLLv8jJRL49H2iamRzCInygM/1YaGVUXcgFm3AAVOBvKFSH1syx/iCXZjyfy37Uk/5yc2vm8JF+2dr2+nsh/xWInWbBss7talt+uKaOLIGyLpq4SlLKQUQXrJQnsD9ka7wCSUG7xdlKv+xlucK5sZUuYXbqrkNDUHNXxFVV1MtRRmjsn6S0yJG9yIm+SA91fTtJqDbRNSDxof2GgHiVo+zrDdQ69EoQEIwHMEozA3kD5/eTTAejeHcB8lJeMsmJqQkKEPXRJ6uUoQZwZAMYGov9oALMF4ZclqwJN6xaNZEQQBEF4R5FFQBAEQfjG/wEsZ2FcXFc57gAAAABJRU5ErkJggg==';
+let R=n=>S.root.querySelector(`[data-r="${n}"]`);
+const ico=n=>`<svg viewBox="0 0 24 24"><use href="#${P}i-${n}"/></svg>`;
+const CHECK_SVG='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>';
+const CROSS_SVG='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+
+let scene9,sceneI,pond,forest,field10;
+const S9={snakes:5,runS:5,M:5,P:.85,dispP:.85,week:0,running:false,acc:0,runs:[],hasRun:false,result:null,series:[],runId:0};
+const SC10=[
+  {key:'field',tab:'Đồng ruộng',title:'Săn bắt rắn quá mức',sw:'Săn bắt rắn quá mức',safe:false,on:false,h:0,up:.07,down:.035,
+   desc:'Bật công tắc để xem số rắn trên đồng thay đổi theo thời gian, rồi quan sát chuột và cây khoai.',
+   info:'Săn bắt rắn quá mức có thể khiến chuột tăng số lượng và phá hại cây khoai nhiều hơn.',voice:'S10_SanBatRan',
+   S:5,M:5,P:.85,weeks:0,explored:false,before:null,after:null,fired:false},
+  {key:'pond',tab:'Ao hồ',title:'Đánh bắt cá bằng điện',sw:'Đánh bắt bằng điện',safe:false,on:false,h:0,up:.09,down:.035,
+   desc:'Bật công tắc, rồi quan sát mật độ sinh vật trong ao và chim kiếm ăn sau một thời gian.',
+   info:'Đánh bắt bằng điện có thể làm chết nhiều sinh vật dưới nước và ảnh hưởng đến các chuỗi thức ăn trong ao hồ.',voice:'S10_DanhBatDien',
+   e:0,weeks:0,explored:false,before:null,after:null,fired:false},
+  {key:'forest',tab:'Rừng xanh',title:'Bảo vệ rừng',sw:'Bảo vệ rừng',safe:true,on:true,h:0,up:.025,down:.03,
+   desc:'Công tắc bảo vệ rừng đang tắt: hãy quan sát nơi sống thay đổi theo thời gian, rồi bật lại để xem rừng hồi phục.',
+   info:'Bảo vệ rừng giúp duy trì nơi sống của sinh vật và góp phần giữ cân bằng các chuỗi thức ăn.',infoHarm:'Khi rừng bị suy giảm, cây xanh và nơi trú ẩn mất dần, chim và động vật nhỏ phải rời đi, làm chuỗi thức ăn trong rừng bị ảnh hưởng.',voice:'S10_BaoVeRung',hadHarm:false,
+   weeks:0,explored:false,before:null,after:null,fired:false}
+];
+const S10={cur:0,acc:0};
+const CARDS=[
+  {id:0,t:'Trồng cây, bảo vệ rừng',ans:'good',art:'plant'},
+  {id:1,t:'Săn bắt động vật hoang dã quá mức',ans:'bad',art:'hunt'},
+  {id:2,t:'Đánh bắt cá bằng điện',ans:'bad',art:'fish'},
+  {id:3,t:'Bảo vệ nơi sống của động vật',ans:'good',art:'habitat'}
+];
+const CARD_ORDER=[2,0,3,1];
+const S11={phase:'q1',loc:{0:'tray',1:'tray',2:'tray',3:'tray'},marks:{},q1ok:false,q2ok:false,sel:null,hint:'',fb:null,wrongOpt:{},rightOpt:null};
+const Q2_OPTS=['Tiếp tục săn bắt tất cả rắn trên cánh đồng.','Bảo vệ các loài động vật trong chuỗi thức ăn và giữ gìn môi trường sống.','Chặt bỏ cây xanh xung quanh cánh đồng.','Sử dụng các cách tiêu diệt sinh vật một cách bừa bãi.'];
+
+/* ---------------- tiện ích giao diện ---------------- */
+function toast(msg){
+  const t=S.root&&R('toast');if(!t)return;
+  t.textContent=msg;t.classList.add('on');
+  clearTimeout(toast._t);toast._t=T.set(()=>t.classList.remove('on'),2400);
+}
+function snap(svg){
+  const c=svg.cloneNode(true);
+  c.removeAttribute('id');c.removeAttribute('data-r');c.setAttribute('class','m3-scene on');c.style.removeProperty('--px');c.style.removeProperty('--py');
+  const gl=svg.__scene?GLS.snapshotImage(svg.__scene):'';
+  if(gl)c.insertAdjacentHTML('beforeend',gl);
+  return c.outerHTML;
+}
+function setRow(scope,key,f,txt,cls){
+  const row=scope.querySelector(`[data-row="${key}"]`);if(!row)return;
+  const b=row.querySelector('.bar span');b.style.width=Math.round(clamp(f,0,1)*100)+'%';b.className=cls||'';
+  row.querySelector('.st').textContent=txt;
+}
+const rowHtml=(key,ic,nm)=>`<div class="m3-row" data-row="${key}"><span class="ic">${ico(ic)}</span><span class="nm">${nm}</span><div class="bar"><span></span></div><span class="st"></span></div>`;
+function potatoStatus(Pv){
+  if(Pv>=.93)return{t:'Khoẻ mạnh',c:''};
+  if(Pv>=.72)return{t:'Tương đối ổn định',c:''};
+  if(Pv>=.5)return{t:'Bị phá hại',c:'warn'};
+  return{t:'Bị phá hại nặng',c:'bad'};
+}
+function miceStatus(M){
+  if(Math.abs(M-5)<.7)return{t:'Vừa phải',c:''};
+  return M>5?{t:'Tăng',c:M>=7?'bad':'warn'}:{t:'Giảm',c:''};
+}
+function refreshNarr(){
+  const b=R('narr');if(!b)return;
+  b.setAttribute('aria-pressed',S.narrationEnabled?'true':'false');
+  if(!S.narrationEnabled)S.root.classList.remove('m3-playing');
+}
+function refreshPause(){
+  const b=R('pp');if(!b)return;
+  const vis=(S.step===0&&S9.running)||S.step===1;
+  b.hidden=!vis;
+  b.setAttribute('aria-pressed',S.paused?'true':'false');
+  b.querySelector('span').textContent=S.paused?'Phát':'Tạm dừng';
+  b.querySelector('g').innerHTML=S.paused?'<path d="M7 5l12 7-12 7z" fill="currentColor"/>':'<path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/>';
+  S.root.classList.toggle('m3-paused',S.paused);
+}
+
+/* =====================================================================
+   XÂY DỰNG GIAO DIỆN
+   ===================================================================== */
+function build(){
+  if(S.built)return;
+  S.built=true;
+  const root=document.createElement('div');
+  root.className='kh4b30-m03-root';root.id=P+'root';root.hidden=true;
+  const mount=document.getElementById('kh4b30-m03-mount');
+  if(mount)root.classList.add('m3-embedded');
+  root.innerHTML=`<svg class="m3-defs" aria-hidden="true" focusable="false">${defsMarkup()}</svg>
+  <header class="m3-top"><img class="m3-logo" alt="YooBook" src="${LOGO}">
+   <div class="m3-titles"><div class="m3-badge">Khoa học 4 · Bài 30</div><h1>Bài 30 – Vai trò của thực vật trong chuỗi thức ăn</h1></div>
+   <button class="m3-tbtn" data-r="fs" type="button" aria-label="Toàn màn hình" title="Toàn màn hình"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></header>
+  <div class="m3-main"><div class="m3-frame">
+   <div class="m3-stage">
+    <div class="m3-view" data-r="view">
+     <div class="m3-host">
+      <svg class="m3-scene" data-r="sc9" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Cánh đồng khoai tây"></svg>
+      <svg class="m3-scene" data-r="sc10a" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Cánh đồng khoai tây"></svg>
+      <svg class="m3-scene" data-r="sc10b" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Ao hồ"></svg>
+      <svg class="m3-scene" data-r="sc10c" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Rừng xanh"></svg>
+      <canvas class="m3-gl" data-r="gl"></canvas>
+     </div>
+     <div class="m3-tools">
+      <button class="m3-ghost" data-r="ov" type="button"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span>Toàn cảnh</span></button>
+      <button class="m3-ghost" data-r="auto" type="button" aria-pressed="false"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 12a8 8 0 1 1-3-6.2M20 4v5h-5"/></svg><span>Tự xoay</span></button>
+      <button class="m3-ghost" data-r="narr" type="button" aria-pressed="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9zM16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg><span>Thuyết minh</span><b class="m3-wave"><i></i><i></i><i></i></b></button>
+      <button class="m3-ghost" data-r="pp" type="button" aria-pressed="false" hidden><svg width="14" height="14" viewBox="0 0 24 24"><g><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></g></svg><span>Tạm dừng</span></button>
+     </div>
+     <div class="m3-tabs" data-r="tabs" role="tablist"></div>
+     <div class="m3-clock" data-r="clock"><span data-r="clk">Tuần 0</span><div class="bar"><span data-r="clkb"></span></div></div>
+     <div class="m3-badge-st" data-r="bst"></div>
+     <button class="m3-nav prev" data-r="prev" type="button" aria-label="Bước trước">◀</button>
+     <button class="m3-nav next" data-r="next" type="button" aria-label="Bước sau">▶</button>
+     <div class="m3-practice" data-r="prac"></div>
+     <div class="m3-ov" data-r="ovkn"><div class="m3-kn" role="dialog" aria-modal="true">
+       <header><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/></svg>HÌNH THÀNH KIẾN THỨC</header>
+       <div class="bd" data-r="knbd"></div>
+       <div class="ft"><button class="m3-btn alt" data-r="knlisten" type="button">🔊 Nghe lại</button><button class="m3-btn" data-r="knclose" type="button">Đã hiểu</button></div></div></div>
+     <div class="m3-ov" data-r="ovcmp"></div>
+     <div class="m3-toast" data-r="toast"></div>
+    </div>
+    <aside class="m3-panel">
+     <section class="m3-pane" data-pane="0">
+      <div class="m3-kick">Step 1 · Mô phỏng</div>
+      <h2 class="m3-ptitle">THỬ NGHIỆM CÂN BẰNG TỰ NHIÊN</h2>
+      <p class="m3-pdesc">Điều gì sẽ xảy ra nếu số lượng rắn trên cánh đồng thay đổi?</p>
+      <div class="m3-card">
+       <div class="m3-sl-head"><span>Số rắn</span><b data-r="snv">5/10</b></div>
+       <input class="m3-range" data-r="slider" type="range" min="0" max="10" step="1" value="5" aria-label="Số rắn trên cánh đồng">
+       <div class="m3-sl-scale"><span>0</span><span>5</span><span>10</span></div>
+       <div class="m3-note">0–10 là mức giả định của mô hình giáo dục, không phải số liệu điều tra thực tế.</div>
+      </div>
+      <div class="m3-btnrow">
+       <button class="m3-btn full" data-r="run" type="button"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="#fff"/></svg>Chạy mô phỏng</button>
+       <button class="m3-btn alt" data-r="reset" type="button">Đặt lại</button>
+       <button class="m3-btn alt" data-r="cmp" type="button" disabled>So sánh kết quả</button>
+      </div>
+      <div class="m3-card m3-live">
+       <div class="m3-row"><span class="nm" style="min-width:62px">Thời gian</span><div class="m3-prog" style="flex:1"><span data-r="prog"></span></div><span class="st" data-r="wk">Tuần 0/12</span></div>
+       ${rowHtml('snake','snake','Rắn')}${rowHtml('mouse','mouse','Chuột')}${rowHtml('potato','potato','Cây khoai')}
+      </div>
+      <div class="m3-res" data-r="res" hidden></div>
+      <button class="m3-btn gold" data-r="kn9" type="button" hidden>Hình thành kiến thức</button>
+     </section>
+     <section class="m3-pane" data-pane="1">
+      <div class="m3-kick" data-r="k10">Tình huống 1/3</div>
+      <h2 class="m3-ptitle" data-r="t10"></h2>
+      <p class="m3-pdesc" data-r="d10"></p>
+      <div class="m3-card m3-switch"><span class="lbl" data-r="swl"></span><button class="m3-sw" type="button" role="switch" aria-checked="false" data-r="sw"><span class="t-off">Tắt</span><span class="t-on">Bật</span></button></div>
+      <div class="m3-card m3-live" data-r="mt10"></div>
+      <div class="m3-info" data-r="inf" hidden></div>
+      <div class="m3-ba"><figure data-r="bf"><figcaption>Trước</figcaption></figure><figure data-r="af"><figcaption>Sau</figcaption></figure></div>
+      <div style="display:flex;gap:8px;align-items:center"><div class="m3-chips" data-r="chips" style="flex:1"></div><button class="m3-btn alt" data-r="rst10" type="button" style="padding:5px 10px;font-size:12px">↺ Đặt lại</button></div>
+      <button class="m3-btn gold" data-r="kn10" type="button" hidden>Hình thành kiến thức</button>
+     </section>
+     <section class="m3-pane" data-pane="2">
+      <div class="m3-kick">Step 3 · Vận dụng</div>
+      <h2 class="m3-ptitle">BẢO VỆ CÂN BẰNG</h2>
+      <p class="m3-pdesc">Hoàn thành hai nhiệm vụ ngắn để củng cố điều em đã khám phá.</p>
+      <div class="m3-card m3-live" data-r="tasks11"></div>
+      <div class="m3-info good" data-r="tip11"></div>
+     </section>
+    </aside>
+   </div>
+   <nav class="m3-steps" data-r="steps"></nav>
+  </div></div>
+  <div class="m3-intro" data-r="intro"><svg class="bgs m3-scene on" data-r="scI" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+   <div class="m3-introbox"><div class="k">Khoa học 4 · Bài 30</div><h1>CÂN BẰNG CHUỖI THỨC ĂN</h1>
+   <p>Khám phá điều gì xảy ra khi số lượng sinh vật thay đổi và cách con người bảo vệ sự cân bằng trong tự nhiên.</p>
+   <button class="m3-explore" data-r="explore" type="button">Khám phá bài học</button></div>
+   <div class="m3-credit">Được phát triển bởi <strong>YooBook</strong></div></div>`;
+  (mount||document.body).appendChild(root);
+  S.root=root;
+
+  scene9=FieldScene(R('sc9'));
+  field10=FieldScene(R('sc10a'));
+  pond=PondScene(R('sc10b'));
+  forest=ForestScene(R('sc10c'));
+  sceneI=FieldScene(R('scI'));
+  scene9.setSnakeCount(5);scene9.setMouseCount(5,true);
+  field10.setSnakeCount(5);field10.setMouseCount(5,true);
+  sceneI.setHealth(.92);sceneI.setView(0,.36,700);sceneI.update(0);R('scI').classList.add('m3-frozen');
+  pond.set({fish:10,small:6,plant:1,bird:'dip',elec:0,desat:0});
+
+  R('steps').innerHTML=STEP_LABELS.map((l,i)=>`<button class="m3-step" type="button" data-step="${i}" aria-pressed="${i===0}"><b>${GLOBAL_NO[i]}</b><span>${l}</span></button>`).join('');
+  R('tabs').innerHTML=SC10.map((s,i)=>`<button class="m3-tab" role="tab" type="button" data-tab="${i}" aria-selected="${i===0}">${s.tab}<span class="ck">${CHECK_SVG}</span></button>`).join('');
+  GLS.init(R('gl'));
+  bindEvents();
+  sync9();loadScenario10(0);renderTasks11();
+}
+
+/* =====================================================================
+   SỰ KIỆN
+   ===================================================================== */
+function bindEvents(){
+  const root=S.root,view=R('view');
+  root.addEventListener('click',e=>{
+    const t=e.target;
+    const b=t.closest('button');
+    if(!b){zoneClick(e);return}
+    const r=b.dataset.r;
+    if(b.dataset.step!=null){gotoStep(+b.dataset.step);return}
+    if(b.dataset.tab!=null){selectTab(+b.dataset.tab);return}
+    switch(r){
+      case'fs':toggleFs();break;
+      case'ov':S.tpx=0;S.tpy=0;S.auto=false;S.cam.tyaw=0;S.cam.tpitch=.36;S.cam.tdist=640;R('auto').setAttribute('aria-pressed','false');break;
+      case'auto':S.auto=!S.auto;S.autoT=0;b.setAttribute('aria-pressed',S.auto?'true':'false');if(!S.auto){S.tpx=0;S.tpy=0}break;
+      case'narr':toggleNarration();break;
+      case'pp':S.paused=!S.paused;refreshPause();break;
+      case'prev':gotoStep(S.step-1);break;
+      case'next':gotoStep(S.step+1);break;
+      case'run':runSim();break;
+      case'reset':resetAll9();break;
+      case'cmp':openCmp();break;
+      case'kn9':openKn(0);break;
+      case'kn10':openKn(1);break;
+      case'knclose':closeKn();break;
+      case'knlisten':Aud.play(KN[S.knStep].key,{force:true});break;
+      case'sw':toggleSwitch();break;
+      case'rst10':resetScenario10();break;
+      case'explore':introStart();break;
+      case'cmpclose':closeCmp();break;
+    }
+    const a=b.dataset.act;
+    if(a)practiceAction(a,b);
+    const o=b.dataset.opt;
+    if(o!=null)pickOpt(+o);
+  });
+  R('slider').addEventListener('input',e=>onSlider(+e.target.value));
+  root.addEventListener('change',e=>{if(e.target.dataset.r==='cmpa'||e.target.dataset.r==='cmpb')renderCmp()});
+  /* kéo để đổi góc nhìn (parallax nhẹ) */
+  let d=null;
+  view.addEventListener('pointerdown',e=>{
+    if(e.target.closest('button,input,select,.m3-ov,.m3-practice,.m3-tabs'))return;
+    d={x:e.clientX,y:e.clientY,px:S.tpx,py:S.tpy,cy:S.cam.tyaw,cp:S.cam.tpitch};view.classList.add('dragging');
+    try{view.setPointerCapture(e.pointerId)}catch(_){}
+  });
+  view.addEventListener('pointermove',e=>{
+    if(!d)return;
+    S.auto=false;R('auto').setAttribute('aria-pressed','false');
+    if(is3D()){S.cam.tyaw=d.cy-(e.clientX-d.x)*.006;S.cam.tpitch=clamp(d.cp+(e.clientY-d.y)*.004,.08,1.1)}
+    else{S.tpx=clamp(d.px+(e.clientX-d.x)/320,-1,1);S.tpy=clamp(d.py+(e.clientY-d.y)/420,-1,1)}
+  });
+  const end=()=>{d=null;view.classList.remove('dragging')};
+  view.addEventListener('wheel',e=>{if(!is3D()||e.target.closest('.m3-ov,.m3-practice'))return;e.preventDefault();S.cam.tdist=clamp(S.cam.tdist*(1+e.deltaY*.0012),420,1300)},{passive:false});
+  view.addEventListener('pointerup',end);view.addEventListener('pointercancel',end);
+  /* kéo thả Step 11 */
+  R('prac').addEventListener('pointerdown',dndDown);
+}
+const is3D=()=>S.step===0||(S.step===1&&S10.cur===0);
+function toggleFs(){
+  const el=S.root;
+  if(!document.fullscreenElement)(el.requestFullscreen||document.documentElement.requestFullscreen).call(el).catch(()=>{});
+  else document.exitFullscreen&&document.exitFullscreen().catch(()=>{});
+}
+function toggleNarration(){
+  S.narrationEnabled=!S.narrationEnabled;refreshNarr();
+  if(!S.narrationEnabled){Aud.stop();T.clearAll();return}
+  const k=S.lastKey||['S09_Voice','S10_Voice','S11_Voice'][S.step];
+  Aud.play(k);
+}
+
+/* =====================================================================
+   ĐIỀU HƯỚNG STEP
+   ===================================================================== */
+function gotoStep(i,opt){
+  i=clamp(i,0,2);
+  if(i===S.step&&!(opt&&opt.force))return;
+  Aud.stop();T.clearAll();closeKn(true);closeCmp();
+  if(S.step===0&&S9.running)abortRun9();
+  S.paused=false;S.step=i;S.narrationEnabled=true;S.lastKey=null;refreshNarr();
+  const root=S.root;
+  $$(root,'.m3-pane').forEach(p=>p.classList.toggle('on',+p.dataset.pane===i));
+  $$(root,'.m3-step').forEach((b,k)=>b.setAttribute('aria-pressed',k===i?'true':'false'));
+  R('prev').disabled=i===0;R('next').disabled=i===2;
+  R('tabs').classList.toggle('on',i===1);
+  R('clock').classList.toggle('on',i<2);
+  R('prac').classList.toggle('on',i===2);
+  R('bst').classList.remove('on');
+  showScene();refreshPause();
+  if(i===0){sync9();Aud.play('S09_Voice')}
+  else if(i===1){loadScenario10(S10.cur);Aud.play('S10_Voice')}
+  else{
+    renderPractice();
+    if(S11.phase==='q1')Aud.play('S11_Voice',{onEnd:()=>{if(S.step===2&&S11.phase==='q1')Aud.play('S11_Q01')}});
+    else if(S11.phase==='q2')Aud.play('S11_Voice',{onEnd:()=>{if(S.step===2&&S11.phase==='q2')Aud.play('S11_Q02')}});
+    else{S.root.dispatchEvent(new CustomEvent(P+'complete',{bubbles:true,detail:{module:'canBangChuoiThucAn'}}));Aud.play('S11_KetLuan')}
+  }
+}
+function showScene(){
+  const map=S.step===0?'sc9':S.step===1?['sc10a','sc10b','sc10c'][S10.cur]:null;
+  ['sc9','sc10a','sc10b','sc10c'].forEach(k=>R(k).classList.toggle('on',k===map));
+  if(map!=='sc9'&&map!=='sc10a')GLS.hide();
+}
+function activeSceneEl(){
+  return S.step===0?R('sc9'):S.step===1?R(['sc10a','sc10b','sc10c'][S10.cur]):null;
+}
+
+/* =====================================================================
+   STEP 9 – CÂN BẰNG TỰ NHIÊN
+   ===================================================================== */
+function onSlider(v){
+  if(S9.running)return;
+  S9.snakes=v;scene9.setSnakeCount(v);sync9();
+}
+function sync9(){
+  if(!S.root)return;
+  const sl=R('slider');sl.value=S9.snakes;sl.disabled=S9.running;
+  R('snv').textContent=S9.snakes+'/10';
+  const live=R('pane0')||S.root.querySelector('[data-pane="0"]');
+  const M=S9.M;
+  setRow(live,'snake',S9.snakes/10,S9.snakes+' con','');
+  const ms=miceStatus(M);setRow(live,'mouse',M/10,ms.t,ms.c);
+  const ps=potatoStatus(S9.dispP);setRow(live,'potato',S9.dispP,ps.t,ps.c);
+  R('wk').textContent='Tuần '+S9.week+'/12';R('prog').style.width=(S9.week/12*100)+'%';
+  R('clk').textContent='Tuần '+S9.week+'/12';R('clkb').style.width=(S9.week/12*100)+'%';
+  R('run').disabled=S9.running;
+  R('run').lastChild.textContent=S9.hasRun&&!S9.running?'Chạy lại với giá trị này':'Chạy mô phỏng';
+  R('cmp').disabled=S9.runs.length<2||S9.running;
+  R('kn9').hidden=!S9.hasRun;
+  const bst=R('bst');
+  const near=S9.snakes>=4&&S9.snakes<=6&&!S9.running&&S.step===0;
+  bst.textContent='Mức rắn gần trạng thái tham chiếu của mô hình';bst.classList.toggle('on',near);
+}
+function runSim(){
+  if(S9.running||S.step!==0)return;
+  closeKn(true);Aud.stop();T.clearAll();
+  S9.runS=S9.snakes;S9.M=5;S9.P=.85;S9.dispP=.85;S9.week=0;S9.acc=0;S9.running=true;S9.series=[5];S9.result=null;
+  scene9.setMouseCount(5,true);scene9.setHealth(.85);
+  R('res').hidden=true;S.paused=false;refreshPause();sync9();
+}
+function abortRun9(){
+  S9.running=false;S9.M=5;S9.P=.85;S9.dispP=.85;S9.week=0;S9.result=null;
+  scene9.setMouseCount(5,true);scene9.setHealth(.85);R('res').hidden=true;sync9();
+}
+function resetAll9(){
+  Aud.stop();T.clearAll();closeKn(true);
+  S9.running=false;S9.snakes=5;S9.M=5;S9.P=.85;S9.dispP=.85;S9.week=0;S9.result=null;
+  scene9.setSnakeCount(5);scene9.setMouseCount(5,true);scene9.setHealth(.85);
+  R('res').hidden=true;S.paused=false;refreshPause();sync9();
+}
+function stepSim(){
+  S9.M=clamp(S9.M+.25*(9-.8*S9.runS-S9.M),.5,10);
+  S9.P=clamp(S9.P-.016*(S9.M-5),0,1);
+  S9.series.push(S9.M);
+  scene9.setMouseCount(Math.round(S9.M));
+}
+function resultKind(s){return s<=3?'giam':s>=7?'tang':'ref'}
+function finishRun9(){
+  S9.running=false;S9.hasRun=true;
+  const kind=resultKind(S9.runS);
+  const run={id:++S9.runId,s:S9.runS,M:S9.M,mice:Math.round(S9.M),P:S9.P,kind,thumb:snap(R('sc9'))};
+  S9.runs.push(run);if(S9.runs.length>6)S9.runs.shift();
+  S9.result=kind;
+  const res=R('res');
+  const T9={
+    giam:['Khi số rắn giảm:',['Chuột có thể tăng.','Cây khoai tây bị phá hại nhiều hơn.','Mối quan hệ giữa các sinh vật bị thay đổi.'],''],
+    tang:['Khi số rắn tăng:',['Chuột có thể giảm.','Cây khoai tây ít bị phá hại hơn.','Số lượng sinh vật trong chuỗi thay đổi.'],'up'],
+    ref:['Trạng thái tham chiếu của mô hình:',['Số chuột thay đổi ít.','Cây khoai duy trì trạng thái tương đối ổn định.'],'ref']
+  }[kind];
+  res.className='m3-res '+T9[2];
+  res.innerHTML=`<h4>${T9[0]}</h4><ul>${T9[1].map(x=>`<li>${x}</li>`).join('')}</ul>`;
+  res.hidden=false;
+  refreshPause();sync9();
+  if(kind==='giam')Aud.play('S09_RanGiam');else if(kind==='tang')Aud.play('S09_RanTang');
+}
+function tick9(d){
+  scene9.update(d);
+  if(S9.running&&d>0){
+    S9.acc+=d;
+    while(S9.acc>=.8&&S9.running){
+      S9.acc-=.8;S9.week++;stepSim();
+      if(S9.week>=12){finishRun9();break}
+    }
+    S9.dispP+=(S9.P-S9.dispP)*Math.min(1,d*3);
+    scene9.setHealth(S9.dispP);
+    S.t9=(S.t9||0)+d;
+    if(S.t9>.15){S.t9=0;sync9()}
+  }
+}
+
+/* ---- so sánh kết quả ---- */
+function openCmp(){
+  if(S9.runs.length<2)return;
+  const ov=R('ovcmp');
+  S.cmpA=S9.runs.length-2;S.cmpB=S9.runs.length-1;
+  ov.classList.add('on');renderCmp(true);
+}
+function closeCmp(){const o=S.root&&R('ovcmp');if(o)o.classList.remove('on')}
+function renderCmp(first){
+  const ov=R('ovcmp');
+  if(!first){const a=R('cmpa'),b=R('cmpb');S.cmpA=+a.value;S.cmpB=+b.value}
+  const runs=S9.runs,A=runs[S.cmpA],B=runs[S.cmpB];
+  const opts=(sel)=>runs.map((r,i)=>`<option value="${i}" ${i===sel?'selected':''}>Lượt ${r.id} · rắn ${r.s}</option>`).join('');
+  const dots=(ic,n)=>Array.from({length:n},()=>ico(ic)).join('');
+  const cmpChip=(a,b,upGood)=>{const d=b-a;return Math.abs(d)<.03?'<span class="chg eq">= như nhau</span>':d>0?'<span class="chg up">↑ tăng</span>':'<span class="chg dn">↓ giảm</span>'};
+  const card=(r,tag,other)=>{
+    const ps=potatoStatus(r.P);
+    return `<div class="m3-cs"><div class="tag"><span>TRẠNG THÁI ${tag}</span><em>Lượt ${r.id}</em></div><div class="th m3-frozen">${r.thumb}</div>
+    <div class="kv"><span class="ic">${ico('snake')}</span><b>Số rắn</b><span class="dots">${dots('snake',r.s)}</span><span class="tx">${r.s}/10</span>${other?cmpChip(other.s,r.s):''}</div>
+    <div class="kv"><span class="ic">${ico('mouse')}</span><b>Số chuột</b><span class="dots">${dots('mouse',r.mice)}</span><span class="tx">${miceStatus(r.M).t}</span>${other?cmpChip(other.M,r.M):''}</div>
+    <div class="kv"><span class="ic">${ico('potato')}</span><b>Cây khoai</b><span class="dots"></span><span class="tx">${ps.t}</span>${other?cmpChip(other.P,r.P):''}</div></div>`;
+  };
+  let sum;
+  if(A.s===B.s)sum='Hai lượt có cùng số rắn nên kết quả giống nhau. Hãy đổi số rắn rồi chạy thêm một lượt để so sánh.';
+  else{
+    const sr=B.s>A.s?'tăng':'giảm',mc=B.M>A.M?'tăng':'giảm',pt=B.P>A.P?'ít bị phá hại hơn':'bị phá hại nhiều hơn';
+    sum=`<b>Điểm thay đổi:</b> số rắn ${sr} từ ${A.s} lên ${B.s} → chuột ${mc} (${A.mice} → ${B.mice} mô hình) → cây khoai ${pt}. Cân bằng không có nghĩa là loài nào cũng tăng số lượng.`;
+    if(B.s<A.s)sum=`<b>Điểm thay đổi:</b> số rắn giảm từ ${A.s} xuống ${B.s} → chuột ${mc} (${A.mice} → ${B.mice} mô hình) → cây khoai ${pt}. Cân bằng không có nghĩa là loài nào cũng tăng số lượng.`;
+  }
+  ov.innerHTML=`<div class="m3-cmp" role="dialog" aria-modal="true"><header>SO SÁNH KẾT QUẢ<span class="sp"></span>A: <select data-r="cmpa">${opts(S.cmpA)}</select> B: <select data-r="cmpb">${opts(S.cmpB)}</select></header>
+   <div class="bd">${card(A,'A',null)}${card(B,'B',A)}</div><div class="sum">${sum}</div>
+   <div class="ft"><button class="m3-btn" data-r="cmpclose" type="button">Quay lại mô phỏng</button></div></div>`;
+}
+
+/* ---- hình thành kiến thức ---- */
+function openKn(i){
+  S.knStep=i;
+  R('knbd').innerHTML=KN[i].lines.map(l=>`<blockquote>${l}</blockquote>`).join('');
+  R('ovkn').classList.add('on');
+  Aud.play(KN[i].key);
+}
+function closeKn(silent){
+  const o=S.root&&R('ovkn');if(!o||!o.classList.contains('on'))return;
+  o.classList.remove('on');if(!silent)Aud.stop();
+}
+
+/* =====================================================================
+   STEP 10 – TÁC ĐỘNG CON NGƯỜI
+   ===================================================================== */
+function selectTab(i){
+  if(S.step!==1)return;
+  if(i===S10.cur)return;
+  Aud.stop();T.clearAll();
+  loadScenario10(i);
+}
+function loadScenario10(i){
+  S10.cur=i;
+  const sc=SC10[i];
+  $$(S.root,'.m3-tab').forEach((b,k)=>b.setAttribute('aria-selected',k===i?'true':'false'));
+  R('k10').textContent=`Tình huống ${i+1}/3`;R('t10').textContent=sc.title.toUpperCase();R('d10').textContent=sc.desc;
+  R('swl').textContent=sc.sw+':';
+  const mt={field:[['snake','snake','Rắn'],['mouse','mouse','Chuột'],['potato','potato','Cây khoai']],
+            pond:[['fish','fish','Cá'],['shrimp','shrimp','Sinh vật nhỏ'],['weed','weed','Thực vật'],['bird','bird','Chim kiếm ăn']],
+            forest:[['tree','tree','Cây xanh'],['home','home','Nơi trú ẩn'],['animal','animal','Động vật']]}[sc.key];
+  R('mt10').innerHTML=mt.map(r=>rowHtml(r[0],r[1],r[2])).join('');
+  showScene();
+  /* mỗi lần vào một tình huống, công tắc luôn ở trạng thái TẮT */
+  const wasHarm=harmOf(sc);
+  sc.on=false;
+  if(!sc.explored||sc.h<.2)sc.weeks=0;
+  if(!wasHarm&&harmOf(sc)&&sc.h<.12){sc.before=snap(sceneEl10(sc));sc.fired=false}
+  sync10(true);
+}
+function toggleSwitch(){
+  const sc=SC10[S10.cur];
+  const wasHarm=harmOf(sc);
+  sc.on=!sc.on;
+  if(!wasHarm&&harmOf(sc)&&sc.h<.12){sc.before=snap(sceneEl10(sc));sc.fired=false}
+  if(!harmOf(sc))sc.fired=sc.h>.3?sc.fired:false;
+  Aud.stop();
+  if(sc.key==='forest'&&sc.on&&sc.hadHarm)Aud.play(sc.voice);      /* bật bảo vệ rừng sau khi rừng suy giảm */
+  sync10(true);
+}
+function resetScenario10(){
+  const sc=SC10[S10.cur];
+  Aud.stop();T.clearAll();
+  sc.on=false;sc.h=0;sc.weeks=0;sc.fired=false;sc.hadHarm=false;sc.before=null;sc.after=null;sc.key2=null;
+  if(sc.key==='field'){sc.S=5;sc.M=5;sc.P=.85;field10.setHunting(false);field10.setSnakeCount(5);field10.setMouseCount(5,true);field10.setHealth(.85)}
+  else if(sc.key==='pond'){sc.e=0;pond.set({fish:10,small:6,plant:1,bird:'dip',elec:0,desat:0})}
+  else forest.reset();
+  if(harmOf(sc))sc.before=snap(sceneEl10(sc));
+  S.t10Dirty=null;sync10(true);
+}
+function harmOf(sc){return sc.safe?!sc.on:sc.on}
+function sceneEl10(sc){return R(sc.key==='field'?'sc10a':sc.key==='pond'?'sc10b':'sc10c')}
+function weekOf(sc){return Math.floor(sc.weeks)}
+function sync10(full){
+  const sc=SC10[S10.cur];
+  const sw=R('sw');
+  sw.setAttribute('aria-checked',sc.on?'true':'false');sw.classList.toggle('safe',sc.safe);
+  R('clk').textContent='Tuần '+weekOf(sc);R('clkb').style.width=(sc.h*100)+'%';
+  const mt=R('mt10');
+  let rows;
+  if(sc.key==='field'){
+    const ps=potatoStatus(sc.P),ms=miceStatus(sc.M),sn=Math.round(sc.S);
+    rows=[['snake',sc.S/5,sn+' con',sc.S<4.4?'warn':''],['mouse',sc.M/10,ms.t,ms.c],['potato',sc.P,ps.t,ps.c]];
+  }else if(sc.key==='pond'){
+    const f=pond.st;
+    rows=[['fish',f.fish/10,f.fish>=9?'Đông đúc':f.fish>=5?'Thưa dần':'Rất thưa',f.fish>=9?'':f.fish>=5?'warn':'bad'],
+      ['shrimp',f.small/6,f.small>=5?'Nhiều':f.small>=3?'Ít dần':'Rất ít',f.small>=5?'':f.small>=3?'warn':'bad'],
+      ['weed',f.plant,f.plant>=.9?'Xanh tốt':'Kém sinh động',f.plant>=.9?'':'warn'],
+      ['bird',f.bird==='dip'?1:f.bird==='search'?.45:.1,f.bird==='dip'?'Kiếm ăn tốt':f.bird==='search'?'Khó tìm mồi':'Đã rời đi',f.bird==='dip'?'':f.bird==='search'?'warn':'bad']];
+  }else{
+    const s=forest.stats;
+    const t=(v,a,b,c)=>v>.85?a:v>.45?b:c;
+    rows=[['tree',s.trees,t(s.trees,'Xanh tốt','Thưa dần','Còn rất ít'),s.trees>.85?'':s.trees>.45?'warn':'bad'],
+      ['home',s.shelter,t(s.shelter,'Đầy đủ','Thu hẹp','Gần như mất'),s.shelter>.85?'':s.shelter>.45?'warn':'bad'],
+      ['animal',s.animals,t(s.animals,'Đông đủ','Rời đi dần','Rất ít'),s.animals>.85?'':s.animals>.45?'warn':'bad']];
+  }
+  rows.forEach(r=>setRow(mt,r[0],r[1],r[2],r[3]));
+  /* thông tin & trước/sau */
+  const inf=R('inf');
+  let itx=null,good=false;
+  if(sc.key==='forest'){
+    if(harmOf(sc)&&sc.h>=.5)itx=sc.infoHarm;
+    else if(!harmOf(sc)&&sc.hadHarm){itx=sc.info;good=true}
+  }else if(sc.explored&&(harmOf(sc)||sc.h>.2)){itx=sc.info;good=!harmOf(sc)}
+  inf.hidden=itx==null;
+  if(itx!=null){inf.textContent=itx;inf.className='m3-info'+(good?' good':'')}
+  const fig=(el,html,ph)=>{$$(el,'.m3-frozen,.empty').forEach(n=>n.remove());el.insertAdjacentHTML('beforeend',html?`<div class="m3-frozen" style="position:absolute;inset:0">${html}</div>`:`<div class="empty">${ph}</div>`)};
+  if(full||S.t10Dirty!==S10.cur+':'+(sc.before?1:0)+(sc.after?1:0)){
+    fig(R('bf'),sc.before,sc.safe?'Tắt bảo vệ rừng để lưu lại trạng thái trước':'Bật công tắc để lưu lại trạng thái trước');
+    fig(R('af'),sc.after,'Quan sát thêm để xem trạng thái sau');
+    S.t10Dirty=S10.cur+':'+(sc.before?1:0)+(sc.after?1:0);
+  }
+  R('chips').innerHTML=SC10.map(s=>`<span class="m3-chip ${s.explored?'done':''}">${CHECK_SVG.replace('#fff','#1d6b46')}${s.tab}</span>`).join('');
+  $$(S.root,'.m3-tab').forEach((b,k)=>b.classList.toggle('done',SC10[k].explored));
+  R('kn10').hidden=!SC10.every(s=>s.explored);
+}
+function tick10(d){
+  const sc=SC10[S10.cur];
+  const harm=harmOf(sc);
+  const target=harm?1:0;
+  if(d>0){
+    const rate=harm?sc.up:sc.down;
+    if(sc.key!=='field')sc.h+=clamp(target-sc.h,-rate*d,rate*d);
+    sc.weeks+=d/1.2;
+    if(sc.key==='field'){
+      field10.setHunting(sc.on);
+      const act=field10.activeSnakes();
+      if(sc.on)sc.S=act;
+      else{sc.S=Math.min(5,Math.max(sc.S,act)+.13*d);field10.setSnakeCount(Math.floor(sc.S+.001))}
+      sc.h=clamp((5-act)/4,0,1);
+      sc.M=clamp(sc.M+(9-.8*sc.S-sc.M)*.22*d,.5,10);
+      if(sc.M>5)sc.P=clamp(sc.P-.009*(sc.M-5)*d,0,1);
+      else if(sc.P<.85)sc.P=Math.min(.85,sc.P+.02*(5-sc.M)*d);
+      field10.setMouseCount(Math.round(sc.M));field10.setHealth(sc.P);
+    }else if(sc.key==='pond'){
+      sc.e+=clamp((harm?1:0)-sc.e,-1.5*d,1.5*d);
+      const fish=Math.round(10-8*sc.h),small=Math.round(6-5*sc.h);
+      const st={fish,small,plant:Math.round((1-.35*sc.h)*50)/50,bird:fish>=6?'dip':fish>=3?'search':'away',elec:Math.round(sc.e*50)/50,desat:Math.round(sc.h*50)/50};
+      const key=JSON.stringify(st);
+      if(key!==sc.key2){sc.key2=key;pond.set(st)}
+    }else{
+      forest.setH(sc.h);
+    }
+    /* kết quả xuất hiện khi tác động đã thể hiện rõ */
+    if(harm&&sc.h>=.895&&!sc.fired){      /* suy giảm đủ rõ (rừng: khoảng Tuần 30) */
+      sc.fired=true;sc.explored=true;sc.after=snap(sceneEl10(sc));
+      sync10(true);
+      Aud.play(sc.voice);
+    }
+    if(!harm&&sc.h<.25)sc.fired=false;
+    if(harm&&sc.h>=.3)sc.hadHarm=true;
+  }
+  if(sc.key==='field')field10.update(d);else if(sc.key==='pond')pond.update(d);else forest.update(d);
+  S10.acc+=d;
+  if(S10.acc>.2){S10.acc=0;sync10(false)}
+}
+
+/* =====================================================================
+   STEP 11 – BẢO VỆ CÂN BẰNG
+   ===================================================================== */
+const ART={
+  plant:()=>`<svg viewBox="0 0 120 72"><rect width="120" height="72" fill="#cfe9f3"/><circle cx="100" cy="13" r="8" fill="#ffe58a"/><path d="M0 52C30 44 80 46 120 50L120 72L0 72Z" fill="#8cc06a"/><rect x="52" y="30" width="7" height="26" rx="2" fill="#7a5638"/><path d="${blob(56,24,24,18,11,3,.22)}" fill="#4a954b"/><path d="${blob(48,28,14,10,9,4,.2)}" fill="#66b361"/><path d="${blob(66,19,13,9,9,5,.2)}" fill="#86c97a"/><path d="M90 60L90 49" stroke="#4f8b3d" stroke-width="2.2"/><ellipse cx="85" cy="48" rx="6" ry="3.2" fill="#5fae4a" transform="rotate(-30 85 48)"/><ellipse cx="95" cy="46" rx="6" ry="3.2" fill="#6fbd58" transform="rotate(25 95 46)"/><path d="${blob(20,56,16,8,8,6,.25)}" fill="#4f9a4f"/></svg>`,
+  hunt:()=>`<svg viewBox="0 0 120 72"><rect width="120" height="72" fill="#d6e9d2"/><path d="M0 54C30 48 80 50 120 52L120 72L0 72Z" fill="#8cb86a"/><g opacity=".4" fill="none" stroke="#7a5a3a" stroke-width="1.3" stroke-dasharray="3 2"><ellipse cx="22" cy="44" rx="11" ry="6"/><path d="M30 40L33 30L38 30"/><ellipse cx="102" cy="46" rx="9" ry="5"/></g><g><path d="M46 56L45 66M54 57L54 66M72 56L72 66M80 55L81 66" stroke="#8a6a44" stroke-width="3" stroke-linecap="round"/><ellipse cx="63" cy="48" rx="22" ry="10" fill="#b98a58"/><ellipse cx="62" cy="52" rx="16" ry="5" fill="#e3c9a2"/><path d="M80 46C84 38 86 32 88 28L94 30C92 36 90 42 88 50Z" fill="#b98a58"/><ellipse cx="94" cy="27" rx="8" ry="5.5" fill="#b98a58" transform="rotate(-12 94 27)"/><circle cx="96" cy="26" r="1.5" fill="#222"/><circle cx="101" cy="28" r="1.5" fill="#4a3322"/><path d="M90 22L88 14M90 19L84 15M93 21L96 12M94 18L100 14" stroke="#7a5a3a" stroke-width="1.8" stroke-linecap="round"/><ellipse cx="38" cy="46" rx="3" ry="4" fill="#fff"/></g></svg>`,
+  fish:()=>`<svg viewBox="0 0 120 72"><defs><linearGradient id="${P}ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#98e4e8"/><stop offset="1" stop-color="#1b6c84"/></linearGradient></defs><rect width="120" height="72" fill="url(#${P}ag)"/><path d="M0 12Q15 8 30 12T60 12T90 12T120 12" stroke="#fff" stroke-width="1.4" fill="none" opacity=".6"/><path d="M0 66Q30 62 60 66T120 64L120 72L0 72Z" fill="#8d7552"/><g transform="translate(46 44)">${fishMarkup(40,17,'#e9a23f','#f7d594','#e2762a',0)}</g><g transform="translate(88 30) scale(-1 1)">${fishMarkup(26,11,'#cfdde6','#f4f9fb','#a9c3d1',0)}</g><path d="M26 64q3-14 4-3M38 64q-2-10 3-6" stroke="#3f9a58" stroke-width="2.4" fill="none"/><g transform="translate(20 22)"><path d="M6-16L-7 4L0 4L-4 16L10-5L3-5Z" fill="#ffd21f" stroke="#a8791a" stroke-width="1.2" stroke-linejoin="round"/></g></svg>`,
+  habitat:()=>`<svg viewBox="0 0 120 72"><rect width="120" height="72" fill="#d3ebd6"/><path d="M0 54C30 48 80 50 120 52L120 72L0 72Z" fill="#7fb35e"/><path d="M-4 54C14 52 34 52 48 54" stroke="#a8814a" stroke-width="3" fill="none" stroke-linecap="round" opacity=".0"/><rect x="36" y="26" width="9" height="32" rx="2" fill="#7a5638"/><path d="${blob(40,20,28,20,12,8,.22)}" fill="#3f8d47"/><path d="${blob(32,24,15,11,9,9,.2)}" fill="#58a652"/><path d="${blob(48,15,14,10,9,10,.2)}" fill="#7fc06a"/><ellipse cx="41" cy="38" rx="9" ry="5.5" fill="#7a5a2c"/><ellipse cx="41" cy="36" rx="7" ry="3.5" fill="#a07a3c"/><ellipse cx="38" cy="33" rx="4" ry="3" fill="#f2c94c"/><circle cx="40" cy="32" r="3.4" fill="#fbfbf3"/><path d="M42 32L47 33L42 34Z" fill="#e7a23a"/><circle cx="40.8" cy="31.4" r=".9" fill="#111"/><g transform="translate(84 60)"><ellipse cx="0" cy="-8" rx="13" ry="9" fill="#cdb79b"/><circle cx="11" cy="-14" r="7" fill="#cdb79b"/><path d="M8-19C5-30 8-34 11-32C13-28 12-22 12-19ZM13-19C12-29 15-33 18-30C19-27 17-22 16-18Z" fill="#cdb79b"/><circle cx="14" cy="-15" r="1.4" fill="#222"/><circle cx="-12" cy="-10" r="4" fill="#fbfbf8"/></g><g stroke="#a8814a" stroke-width="2.4" stroke-linecap="round"><path d="M70 62L70 52M82 62L82 52M96 62L96 52M108 62L108 52M68 56L110 56"/></g></svg>`
+};
+function renderTasks11(){
+  const t=R('tasks11');if(!t)return;
+  const chip=(ok,cur,l)=>`<div class="m3-row"><span class="ic" style="${ok?'background:#dff3e6':cur?'background:#e0eef0':''}">${ok?CHECK_SVG.replace('#fff','#1d6b46'):'<b style="font-size:12px;color:var(--brand-dark)">'+(cur?'▶':'•')+'</b>'}</span><span class="nm" style="min-width:0;flex:1">${l}</span><span class="st">${ok?'Xong':cur?'Đang làm':''}</span></div>`;
+  t.innerHTML=chip(S11.q1ok,S11.phase==='q1','Nhiệm vụ 1: Phân loại hành động')+chip(S11.q2ok,S11.phase==='q2','Nhiệm vụ 2: Xử lí tình huống')+chip(S11.phase==='summary',false,'Em cần nhớ');
+  const tips={q1:'Kéo thả thẻ vào ô NÊN LÀM / KHÔNG NÊN LÀM, hoặc chạm vào thẻ rồi chạm vào ô cần đặt.',q2:'Đọc kĩ tình huống và chọn cách ứng xử phù hợp nhất. Em có thể chọn lại nếu chưa đúng.',summary:'Em đã hoàn thành hai nhiệm vụ! Hãy ghi nhớ ba ý chính.'};
+  R('tip11').textContent=tips[S11.phase];
+}
+function dotsHtml(){
+  const cur=S11.phase;
+  const d=(n,k,done,dis)=>`<button class="m3-qdot ${cur===k?'cur':''} ${done&&cur!==k?'done':''}" type="button" data-act="goto" data-to="${k}" ${dis?'disabled':''}>${done&&cur!==k?CHECK_SVG:n}</button>`;
+  return `<div class="m3-qdots">${d(1,'q1',S11.q1ok,false)}${d(2,'q2',S11.q2ok,false)}${d('★','summary',false,!S11.q2ok)}</div>`;
+}
+function renderPractice(){
+  const pr=R('prac');
+  renderTasks11();
+  if(S11.phase==='q1'){
+    const placed=Object.values(S11.loc).filter(z=>z!=='tray').length;
+    const card=id=>{
+      const c=CARDS[id],mk=S11.marks[id];
+      return `<div class="m3-card11 ${S11.sel===id?'sel':''} ${mk||''}" data-id="${id}"><div class="art">${ART[c.art]()}</div><div class="cap">${c.t}</div><span class="mk">${mk==='ok'?CHECK_SVG:mk==='no'?CROSS_SVG:''}</span></div>`;
+    };
+    const inZone=z=>CARD_ORDER.filter(id=>S11.loc[id]===z).map(card).join('');
+    const correct=S11.q1ok;
+    pr.innerHTML=`<div class="m3-pcard"><div class="m3-qhead">${dotsHtml()}<div><h3 class="m3-qtitle">Việc nào nên làm để giữ cân bằng chuỗi thức ăn?</h3><p class="m3-qsub">Kéo thả thẻ vào đúng khu vực, hoặc chạm vào thẻ rồi chạm vào khu vực.</p></div></div>
+    <div class="m3-board"><div class="m3-tray" data-zone="tray">${inZone('tray')}</div>
+    <div class="m3-zones"><div class="m3-zone good" data-zone="good"><h4>NÊN LÀM</h4><div class="slot">${inZone('good')}</div></div><div class="m3-zone bad" data-zone="bad"><h4>KHÔNG NÊN LÀM</h4><div class="slot">${inZone('bad')}</div></div></div></div>
+    <div class="m3-hint ${S11.hintOk?'':''}" ${S11.hint?'':'hidden'} style="${S11.hintOk?'background:#e9f8ef;color:#1b6b43;border-color:#b9e2c9':''}">${S11.hint}</div>
+    <div class="m3-acts"><button class="m3-btn" type="button" data-act="check" ${placed<4?'disabled':''}>Kiểm tra</button><button class="m3-btn gold" type="button" data-act="toq2" ${correct?'':'hidden'}>Sang nhiệm vụ 2 ▶</button></div></div>`;
+  }else if(S11.phase==='q2'){
+    pr.innerHTML=`<div class="m3-pcard"><div class="m3-qhead">${dotsHtml()}<div><h3 class="m3-qtitle">Xử lí tình huống</h3><p class="m3-qsub">Chọn cách làm phù hợp nhất.</p></div></div>
+    <div class="m3-situation">Trên một cánh đồng, người dân săn bắt rắn quá nhiều. Sau một thời gian, chuột xuất hiện ngày càng nhiều và phá hại cây trồng. Theo em, việc làm nào giúp góp phần giữ cân bằng chuỗi thức ăn?</div>
+    <div class="m3-opts">${Q2_OPTS.map((o,i)=>`<button class="m3-opt ${S11.rightOpt===i?'right':''} ${S11.wrongOpt[i]?'wrong':''}" type="button" data-opt="${i}"><b>${'ABCD'[i]}</b><span>${o}</span></button>`).join('')}</div>
+    <div class="m3-fb ${S11.fb?S11.fb.c:''}" ${S11.fb?'':'hidden'}>${S11.fb?S11.fb.t:''}</div>
+    <div class="m3-acts"><button class="m3-btn gold" type="button" data-act="tosum" ${S11.q2ok?'':'hidden'}>Xem tổng kết ▶</button></div></div>`;
+  }else{
+    pr.innerHTML=`<div class="m3-pcard"><div class="m3-qhead">${dotsHtml()}<div><h3 class="m3-qtitle">Tổng kết</h3></div></div>
+    <div class="m3-sum"><div><h2>EM CẦN NHỚ</h2><ul><li><i>1</i><span>Các sinh vật trong chuỗi thức ăn có mối quan hệ phụ thuộc lẫn nhau.</span></li><li><i>2</i><span>Khi số lượng một loài thay đổi quá nhiều, các loài khác cũng có thể bị ảnh hưởng và làm mất cân bằng chuỗi thức ăn.</span></li><li><i>3</i><span>Con người cần bảo vệ thực vật, động vật và môi trường sống để góp phần duy trì cân bằng tự nhiên.</span></li></ul>
+    <div class="m3-msg">Bảo vệ thiên nhiên là góp phần giữ cân bằng chuỗi thức ăn.</div></div>
+    <div class="m3-sumart">${sumArt()}</div></div>
+    <div class="m3-acts"><button class="m3-btn alt" type="button" data-act="redo">Làm lại</button></div></div>`;
+  }
+}
+function sumArt(){
+  const plant=potatoPlant(0,92,168,.95,321,true).replace(/class="plant"/,'class="plant" style="--lf:#4ea044;--lf2:#3b8738"');
+  return `<svg viewBox="0 0 250 200" preserveAspectRatio="xMidYMid slice"><rect width="250" height="200" fill="${u('sky')}"/><circle cx="214" cy="30" r="14" fill="#fff6b5"/>
+  <path d="M-10 112C40 90 90 104 140 96S220 92 260 100L260 210L-10 210Z" fill="#9ccb7a"/><path d="M-10 150C60 138 150 146 260 140L260 210L-10 210Z" fill="#b99565"/><path d="M-10 168C60 162 160 168 260 160L260 210L-10 210Z" fill="#8a5f3a"/>
+  <ellipse cx="62" cy="186" rx="9" ry="6" fill="#d2a266"/><ellipse cx="98" cy="190" rx="10" ry="6" fill="#d2a266" transform="rotate(-10 98 190)"/><ellipse cx="118" cy="184" rx="8" ry="5" fill="#d2a266"/>
+  ${plant}<g transform="translate(176 166) scale(.9)">${mouseMarkup().replace('class="mo run"','class="mo"')}</g>
+  <path d="M20 150C40 134 60 160 84 148S120 136 140 148" fill="none" stroke="#6b6a32" stroke-width="9" stroke-linecap="round"/><path d="M20 152C40 137 60 162 84 151S120 139 140 150" fill="none" stroke="#b9b073" stroke-width="3" stroke-linecap="round" opacity=".8"/><path d="M26 143l7-3 3 7-6 4z" fill="#6c6a31" transform="translate(-14 4) scale(.7)"/><circle cx="144" cy="148" r="1.4" fill="#111"/></svg>`;
+}
+function practiceAction(a,b){
+  if(a==='goto'){
+    const to=b.dataset.to;if(to===S11.phase)return;
+    if(to==='summary'&&!S11.q2ok)return;
+    enter11(to);return;
+  }
+  if(a==='check')checkQ1();
+  else if(a==='toq2')enter11('q2');
+  else if(a==='tosum')enter11('summary');
+  else if(a==='redo'){
+    Aud.stop();T.clearAll();
+    Object.assign(S11,{phase:'q1',loc:{0:'tray',1:'tray',2:'tray',3:'tray'},marks:{},q1ok:false,q2ok:false,sel:null,hint:'',hintOk:false,fb:null,wrongOpt:{},rightOpt:null});
+    renderPractice();
+    Aud.play('S11_Q01');
+  }else if(a==='finish'){
+    toast('Chúc mừng em đã hoàn thành Bài 30!');
+    S.root.dispatchEvent(new CustomEvent(P+'complete',{bubbles:true,detail:{module:'canBangChuoiThucAn'}}));
+  }
+}
+function enter11(ph){
+  Aud.stop();T.clearAll();
+  S11.phase=ph;S11.sel=null;renderPractice();
+  if(ph==='q1')Aud.play('S11_Q01');
+  else if(ph==='q2')Aud.play('S11_Q02');
+  else{S.root.dispatchEvent(new CustomEvent(P+'complete',{bubbles:true,detail:{module:'canBangChuoiThucAn'}}));Aud.play('S11_KetLuan')}
+}
+function checkQ1(){
+  let allOk=true;S11.marks={};
+  CARDS.forEach(c=>{const ok=S11.loc[c.id]===c.ans;S11.marks[c.id]=ok?'ok':'no';if(!ok)allOk=false});
+  S11.q1ok=allOk;S11.sel=null;
+  if(allOk){S11.hint='Chính xác! Trồng cây và bảo vệ nơi sống giúp giữ cân bằng, còn săn bắt quá mức hay đánh bắt bằng điện làm giảm sinh vật.';S11.hintOk=true;beep(true)}
+  else{S11.hint='Có thẻ chưa đúng. Hãy nghĩ xem việc làm đó giúp hay làm hại sinh vật và nơi sống của chúng. Em có thể kéo thẻ sang ô khác rồi kiểm tra lại.';S11.hintOk=false;beep(false)}
+  renderPractice();
+}
+function pickOpt(i){
+  if(S.step!==2||S11.phase!=='q2'||S11.q2ok)return;
+  if(i===1){
+    S11.q2ok=true;S11.rightOpt=1;S11.wrongOpt={};
+    S11.fb={c:'ok',t:'Chính xác! Bảo vệ các sinh vật và môi trường sống giúp hạn chế nguy cơ mất cân bằng chuỗi thức ăn.'};
+    beep(true);renderPractice();
+    T.set(()=>{if(S.step===2&&S11.phase==='q2')enter11('summary')},2800);
+  }else{
+    S11.wrongOpt[i]=true;
+    S11.fb={c:'no',t:'Hãy nghĩ đến mối quan hệ giữa rắn, chuột và cây trồng.'};
+    beep(false);renderPractice();
+  }
+}
+/* ---- kéo thả ---- */
+let dnd=null;
+function placeCard(id,zone){
+  if(S11.loc[id]===zone)return;
+  S11.loc[id]=zone;delete S11.marks[id];S11.q1ok=false;S11.hint='';S11.sel=null;
+  renderPractice();
+}
+function zoneClick(e){
+  if(S.step!==2||S11.phase!=='q1'||S11.sel==null)return;
+  if(e.target.closest('.m3-card11'))return;
+  const z=e.target.closest('[data-zone]');if(!z)return;
+  placeCard(S11.sel,z.dataset.zone);
+}
+function dndDown(e){
+  if(S.step!==2||S11.phase!=='q1')return;
+  const c=e.target.closest('.m3-card11');if(!c||dnd)return;
+  dnd={c,id:+c.dataset.id,sx:e.clientX,sy:e.clientY,moved:false,ghost:null,w:c.offsetWidth,hl:null};
+  window.addEventListener('pointermove',dndMove);window.addEventListener('pointerup',dndUp);window.addEventListener('pointercancel',dndCancel);
+}
+function dndStop(){
+  window.removeEventListener('pointermove',dndMove);window.removeEventListener('pointerup',dndUp);window.removeEventListener('pointercancel',dndCancel);
+  if(dnd&&dnd.ghost)dnd.ghost.remove();
+  if(dnd&&dnd.hl)dnd.hl.classList.remove('hl');
+  dnd=null;
+}
+function dndCancel(){dndStop()}
+function dndMove(e){
+  if(!dnd)return;
+  const dx=e.clientX-dnd.sx,dy=e.clientY-dnd.sy;
+  if(!dnd.moved&&Math.hypot(dx,dy)>6){
+    dnd.moved=true;
+    const g=dnd.c.cloneNode(true);g.classList.add('ghostc');g.style.width=dnd.w+'px';
+    document.body.appendChild(g);dnd.ghost=g;dnd.c.style.opacity='.35';
+  }
+  if(dnd.moved){
+    dnd.ghost.style.left=(e.clientX-dnd.w/2)+'px';dnd.ghost.style.top=(e.clientY-40)+'px';
+    const el=document.elementFromPoint(e.clientX,e.clientY);
+    const z=el&&el.closest('[data-zone]');
+    if(dnd.hl&&dnd.hl!==z)dnd.hl.classList.remove('hl');
+    if(z&&z.classList.contains('m3-zone')){z.classList.add('hl');dnd.hl=z}else dnd.hl=null;
+  }
+}
+function dndUp(e){
+  if(!dnd)return;
+  const d=dnd;
+  if(d.moved){
+    const el=document.elementFromPoint(e.clientX,e.clientY);
+    const z=el&&el.closest('[data-zone]');
+    dndStop();
+    if(z)placeCard(d.id,z.dataset.zone);else renderPractice();
+  }else{
+    dndStop();
+    S11.sel=S11.sel===d.id?null:d.id;
+    renderPractice();
+  }
+}
+
+
+/* =====================================================================
+   VÒNG LẶP, API MODULE, KHỞI ĐỘNG
+   ===================================================================== */
+function tickView(dt){
+  const c=S.cam,three=is3D();
+  if(S.auto){S.autoT+=dt;if(three)c.tyaw+=dt*.2;else{S.tpx=Math.sin(S.autoT*.45)*.9;S.tpy=Math.sin(S.autoT*.3)*.35}}
+  const k=Math.min(1,dt*5);
+  S.px=lerp(S.px,S.tpx,k);S.py=lerp(S.py,S.tpy,k);
+  c.yaw=lerp(c.yaw,c.tyaw,k);c.pitch=lerp(c.pitch,c.tpitch,k);c.dist=lerp(c.dist,c.tdist,k);
+  if(three){(S.step===0?scene9:field10).setView(c.yaw,c.pitch,c.dist)}
+  else{const el=activeSceneEl();if(el){el.style.setProperty('--px',S.px.toFixed(3));el.style.setProperty('--py',S.py.toFixed(3))}}
+}
+function loop(ts){
+  S.raf=requestAnimationFrame(loop);
+  const dt=Math.min(.05,Math.max(0,(ts-S.last)/1000));S.last=ts;
+  if(S.introOn)return;                /* intro: ảnh tĩnh */
+  if(!S.active)return;
+  tickView(dt);
+  const d=S.paused?0:dt;
+  if(S.step===0)tick9(d);else if(S.step===1)tick10(d);
+}
+function startLoop(){if(!S.raf){S.last=performance.now();S.raf=requestAnimationFrame(loop)}}
+function stopLoop(){if(S.raf){cancelAnimationFrame(S.raf);S.raf=0}}
+
+function introStart(){
+  R('intro').classList.remove('on');S.introOn=false;
+  mod.activate(0);
+}
+
+const mod={
+  key:'canBangChuoiThucAn',
+  stepLabels:STEP_LABELS.slice(),
+  init(){build();return Promise.resolve()},
+  showIntro(){
+    build();S.root.hidden=false;S.active=false;S.introOn=true;
+    R('intro').classList.add('on');startLoop();
+  },
+  activate(localIndex){
+    build();
+    S.root.hidden=false;R('intro').classList.remove('on');S.introOn=false;
+    S.active=true;startLoop();
+    gotoStep(typeof localIndex==='number'?localIndex:0,{force:true});
+    return Promise.resolve();
+  },
+  gotoLocalStep(localIndex){gotoStep(localIndex);return Promise.resolve()},
+  /* trợ giúp kiểm thử: chạy nhanh đồng hồ mô phỏng (không dùng trong bài giảng) */
+  _advance(sec){const n=Math.ceil(sec/.05);for(let i=0;i<n&&S.active;i++){tickView(.05);const d=S.paused?0:.05;if(S.step===0)tick9(d);else if(S.step===1)tick10(d)}},
+  deactivate(){
+    if(!S.built)return;
+    S.active=false;S.introOn=false;stopLoop();
+    Aud.stop();T.clearAll();dndStop();
+    closeKn(true);closeCmp();
+    if(S9.running)abortRun9();
+    S.paused=false;refreshPause();
+    S.root.classList.remove('m3-playing');GLS.hide();
+    S.root.hidden=true;
+  }
+};
+window.LessonModules=window.LessonModules||{};
+window.LessonModules.canBangChuoiThucAn=mod;
+
+if(!window.KH4B30_M03_MANUAL){
+  const boot=()=>mod.showIntro();
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+}
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Step 13: Chuột Đồng Sinh Tồn - Khoa Học Lớp 4</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #0f2e2e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #game-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1280px;
+            aspect-ratio: 16 / 9;
+            max-height: 100vh;
+            background: #e8f8f5;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+            border: 4px solid #195658;
+        }
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        /* HUD THANH THÔNG TIN PHÍA TRÊN */
+        #hud {
+            position: absolute;
+            top: 14px;
+            left: 18px;
+            right: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .hud-box {
+            background: rgba(255, 255, 255, 0.92);
+            border: 3px solid #195658;
+            border-radius: 999px;
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.14);
+            font-weight: 800;
+            color: #195658;
+            font-size: clamp(15px, 1.8vw, 22px);
+        }
+        .hearts-container {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .heart-svg {
+            width: clamp(24px, 2.5vw, 32px);
+            height: clamp(24px, 2.5vw, 32px);
+            transition: transform 0.25s ease, opacity 0.25s ease;
+        }
+        .heart-svg.lost {
+            opacity: 0.25;
+            transform: scale(0.8);
+            filter: grayscale(100%);
+        }
+        #timer-box {
+            background: #195658;
+            color: #ffffff;
+            border-color: #ffffff;
+            min-width: 150px;
+            justify-content: center;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        #timer-box.urgent {
+            background: #e63946;
+            animation: pulseUrgent 0.55s infinite alternate;
+        }
+        @keyframes pulseUrgent {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+        /* NÚT ĐIỀU KHIỂN LÊN / XUỐNG CHO TABLET & CẢM ỨNG */
+        #touch-controls {
+            position: absolute;
+            bottom: 18px;
+            right: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 15;
+        }
+        .ctrl-btn {
+            width: clamp(64px, 7.5vw, 84px);
+            height: clamp(64px, 7.5vw, 84px);
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 4px solid #195658;
+            box-shadow: 0 6px 0 #195658, 0 8px 16px rgba(0,0,0,0.22);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: #195658;
+            font-weight: 800;
+            font-size: clamp(11px, 1.1vw, 13px);
+            transition: transform 0.08s, box-shadow 0.08s, background-color 0.15s;
+            touch-action: manipulation;
+        }
+        .ctrl-btn:active, .ctrl-btn.pressed {
+            transform: translateY(5px);
+            box-shadow: 0 1px 0 #195658;
+            background: #d1f2eb;
+        }
+        .ctrl-btn svg {
+            width: 50%;
+            height: 50%;
+            fill: #195658;
+        }
+        /* HIỆU ỨNG COMBO NỔI BẬT */
+        #combo-banner {
+            position: absolute;
+            top: 78px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.7);
+            background: linear-gradient(135deg, #ffb703, #fb8500);
+            color: #fff;
+            padding: 8px 26px;
+            border-radius: 999px;
+            font-weight: 900;
+            font-size: clamp(18px, 2.2vw, 28px);
+            border: 3px solid #fff;
+            box-shadow: 0 8px 20px rgba(251, 133, 0, 0.45);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 12;
+            transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+        #combo-banner.show {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+        /* MÀN HÌNH OVERLAY (BẮT ĐẦU & KẾT THÚC) */
+        .overlay-screen {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 46, 46, 0.68);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 30;
+            padding: 16px;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .modal-card {
+            background: #f6fbfc;
+            border: 5px solid #195658;
+            border-radius: 28px;
+            padding: clamp(18px, 2.8vw, 32px);
+            max-width: 680px;
+            width: 94%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.38);
+            animation: popIn 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+        @keyframes popIn {
+            from { transform: scale(0.86); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .badge-step {
+            display: inline-block;
+            background: #00aaab;
+            color: #fff;
+            font-weight: 800;
+            font-size: clamp(12px, 1.3vw, 15px);
+            padding: 5px 16px;
+            border-radius: 999px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        .game-title {
+            color: #195658;
+            font-size: clamp(24px, 3.4vw, 40px);
+            font-weight: 900;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 0 rgba(25, 86, 88, 0.12);
+        }
+        .hero-illustration {
+            width: clamp(150px, 24vw, 210px);
+            height: clamp(95px, 15vw, 130px);
+            margin: 6px auto 12px;
+            background: linear-gradient(180deg, #b8ecff 0%, #8fd974 68%, #68b849 100%);
+            border-radius: 20px;
+            border: 3px solid #195658;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .short-guide {
+            color: #1f4e50;
+            font-size: clamp(15px, 1.7vw, 19px);
+            font-weight: 700;
+            line-height: 1.45;
+            margin-bottom: 14px;
+            padding: 0 8px;
+        }
+        .controls-preview {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            background: #e2f3f5;
+            border: 2px dashed #00aaab;
+            padding: 10px 20px;
+            border-radius: 16px;
+            margin-bottom: 18px;
+            color: #195658;
+            font-weight: 700;
+            font-size: clamp(13px, 1.4vw, 16px);
+        }
+        .key-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            border: 2px solid #195658;
+            border-radius: 10px;
+            padding: 4px 10px;
+            font-weight: 900;
+            box-shadow: 0 3px 0 #195658;
+            margin: 0 2px;
+        }
+        .btn-primary {
+            background: linear-gradient(180deg, #00c4c6 0%, #00aaab 100%);
+            color: #ffffff;
+            border: 3px solid #195658;
+            border-radius: 999px;
+            padding: 12px 38px;
+            font-size: clamp(18px, 2.2vw, 24px);
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #195658, 0 10px 20px rgba(0, 170, 171, 0.35);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        .btn-primary:hover {
+            filter: brightness(1.05);
+        }
+        .btn-primary:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #195658;
+        }
+        .btn-secondary {
+            background: #ffffff;
+            color: #195658;
+            border: 3px solid #195658;
+            border-radius: 999px;
+            padding: 12px 30px;
+            font-size: clamp(16px, 1.9vw, 20px);
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #195658;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        .btn-secondary:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #195658;
+        }
+        /* BẢNG KẾT QUẢ */
+        .stars-row {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 8px 0 12px;
+        }
+        .star-icon {
+            width: clamp(38px, 4.5vw, 52px);
+            height: clamp(38px, 4.5vw, 52px);
+            fill: #d0d7de;
+            stroke: #195658;
+            stroke-width: 2px;
+            transition: transform 0.3s ease;
+        }
+        .star-icon.earned {
+            fill: #ffb703;
+            filter: drop-shadow(0 4px 8px rgba(255, 183, 3, 0.5));
+            transform: scale(1.08);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 10px 0 14px;
+        }
+        .stat-item {
+            background: #ffffff;
+            border: 2px solid #00aaab;
+            border-radius: 16px;
+            padding: 8px 6px;
+        }
+        .stat-label {
+            font-size: clamp(11px, 1.2vw, 14px);
+            color: #52797a;
+            font-weight: 700;
+        }
+        .stat-value {
+            font-size: clamp(18px, 2.2vw, 26px);
+            color: #195658;
+            font-weight: 900;
+            margin-top: 2px;
+        }
+        .feedback-text {
+            font-weight: 800;
+            color: #008080;
+            font-size: clamp(14px, 1.6vw, 18px);
+            margin-bottom: 10px;
+        }
+        .knowledge-box {
+            background: #e6f7f8;
+            border-left: 6px solid #00aaab;
+            border-radius: 12px;
+            padding: 10px 14px;
+            text-align: left;
+            color: #195658;
+            font-size: clamp(13px, 1.4vw, 15px);
+            line-height: 1.45;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+        .action-row {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        #completed-badge {
+            margin-top: 10px;
+            color: #195658;
+            font-weight: 800;
+            font-size: 15px;
+            background: #d4edda;
+            border: 2px solid #28a745;
+            padding: 6px 16px;
+            border-radius: 999px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+<div id="game-wrapper">
+    <!-- THANH HUD KHI ĐANG CHƠI -->
+    <div id="hud" class="hidden">
+        <div class="hud-box">
+            <span>Sinh mạng:</span>
+            <div class="hearts-container" id="hearts-list"></div>
+        </div>
+        <div class="hud-box" id="timer-box">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="13" r="8"></circle>
+                <path d="M12 9v4l2.5 2.5"></path>
+                <path d="M9 3h6"></path>
+            </svg>
+            <span id="time-display">60s</span>
+        </div>
+        <div class="hud-box">
+            <span>Điểm:</span>
+            <span id="score-display">0</span>
+        </div>
+    </div>
+
+    <!-- THÔNG BÁO COMBO -->
+    <div id="combo-banner">COMBO +20!</div>
+
+    <!-- CANVAS CHÍNH -->
+    <canvas id="game-canvas" width="1280" height="720"></canvas>
+
+    <!-- NÚT ĐIỀU KHIỂN LÊN / XUỐNG -->
+    <div id="touch-controls" class="hidden">
+        <button class="ctrl-btn" id="btn-up" aria-label="Chuyển lên làn trên">
+            <svg viewBox="0 0 24 24"><path d="M12 5l-8 9h5v5h6v-5h5z"/></svg>
+            <span>LÊN</span>
+        </button>
+        <button class="ctrl-btn" id="btn-down" aria-label="Chuyển xuống làn dưới">
+            <svg viewBox="0 0 24 24"><path d="M12 19l8-9h-5V5H9v5H4z"/></svg>
+            <span>XUỐNG</span>
+        </button>
+    </div>
+
+    <!-- MÀN HÌNH BẮT ĐẦU -->
+    <div id="start-screen" class="overlay-screen">
+        <div class="modal-card">
+            <span class="badge-step">KHOA HỌC 4 • BÀI 30: CHUỖI THỨC ĂN TRONG TỰ NHIÊN</span>
+            <h1 class="game-title">CHUỘT ĐỒNG SINH TỒN</h1>
+            <div class="hero-illustration">
+                <svg width="170" height="110" viewBox="0 0 170 110">
+                    <!-- Bông lúa nền -->
+                    <path d="M25 105 Q30 65 48 45" stroke="#eab308" stroke-width="4" fill="none" stroke-linecap="round"/>
+                    <ellipse cx="45" cy="48" rx="6" ry="3.5" transform="rotate(-30 45 48)" fill="#facc15"/>
+                    <ellipse cx="38" cy="58" rx="6" ry="3.5" transform="rotate(-30 38 58)" fill="#facc15"/>
+                    <path d="M145 105 Q140 65 122 45" stroke="#eab308" stroke-width="4" fill="none" stroke-linecap="round"/>
+                    <ellipse cx="125" cy="48" rx="6" ry="3.5" transform="rotate(30 125 48)" fill="#facc15"/>
+                    <ellipse cx="132" cy="58" rx="6" ry="3.5" transform="rotate(30 132 58)" fill="#facc15"/>
+                    <!-- Chuột đồng minh họa -->
+                    <path d="M52 80 Q32 72 28 58" stroke="#e09f95" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+                    <ellipse cx="82" cy="74" rx="28" ry="20" fill="#9d8189" stroke="#195658" stroke-width="2.5"/>
+                    <ellipse cx="86" cy="79" rx="18" ry="11" fill="#f4acb7"/>
+                    <circle cx="106" cy="66" r="15" fill="#9d8189" stroke="#195658" stroke-width="2.5"/>
+                    <circle cx="96" cy="52" r="9" fill="#9d8189" stroke="#195658" stroke-width="2.5"/>
+                    <circle cx="96" cy="52" r="5" fill="#f4acb7"/>
+                    <circle cx="110" cy="53" r="8" fill="#9d8189" stroke="#195658" stroke-width="2.5"/>
+                    <circle cx="110" cy="53" r="4.5" fill="#f4acb7"/>
+                    <circle cx="112" cy="64" r="3.2" fill="#195658"/>
+                    <circle cx="113" cy="63" r="1.1" fill="#ffffff"/>
+                    <circle cx="122" cy="68" r="3.5" fill="#e63946"/>
+                </svg>
+            </div>
+            <p class="short-guide">
+                Giúp chuột đồng thu thập hạt lúa, tránh rắn và đại bàng trong 60 giây!
+            </p>
+            <div class="controls-preview">
+                <span>Điều khiển:</span>
+                <span><span class="key-pill">↑</span> / <span class="key-pill">W</span> Lên làn trên</span>
+                <span>•</span>
+                <span><span class="key-pill">↓</span> / <span class="key-pill">S</span> Xuống làn dưới</span>
+            </div>
+            <div>
+                <button class="btn-primary" id="btn-start">BẮT ĐẦU</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MÀN HÌNH KẾT THÚC -->
+    <div id="end-screen" class="overlay-screen hidden">
+        <div class="modal-card">
+            <h2 class="game-title" id="end-title">HOÀN THÀNH THỬ THÁCH!</h2>
+            <div class="stars-row" id="stars-container">
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <p class="feedback-text" id="end-feedback">Tuyệt vời! Em đã giúp chú chuột đồng sinh tồn an toàn!</p>
+
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-label">TỔNG ĐIỂM</div>
+                    <div class="stat-value" id="final-score">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">CỤM LÚA THU ĐƯỢC</div>
+                    <div class="stat-value" id="final-rice">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">TIM CÒN LẠI</div>
+                    <div class="stat-value" id="final-hearts">3</div>
+                </div>
+            </div>
+
+            <div class="knowledge-box">
+                🌱 <strong>Kiến thức rút ra:</strong> "Chuột đồng ăn hạt lúa, rắn có thể ăn chuột và đại bàng có thể săn bắt rắn. Trong tự nhiên, mỗi sinh vật có thể vừa tìm kiếm thức ăn, vừa trở thành con mồi của sinh vật khác."
+            </div>
+
+            <div class="action-row">
+                <button class="btn-secondary" id="btn-replay">CHƠI LẠI</button>
+                <button class="btn-primary" id="btn-finish">HOÀN THÀNH</button>
+            </div>
+            <div id="completed-badge" class="hidden">✓ Đã hoàn thành hoạt động vận dụng Step 13!</div>
+        </div>
+    </div>
+</div>
+
+<script>
+/**
+ * ============================================================================
+ * 1. CẤU HÌNH TRÒ CHƠI & SPRITE ASSETS (DỄ DÀNG CHỈNH SỬA / THAY ẢNH PNG/WEBP)
+ * ============================================================================
+ */
+const GAME_CONFIG = {
+    GAME_DURATION: 60,              // Thời gian chơi (giây)
+    INITIAL_HEARTS: 3,              // Số trái tim ban đầu
+    BASE_SCROLL_SPEED: 370,         // Tốc độ cuộn cơ bản (px/giây)
+    LATE_GAME_SPEED_MULT: 1.24,     // Hệ số tăng tốc từ giây 40–60
+    LANE_SWITCH_DURATION: 0.185,    // Thời gian trượt chuyển làn mượt (185ms)
+    INVINCIBLE_DURATION: 2.0,       // Thời gian miễn nhiễm sau khi va chạm (2 giây)
+    RICE_SPAWN_INTERVAL: 0.95,      // Tần suất xuất hiện cụm hạt lúa (giây)
+    SNAKE_SPAWN_INTERVAL: 2.65,     // Tần suất xuất hiện rắn (giây)
+    EAGLE_SPAWN_INTERVAL: 5.2,      // Tần suất xuất hiện đại bàng (giây)
+    EAGLE_WARNING_TIME: 2.0,        // Thời gian cảnh báo trước khi đại bàng lao xuống (2 giây)
+    POINTS_PER_RICE: 10,            // Điểm mỗi cụm hạt lúa
+    COMBO_TARGET: 5,                // Số cụm lúa liên tiếp để nổ Combo
+    COMBO_BONUS: 20,                // Điểm thưởng Combo
+    SURVIVAL_BONUS: 20              // Điểm thưởng sống sót hết 60 giây
+};
+
+// Để thay thế nhân vật bằng ảnh PNG/WebP hoạt hình sau này, chỉ cần điền đường dẫn vào src:
+const ASSET_CONFIG = {
+    mouse: { src: "", img: null, loaded: false },
+    rice:  { src: "", img: null, loaded: false },
+    snake: { src: "", img: null, loaded: false },
+    eagle: { src: "", img: null, loaded: false }
+};
+
+function preloadCustomSprites() {
+    Object.keys(ASSET_CONFIG).forEach(key => {
+        const item = ASSET_CONFIG[key];
+        if (item.src && item.src.trim() !== "") {
+            const image = new Image();
+            image.onload = () => { item.loaded = true; };
+            image.src = item.src;
+            item.img = image;
+        }
+    });
+}
+preloadCustomSprites();
+
+/**
+ * ============================================================================
+ * 2. ÂM THANH NHẸ NHÀNG (WEB AUDIO API THUẦN - KHÔNG CẦN FILE NGOÀI)
+ * ============================================================================
+ */
+class SoundEffects {
+    constructor() {
+        this.ctx = null;
+    }
+    init() {
+        if (!this.ctx) {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (AudioCtx) this.ctx = new AudioCtx();
+        }
+        if (this.ctx && this.ctx.state === "suspended") {
+            this.ctx.resume();
+        }
+    }
+    playTone(freq, type, duration, vol = 0.12, slideFreq = null) {
+        if (!this.ctx) return;
+        try {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+            if (slideFreq) {
+                osc.frequency.exponentialRampToValueAtTime(slideFreq, this.ctx.currentTime + duration);
+            }
+            gain.gain.setValueAtTime(vol, this.ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start();
+            osc.stop(this.ctx.currentTime + duration);
+        } catch (e) {}
+    }
+    playMove() { this.playTone(340, "sine", 0.09, 0.08, 480); }
+    playRice() { this.playTone(587, "triangle", 0.14, 0.14, 880); }
+    playCombo() {
+        this.playTone(523, "triangle", 0.12, 0.15, 659);
+        setTimeout(() => this.playTone(784, "triangle", 0.22, 0.16, 1046), 90);
+    }
+    playWarning() { this.playTone(680, "sine", 0.22, 0.1, 460); }
+    playHit() { this.playTone(220, "sawtooth", 0.25, 0.12, 120); }
+    playWin() {
+        [523, 659, 784, 1046].forEach((f, idx) => {
+            setTimeout(() => this.playTone(f, "triangle", 0.2, 0.14), idx * 110);
+        });
+    }
+}
+const sfx = new SoundEffects();
+
+/**
+ * ============================================================================
+ * 3. QUẢN LÝ TRẠNG THÁI GAME (GAME STATE) & LÀN ĐƯỜNG
+ * ============================================================================
+ */
+const canvas = document.getElementById("game-canvas");
+const ctx = canvas.getContext("2d");
+
+const LANES_Y = [375, 495, 615]; // Tọa độ Y tâm của 3 làn: Làn trên (0), Làn giữa (1), Làn dưới (2)
+const PLAYER_X = 280;            // Chuột đứng ở ~22% chiều rộng màn hình (280 / 1280)
+
+const GameState = {
+    status: "START", // START | PLAYING | ENDED
+    elapsedTime: 0,
+    timeLeft: GAME_CONFIG.GAME_DURATION,
+    score: 0,
+    riceCollected: 0,
+    comboCount: 0,
+    hearts: GAME_CONFIG.INITIAL_HEARTS,
+    scrollSpeed: GAME_CONFIG.BASE_SCROLL_SPEED,
+    lastFrameTime: 0,
+    riceSpawnTimer: 0,
+    snakeSpawnTimer: 0,
+    eagleSpawnTimer: 0,
+    ricePatternQueue: []
+};
+
+/**
+ * ============================================================================
+ * 4. ĐỐI TƯỢNG NHÂN VẬT CHUỘT ĐỒNG (PLAYER)
+ * ============================================================================
+ */
+const Player = {
+    lane: 1,
+    y: LANES_Y[1],
+    startY: LANES_Y[1],
+    targetY: LANES_Y[1],
+    moveElapsed: 0,
+    isMoving: false,
+    runCycle: 0,
+    invincibleTimer: 0,
+    happyTimer: 0,
+
+    reset() {
+        this.lane = 1;
+        this.y = LANES_Y[1];
+        this.startY = LANES_Y[1];
+        this.targetY = LANES_Y[1];
+        this.moveElapsed = 0;
+        this.isMoving = false;
+        this.runCycle = 0;
+        this.invincibleTimer = 0;
+        this.happyTimer = 0;
+    },
+
+    changeLane(dir) {
+        if (GameState.status !== "PLAYING") return;
+        const nextLane = Math.max(0, Math.min(2, this.lane + dir));
+        if (nextLane !== this.lane) {
+            this.lane = nextLane;
+            this.startY = this.y;
+            this.targetY = LANES_Y[this.lane];
+            this.moveElapsed = 0;
+            this.isMoving = true;
+            sfx.playMove();
+        }
+    },
+
+    update(dt) {
+        this.runCycle += dt * 16;
+
+        if (this.isMoving) {
+            this.moveElapsed += dt;
+            const t = Math.min(1, this.moveElapsed / GAME_CONFIG.LANE_SWITCH_DURATION);
+            // EaseOutCubic giúp chuyển làn mượt mà
+            const ease = 1 - Math.pow(1 - t, 3);
+            this.y = this.startY + (this.targetY - this.startY) * ease;
+            if (t >= 1) {
+                this.y = this.targetY;
+                this.isMoving = false;
+            }
+        }
+
+        if (this.invincibleTimer > 0) {
+            this.invincibleTimer = Math.max(0, this.invincibleTimer - dt);
+        }
+        if (this.happyTimer > 0) {
+            this.happyTimer = Math.max(0, this.happyTimer - dt);
+        }
+    },
+
+    draw(ctx) {
+        ctx.save();
+        ctx.translate(PLAYER_X, this.y);
+
+        // Nhấp nháy khi đang miễn nhiễm sau va chạm
+        if (this.invincibleTimer > 0 && Math.floor(this.invincibleTimer * 12) % 2 === 0) {
+            ctx.globalAlpha = 0.42;
+        }
+
+        // Bóng dưới chân chuột
+        ctx.fillStyle = "rgba(25, 86, 88, 0.22)";
+        ctx.beginPath();
+        ctx.ellipse(0, 28, 42, 11, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        const bounce = Math.abs(Math.sin(this.runCycle)) * -6;
+        ctx.translate(0, bounce);
+
+        if (ASSET_CONFIG.mouse.loaded && ASSET_CONFIG.mouse.img) {
+            ctx.drawImage(ASSET_CONFIG.mouse.img, -55, -45, 110, 80);
+            ctx.restore();
+            return;
+        }
+
+        // Đuôi chuột chuyển động
+        const tailWave = Math.sin(this.runCycle * 1.2) * 8;
+        ctx.strokeStyle = "#e5989b";
+        ctx.lineWidth = 6;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(-34, 6);
+        ctx.quadraticCurveTo(-62, -2 + tailWave, -76, -14 + tailWave);
+        ctx.stroke();
+
+        // Chân chạy
+        const legOffset = Math.sin(this.runCycle) * 12;
+        ctx.fillStyle = "#e5989b";
+        ctx.beginPath();
+        ctx.ellipse(-18 + legOffset, 24, 9, 5, 0, 0, Math.PI * 2);
+        ctx.ellipse(18 - legOffset, 24, 9, 5, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Thân chuột tròn trịa
+        ctx.fillStyle = "#8d7780";
+        ctx.strokeStyle = "#195658";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.ellipse(-4, 4, 36, 24, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Bụng kem hồng nhạt
+        ctx.fillStyle = "#f9dcc4";
+        ctx.beginPath();
+        ctx.ellipse(2, 11, 23, 13, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Đầu chuột
+        ctx.fillStyle = "#8d7780";
+        ctx.beginPath();
+        ctx.arc(28, -4, 20, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Hai tai tròn
+        ctx.beginPath();
+        ctx.arc(15, -22, 11, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = "#f4acb7";
+        ctx.beginPath();
+        ctx.arc(15, -22, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#8d7780";
+        ctx.beginPath();
+        ctx.arc(32, -20, 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = "#f4acb7";
+        ctx.beginPath();
+        ctx.arc(32, -20, 5.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Mắt long lanh
+        ctx.fillStyle = "#195658";
+        ctx.beginPath();
+        ctx.arc(36, -7, 4.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.arc(37.5, -8.5, 1.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Má hồng & Mũi đỏ hồng
+        ctx.fillStyle = "rgba(244, 162, 158, 0.7)";
+        ctx.beginPath();
+        ctx.ellipse(32, 2, 5, 3, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#e63946";
+        ctx.beginPath();
+        ctx.arc(48, -2, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Ria mép
+        ctx.strokeStyle = "#195658";
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.moveTo(42, 1); ctx.lineTo(56, -3);
+        ctx.moveTo(42, 4); ctx.lineTo(55, 5);
+        ctx.stroke();
+
+        // Hiệu ứng hào quang vui nhộn khi nhận Combo
+        if (this.happyTimer > 0) {
+            ctx.strokeStyle = "#ffb703";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(10, -2, 52, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+
+        ctx.restore();
+    }
+};
+
+/**
+ * ============================================================================
+ * 5. QUẢN LÝ MÔI TRƯỜNG PARALLAX & ĐỐI TƯỢNG (SPAWNER, COLLISION, ANIMATION)
+ * ============================================================================
+ */
+const Environment = {
+    clouds: [
+        { x: 140, y: 70, s: 1.0, speed: 22 },
+        { x: 520, y: 50, s: 0.8, speed: 18 },
+        { x: 920, y: 82, s: 1.15, speed: 26 },
+        { x: 1180, y: 60, s: 0.9, speed: 20 }
+    ],
+    farHillsOffset: 0,
+    midFieldOffset: 0,
+    stalksOffset: 0,
+    swayTime: 0,
+
+    update(dt, scrollSpeed) {
+        this.swayTime += dt * 3;
+        this.clouds.forEach(c => {
+            c.x -= c.speed * dt;
+            if (c.x < -160) c.x = canvas.width + 140;
+        });
+        this.farHillsOffset = (this.farHillsOffset + scrollSpeed * 0.18 * dt) % 640;
+        this.midFieldOffset = (this.midFieldOffset + scrollSpeed * 0.45 * dt) % 320;
+        this.stalksOffset = (this.stalksOffset + scrollSpeed * 0.85 * dt) % 160;
+    },
+
+    draw(ctx) {
+        // 1. Bầu trời xanh tươi sáng
+        const skyGrad = ctx.createLinearGradient(0, 0, 0, 290);
+        skyGrad.addColorStop(0, "#90e0ef");
+        skyGrad.addColorStop(1, "#e0fbfc");
+        ctx.fillStyle = skyGrad;
+        ctx.fillRect(0, 0, canvas.width, 290);
+
+        // Mặt trời ấm áp
+        ctx.fillStyle = "#ffea79";
+        ctx.beginPath();
+        ctx.arc(1130, 82, 42, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 2. Đám mây trắng trôi chậm
+        this.clouds.forEach(c => {
+            ctx.save();
+            ctx.translate(c.x, c.y);
+            ctx.scale(c.s, c.s);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.92)";
+            ctx.beginPath();
+            ctx.arc(0, 0, 26, 0, Math.PI * 2);
+            ctx.arc(24, -8, 32, 0, Math.PI * 2);
+            ctx.arc(54, 0, 24, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        });
+
+        // 3. Đồi cây xanh phía xa (Parallax lớp 1)
+        ctx.fillStyle = "#95d5b2";
+        for (let x = -this.farHillsOffset; x < canvas.width + 640; x += 640) {
+            ctx.beginPath();
+            ctx.moveTo(x, 290);
+            ctx.quadraticCurveTo(x + 160, 195, x + 320, 290);
+            ctx.quadraticCurveTo(x + 480, 210, x + 640, 290);
+            ctx.fill();
+        }
+
+        // 4. Bờ lúa chín vàng xanh tầm trung (Parallax lớp 2)
+        ctx.fillStyle = "#b7e478";
+        ctx.fillRect(0, 265, canvas.width, 55);
+
+        for (let x = -this.midFieldOffset; x < canvas.width + 320; x += 80) {
+            const sway = Math.sin(this.swayTime + x * 0.02) * 4;
+            // Bụi cỏ & bông lúa phía xa
+            ctx.strokeStyle = "#8ac926";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(x + 20, 315);
+            ctx.quadraticCurveTo(x + 24 + sway, 278, x + 32 + sway, 262);
+            ctx.stroke();
+
+            ctx.fillStyle = "#facc15";
+            ctx.beginPath();
+            ctx.ellipse(x + 32 + sway, 262, 7, 3.5, -0.3, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // 5. Ba làn đường cánh đồng phân biệt bằng sắc độ thảm cỏ & đường đất tự nhiên
+        const laneConfigs = [
+            { top: 315, height: 120, grass: "#80c947", path: "#d9ed92" },
+            { top: 435, height: 120, grass: "#72bb3b", path: "#c7e576" },
+            { top: 555, height: 125, grass: "#63ab2e", path: "#b5dc5c" }
+        ];
+
+        laneConfigs.forEach((ln) => {
+            ctx.fillStyle = ln.grass;
+            ctx.fillRect(0, ln.top, canvas.width, ln.height);
+            // Dải lối mòn cỏ non ở giữa mỗi làn
+            ctx.fillStyle = ln.path;
+            ctx.fillRect(0, ln.top + 22, canvas.width, ln.height - 38);
+        });
+
+        // 6. Cỏ và bông lúa nhỏ đung đưa dọc mép làn (Parallax lớp 3)
+        for (let x = -this.stalksOffset; x < canvas.width + 160; x += 160) {
+            [318, 438, 558, 678].forEach((yPos, idx) => {
+                const sway = Math.sin(this.swayTime * 1.3 + x + idx) * 3;
+                ctx.fillStyle = "#4f8f21";
+                ctx.beginPath();
+                ctx.arc(x + 40, yPos, 7, Math.PI, 0);
+                ctx.arc(x + 50, yPos, 9, Math.PI, 0);
+                ctx.fill();
+
+                ctx.strokeStyle = "#eab308";
+                ctx.lineWidth = 2.2;
+                ctx.beginPath();
+                ctx.moveTo(x + 110, yPos);
+                ctx.lineTo(x + 114 + sway, yPos - 14);
+                ctx.stroke();
+            });
+        }
+    }
+};
+
+// Danh sách quản lý các đối tượng trong màn chơi
+let riceItems = [];
+let snakes = [];
+let eagles = [];
+let floatingTexts = [];
+let particles = [];
+
+function clearAllEntities() {
+    riceItems = [];
+    snakes = [];
+    eagles = [];
+    floatingTexts = [];
+    particles = [];
+    GameState.ricePatternQueue = [];
+}
+
+/**
+ * Kiểm tra xem tại vùng X mục tiêu, các làn nào đang bị rắn hoặc đại bàng chiếm giữ
+ * để đảm bảo KHÔNG BAO GIỜ chặn cả 3 làn cùng lúc.
+ */
+function getOccupiedDangerLanes(targetX, margin = 250) {
+    const busyLanes = new Set();
+    snakes.forEach(s => {
+        if (Math.abs(s.x - targetX) < margin) busyLanes.add(s.lane);
+    });
+    eagles.forEach(e => {
+        if (e.phase !== "DONE") busyLanes.add(e.lane);
+    });
+    return busyLanes;
+}
+
+// Sinh cụm hạt lúa theo dải đường chạy khuyến khích học sinh chuyển làn
+function spawnRiceCluster() {
+    const spawnX = canvas.width + 80;
+    if (GameState.ricePatternQueue.length === 0) {
+        // Tạo một chuỗi 3-4 cụm lúa theo làn liền kề và tránh làn đang có rắn
+        const patterns = [
+            [1, 1, 0, 0],
+            [1, 2, 2, 1],
+            [0, 1, 2, 1],
+            [2, 1, 0, 1]
+        ];
+        GameState.ricePatternQueue = [...patterns[Math.floor(Math.random() * patterns.length)]];
+    }
+
+    let chosenLane = GameState.ricePatternQueue.shift();
+    const dangerLanes = getOccupiedDangerLanes(spawnX, 170);
+    if (dangerLanes.has(chosenLane)) {
+        const safeLanes = [0, 1, 2].filter(l => !dangerLanes.has(l));
+        if (safeLanes.length > 0) {
+            chosenLane = safeLanes[Math.floor(Math.random() * safeLanes.length)];
+        }
+    }
+
+    riceItems.push({
+        lane: chosenLane,
+        x: spawnX,
+        y: LANES_Y[chosenLane],
+        collected: false,
+        animPhase: Math.random() * Math.PI * 2
+    });
+}
+
+// Sinh Rắn hoạt hình thân thiện
+function spawnSnake() {
+    const spawnX = canvas.width + 110;
+    const busyLanes = getOccupiedDangerLanes(spawnX, 340);
+
+    // Luôn giữ ít nhất 1 làn hoàn toàn trống để học sinh lách qua
+    if (busyLanes.size >= 2) return;
+
+    const availableLanes = [0, 1, 2].filter(l => !busyLanes.has(l));
+    if (availableLanes.length <= 1) return;
+
+    const lane = availableLanes[Math.floor(Math.random() * availableLanes.length)];
+
+    // Tránh đặt trùng lên cụm hạt lúa vừa sinh
+    riceItems.forEach(r => {
+        if (r.lane === lane && Math.abs(r.x - spawnX) < 130) {
+            r.x -= 150;
+        }
+    });
+
+    snakes.push({
+        lane: lane,
+        x: spawnX,
+        y: LANES_Y[lane],
+        slitherTime: Math.random() * 5,
+        hasHit: false
+    });
+}
+
+// Sinh Đại bàng cảnh báo trước 2 giây rồi lao xuống
+function spawnEagle() {
+    // Chỉ cho phép 1 đại bàng hoạt động mỗi thời điểm để học sinh lớp 4 dễ quan sát
+    if (eagles.length > 0) return;
+
+    // Kiểm tra các làn có rắn sắp đi ngang qua vị trí chuột (PLAYER_X) sau 2 giây nữa
+    const futureSnakeX = PLAYER_X + GameState.scrollSpeed * GAME_CONFIG.EAGLE_WARNING_TIME;
+    const busyAtImpact = new Set();
+    snakes.forEach(s => {
+        if (Math.abs(s.x - futureSnakeX) < 280) busyAtImpact.add(s.lane);
+    });
+
+    if (busyAtImpact.size >= 2) return;
+
+    const candidateLanes = [0, 1, 2].filter(l => !busyAtImpact.has(l));
+    if (candidateLanes.length <= 1) return;
+
+    // Ưu tiên nhắm vào làn hiện tại của chuột nếu vẫn còn làn an toàn khác
+    let targetLane = Player.lane;
+    if (!candidateLanes.includes(targetLane)) {
+        targetLane = candidateLanes[Math.floor(Math.random() * candidateLanes.length)];
+    }
+
+    sfx.playWarning();
+    eagles.push({
+        lane: targetLane,
+        phase: "WARNING", // WARNING -> SWOOP -> DONE
+        timer: GAME_CONFIG.EAGLE_WARNING_TIME,
+        swoopProgress: 0,
+        wingTime: 0,
+        hasHit: false,
+        x: PLAYER_X,
+        y: -90
+    });
+}
+
+function addFloatingText(text, x, y, color = "#ffb703") {
+    floatingTexts.push({
+        text,
+        x,
+        y,
+        color,
+        life: 0.9,
+        maxLife: 0.9
+    });
+}
+
+function addBurstParticles(x, y, color) {
+    for (let i = 0; i < 8; i++) {
+        const angle = (Math.PI * 2 * i) / 8;
+        particles.push({
+            x,
+            y,
+            vx: Math.cos(angle) * 110,
+            vy: Math.sin(angle) * 110,
+            color,
+            life: 0.45,
+            maxLife: 0.45
+        });
+    }
+}
+
+/**
+ * ============================================================================
+ * 6. XỬ LÝ VA CHẠM, ĐIỂM SỐ, COMBO & TRÁI TIM
+ * ============================================================================
+ */
+let comboHideTimeout = null;
+
+function showComboBanner() {
+    const banner = document.getElementById("combo-banner");
+    banner.classList.add("show");
+    if (comboHideTimeout) clearTimeout(comboHideTimeout);
+    comboHideTimeout = setTimeout(() => {
+        banner.classList.remove("show");
+    }, 1050);
+}
+
+function handleCollectRice(rice) {
+    if (rice.collected) return;
+    rice.collected = true;
+    GameState.score += GAME_CONFIG.POINTS_PER_RICE;
+    GameState.riceCollected += 1;
+    GameState.comboCount += 1;
+
+    sfx.playRice();
+    addFloatingText(`+${GAME_CONFIG.POINTS_PER_RICE}`, rice.x, rice.y - 24, "#fb8500");
+    addBurstParticles(rice.x, rice.y, "#facc15");
+
+    if (GameState.comboCount > 0 && GameState.comboCount % GAME_CONFIG.COMBO_TARGET === 0) {
+        GameState.score += GAME_CONFIG.COMBO_BONUS;
+        Player.happyTimer = 1.0;
+        sfx.playCombo();
+        showComboBanner();
+        addFloatingText(`COMBO +${GAME_CONFIG.COMBO_BONUS}!`, PLAYER_X, Player.y - 52, "#00aaab");
+    }
+    updateHUD();
+}
+
+function handleDamagePlayer() {
+    if (Player.invincibleTimer > 0 || GameState.status !== "PLAYING") return;
+
+    GameState.hearts -= 1;
+    GameState.comboCount = 0; // Đặt lại combo khi va chạm rắn hoặc đại bàng
+    Player.invincibleTimer = GAME_CONFIG.INVINCIBLE_DURATION;
+
+    sfx.playHit();
+    addFloatingText("-1 Tim", PLAYER_X, Player.y - 40, "#e63946");
+    addBurstParticles(PLAYER_X, Player.y, "#e63946");
+    updateHUD();
+
+    if (GameState.hearts <= 0) {
+        endGame(false);
+    }
+}
+
+/**
+ * ============================================================================
+ * 7. VẼ CÁC ĐỐI TƯỢNG HOẠT HÌNH 2D (HẠT LÚA, RẮN, ĐẠI BÀNG)
+ * ============================================================================
+ */
+function drawRiceItem(ctx, r) {
+    ctx.save();
+    const bob = Math.sin(r.animPhase) * 4;
+    const scale = 1 + Math.sin(r.animPhase * 2) * 0.05;
+    ctx.translate(r.x, r.y + bob);
+    ctx.scale(scale, scale);
+
+    if (ASSET_CONFIG.rice.loaded && ASSET_CONFIG.rice.img) {
+        ctx.drawImage(ASSET_CONFIG.rice.img, -36, -36, 72, 72);
+        ctx.restore();
+        return;
+    }
+
+    // Vầng sáng lấp lánh nhẹ quanh cụm hạt lúa
+    ctx.fillStyle = "rgba(255, 214, 10, 0.28)";
+    ctx.beginPath();
+    ctx.arc(0, 0, 30, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 3 nhánh bông lúa vàng óng
+    [-12, 0, 12].forEach((offsetX, idx) => {
+        ctx.save();
+        ctx.rotate((idx - 1) * 0.28);
+        ctx.strokeStyle = "#ca8a04";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(0, 22);
+        ctx.quadraticCurveTo(offsetX * 0.3, 0, offsetX * 0.5, -20);
+        ctx.stroke();
+
+        ctx.fillStyle = "#facc15";
+        ctx.strokeStyle = "#854d0e";
+        ctx.lineWidth = 1.5;
+        for (let i = -16; i <= 6; i += 7) {
+            ctx.beginPath();
+            ctx.ellipse(-5, i, 6.5, 4, -0.4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.ellipse(5, i, 6.5, 4, 0.4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+        }
+        ctx.restore();
+    });
+
+    // Dây buộc đỏ xinh xắn
+    ctx.fillStyle = "#e63946";
+    ctx.fillRect(-8, 12, 16, 6);
+
+    ctx.restore();
+}
+
+function drawSnakeItem(ctx, s) {
+    ctx.save();
+    ctx.translate(s.x, s.y);
+
+    // Bóng dưới đất
+    ctx.fillStyle = "rgba(25, 86, 88, 0.2)";
+    ctx.beginPath();
+    ctx.ellipse(6, 24, 44, 10, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (ASSET_CONFIG.snake.loaded && ASSET_CONFIG.snake.img) {
+        ctx.drawImage(ASSET_CONFIG.snake.img, -50, -35, 100, 70);
+        ctx.restore();
+        return;
+    }
+
+    // Thân rắn uốn lượn hoạt hình thân thiện
+    const w1 = Math.sin(s.slitherTime * 7) * 6;
+    const w2 = Math.cos(s.slitherTime * 7) * 6;
+
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    // Viền ngoài đậm
+    ctx.strokeStyle = "#1b4332";
+    ctx.lineWidth = 22;
+    ctx.beginPath();
+    ctx.moveTo(-24, 10);
+    ctx.quadraticCurveTo(-2, 10 + w1, 16, 10 + w2);
+    ctx.quadraticCurveTo(34, 10 - w1, 46, 14);
+    ctx.stroke();
+
+    // Màu thân xanh lá tươi
+    ctx.strokeStyle = "#2dc653";
+    ctx.lineWidth = 16;
+    ctx.stroke();
+
+    // Đốm lưng vàng chanh thân thiện
+    ctx.fillStyle = "#b7efc5";
+    ctx.beginPath();
+    ctx.arc(-4, 10 + w1 * 0.5, 4, 0, Math.PI * 2);
+    ctx.arc(16, 10 + w2 * 0.5, 4, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Đầu rắn tròn dễ thương hướng sang trái
+    ctx.fillStyle = "#2dc653";
+    ctx.strokeStyle = "#1b4332";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.ellipse(-28, 4, 18, 14, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Mắt to tròn
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.arc(-32, -2, 5.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#1b4332";
+    ctx.beginPath();
+    ctx.arc(-34, -2, 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Lưỡi nhỏ thè nhẹ
+    if (Math.sin(s.slitherTime * 6) > 0) {
+        ctx.strokeStyle = "#e63946";
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        ctx.moveTo(-46, 6);
+        ctx.lineTo(-55, 4);
+        ctx.moveTo(-51, 5);
+        ctx.lineTo(-55, 9);
+        ctx.stroke();
+    }
+
+    ctx.restore();
+}
+
+function drawEagleItem(ctx, e) {
+    const laneY = LANES_Y[e.lane];
+
+    // 1. Vẽ bóng chim và biểu tượng cảnh báo trên làn bị nhắm tới
+    if (e.phase === "WARNING" || (e.phase === "SWOOP" && e.swoopProgress < 0.7)) {
+        ctx.save();
+        const pulse = 0.85 + Math.sin(e.wingTime * 14) * 0.15;
+        ctx.translate(PLAYER_X, laneY);
+
+        // Bóng đại bàng trên mặt đất
+        ctx.fillStyle = "rgba(230, 57, 70, 0.24)";
+        ctx.beginPath();
+        ctx.ellipse(0, 18, 56 * pulse, 16 * pulse, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Vòng tròn cảnh báo màu cam đỏ
+        ctx.strokeStyle = "#e63946";
+        ctx.lineWidth = 3.5;
+        ctx.beginPath();
+        ctx.ellipse(0, 18, 60 * pulse, 19 * pulse, 0, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Biểu tượng chấm than cảnh báo phía trên làn
+        ctx.save();
+        ctx.translate(95, -8);
+        ctx.scale(pulse, pulse);
+        ctx.fillStyle = "#ffbe0b";
+        ctx.strokeStyle = "#195658";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(0, -24);
+        ctx.lineTo(22, 14);
+        ctx.lineTo(-22, 14);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = "#195658";
+        ctx.font = "900 20px sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText("!", 0, 10);
+        ctx.restore();
+
+        ctx.restore();
+    }
+
+    // 2. Vẽ Đại bàng lao xuống và đập cánh trong giai đoạn tấn công
+    if (e.phase === "SWOOP") {
+        ctx.save();
+        ctx.translate(e.x, e.y);
+
+        if (ASSET_CONFIG.eagle.loaded && ASSET_CONFIG.eagle.img) {
+            ctx.drawImage(ASSET_CONFIG.eagle.img, -65, -55, 130, 110);
+            ctx.restore();
+            return;
+        }
+
+        const flap = Math.sin(e.wingTime * 22) * 26;
+
+        // Cánh sau
+        ctx.fillStyle = "#582f0e";
+        ctx.strokeStyle = "#195658";
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(-5, -8);
+        ctx.quadraticCurveTo(28, -48 + flap, 58, -22 + flap);
+        ctx.quadraticCurveTo(30, -4, 5, 4);
+        ctx.fill();
+        ctx.stroke();
+
+        // Thân đại bàng nâu
+        ctx.fillStyle = "#7f4f24";
+        ctx.beginPath();
+        ctx.ellipse(0, 4, 34, 18, -0.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Đầu trắng đặc trưng của đại bàng
+        ctx.fillStyle = "#f8f9fa";
+        ctx.beginPath();
+        ctx.arc(-28, 6, 15, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Mỏ vàng cong
+        ctx.fillStyle = "#ffb703";
+        ctx.beginPath();
+        ctx.moveTo(-40, 2);
+        ctx.quadraticCurveTo(-54, 6, -46, 15);
+        ctx.lineTo(-36, 11);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // Mắt sắc nét nhưng hoạt hình
+        ctx.fillStyle = "#195658";
+        ctx.beginPath();
+        ctx.arc(-32, 4, 3.2, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Cánh trước đập mạnh
+        ctx.fillStyle = "#936639";
+        ctx.beginPath();
+        ctx.moveTo(4, 2);
+        ctx.quadraticCurveTo(36, -42 - flap, 68, -14 - flap);
+        ctx.quadraticCurveTo(38, 12, 8, 10);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.restore();
+    }
+}
+
+/**
+ * ============================================================================
+ * 8. CẬP NHẬT DIỄN BIẾN 60 GIÂY & VÒNG LẶP GAME CHÍNH
+ * ============================================================================
+ */
+function updateGameplay(dt) {
+    GameState.elapsedTime += dt;
+    GameState.timeLeft = Math.max(0, GAME_CONFIG.GAME_DURATION - GameState.elapsedTime);
+
+    // Kịch bản tốc độ theo diễn biến 60 giây:
+    // 0-40s: tốc độ chuẩn | 40-55s: tăng nhẹ tốc độ | 55-60s: chặng nước rút
+    if (GameState.elapsedTime >= 55) {
+        GameState.scrollSpeed = GAME_CONFIG.BASE_SCROLL_SPEED * (GAME_CONFIG.LATE_GAME_SPEED_MULT + 0.08);
+    } else if (GameState.elapsedTime >= 40) {
+        GameState.scrollSpeed = GAME_CONFIG.BASE_SCROLL_SPEED * GAME_CONFIG.LATE_GAME_SPEED_MULT;
+    } else {
+        GameState.scrollSpeed = GAME_CONFIG.BASE_SCROLL_SPEED;
+    }
+
+    Environment.update(dt, GameState.scrollSpeed);
+    Player.update(dt);
+
+    // 1. Luôn sinh các cụm hạt lúa xuyên suốt 0–60 giây
+    GameState.riceSpawnTimer += dt;
+    if (GameState.riceSpawnTimer >= GAME_CONFIG.RICE_SPAWN_INTERVAL) {
+        GameState.riceSpawnTimer = 0;
+        spawnRiceCluster();
+    }
+
+    // 2. Từ giây 10 trở đi: Rắn bắt đầu xuất hiện
+    if (GameState.elapsedTime >= 10) {
+        GameState.snakeSpawnTimer += dt;
+        const currentSnakeInterval = GameState.elapsedTime >= 40
+            ? GAME_CONFIG.SNAKE_SPAWN_INTERVAL * 0.82
+            : GAME_CONFIG.SNAKE_SPAWN_INTERVAL;
+
+        if (GameState.snakeSpawnTimer >= currentSnakeInterval) {
+            GameState.snakeSpawnTimer = 0;
+            spawnSnake();
+        }
+    }
+
+    // 3. Từ giây 25 trở đi: Đại bàng xuất hiện kèm cảnh báo 2 giây
+    if (GameState.elapsedTime >= 25) {
+        GameState.eagleSpawnTimer += dt;
+        const currentEagleInterval = GameState.elapsedTime >= 40
+            ? GAME_CONFIG.EAGLE_SPAWN_INTERVAL * 0.85
+            : GAME_CONFIG.EAGLE_SPAWN_INTERVAL;
+
+        if (GameState.eagleSpawnTimer >= currentEagleInterval) {
+            GameState.eagleSpawnTimer = 0;
+            spawnEagle();
+        }
+    }
+
+    // Cập nhật và kiểm tra va chạm Hạt Lúa
+    for (let i = riceItems.length - 1; i >= 0; i--) {
+        const r = riceItems[i];
+        r.x -= GameState.scrollSpeed * dt;
+        r.animPhase += dt * 6;
+
+        if (!r.collected && r.lane === Player.lane && Math.abs(r.x - PLAYER_X) < 52) {
+            handleCollectRice(r);
+        }
+        if (r.collected || r.x < -90) {
+            riceItems.splice(i, 1);
+        }
+    }
+
+    // Cập nhật và kiểm tra va chạm Rắn
+    for (let i = snakes.length - 1; i >= 0; i--) {
+        const s = snakes[i];
+        s.x -= (GameState.scrollSpeed * 1.06) * dt;
+        s.slitherTime += dt;
+
+        if (!s.hasHit && s.lane === Player.lane && Math.abs(s.x - PLAYER_X) < 50) {
+            s.hasHit = true;
+            handleDamagePlayer();
+        }
+        if (s.x < -110) {
+            snakes.splice(i, 1);
+        }
+    }
+
+    // Cập nhật và kiểm tra va chạm Đại Bàng
+    for (let i = eagles.length - 1; i >= 0; i--) {
+        const e = eagles[i];
+        e.wingTime += dt;
+
+        if (e.phase === "WARNING") {
+            e.timer -= dt;
+            if (e.timer <= 0) {
+                e.phase = "SWOOP";
+                e.swoopProgress = 0;
+            }
+        } else if (e.phase === "SWOOP") {
+            e.swoopProgress += dt * 1.45; // Bay sà xuống nhanh và dứt khoát
+            const p = e.swoopProgress;
+            const targetY = LANES_Y[e.lane];
+
+            // Quỹ đạo bay sà từ trên cao bên phải qua đúng vị trí làn đã cảnh báo rồi vút lên trái
+            e.x = (PLAYER_X + 340) - p * 680;
+            e.y = targetY - Math.pow((p - 0.5) * 2, 2) * 380;
+
+            // Kiểm tra va chạm đúng thời điểm đại bàng sà qua vị trí chuột (p ~ 0.5)
+            if (!e.hasHit && Math.abs(p - 0.5) < 0.13) {
+                if (Player.lane === e.lane) {
+                    e.hasHit = true;
+                    handleDamagePlayer();
+                }
+            }
+
+            if (p >= 1.1) {
+                e.phase = "DONE";
+                eagles.splice(i, 1);
+            }
+        }
+    }
+
+    // Cập nhật hiệu ứng chữ bay (+10, COMBO) & hạt lấp lánh
+    for (let i = floatingTexts.length - 1; i >= 0; i--) {
+        const ft = floatingTexts[i];
+        ft.y -= 48 * dt;
+        ft.life -= dt;
+        if (ft.life <= 0) floatingTexts.splice(i, 1);
+    }
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+        const pt = particles[i];
+        pt.x += pt.vx * dt;
+        pt.y += pt.vy * dt;
+        pt.life -= dt;
+        if (pt.life <= 0) particles.splice(i, 1);
+    }
+
+    updateHUD();
+
+    // Kiểm tra hoàn thành 60 giây sinh tồn
+    if (GameState.timeLeft <= 0 && GameState.status === "PLAYING") {
+        GameState.score += GAME_CONFIG.SURVIVAL_BONUS;
+        endGame(true);
+    }
+}
+
+function renderScene() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Vẽ môi trường cánh đồng lúa
+    Environment.draw(ctx);
+
+    // Sắp xếp vẽ theo thứ tự làn từ trên xuống dưới (0 -> 1 -> 2) để có chiều sâu tự nhiên
+    for (let laneIndex = 0; laneIndex < 3; laneIndex++) {
+        riceItems.forEach(r => {
+            if (r.lane === laneIndex) drawRiceItem(ctx, r);
+        });
+        snakes.forEach(s => {
+            if (s.lane === laneIndex) drawSnakeItem(ctx, s);
+        });
+        if (Player.lane === laneIndex) {
+            Player.draw(ctx);
+        }
+    }
+
+    // Vẽ đại bàng và cảnh báo trên cùng
+    eagles.forEach(e => drawEagleItem(ctx, e));
+
+    // Vẽ hạt hiệu ứng
+    particles.forEach(pt => {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, pt.life / pt.maxLife);
+        ctx.fillStyle = pt.color;
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    });
+
+    // Vẽ điểm cộng bay lên
+    floatingTexts.forEach(ft => {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, ft.life / ft.maxLife);
+        ctx.font = "900 28px 'Segoe UI', sans-serif";
+        ctx.textAlign = "center";
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineWidth = 5;
+        ctx.strokeText(ft.text, ft.x, ft.y);
+        ctx.fillStyle = ft.color;
+        ctx.fillText(ft.text, ft.x, ft.y);
+        ctx.restore();
+    });
+}
+
+function gameLoop(timestamp) {
+    if (!GameState.lastFrameTime) GameState.lastFrameTime = timestamp;
+    let dt = (timestamp - GameState.lastFrameTime) / 1000;
+    GameState.lastFrameTime = timestamp;
+
+    // Giới hạn dt tối đa để tránh nhảy vị trí nếu vừa chuyển tab quay lại
+    if (dt > 0.1) dt = 0.1;
+
+    if (GameState.status === "PLAYING" && !document.hidden) {
+        updateGameplay(dt);
+    }
+
+    renderScene();
+    requestAnimationFrame(gameLoop);
+}
+
+/**
+ * ============================================================================
+ * 9. CẬP NHẬT GIAO DIỆN (UI) & ĐIỀU KHIỂN
+ * ============================================================================
+ */
+function renderHeartsHUD() {
+    const container = document.getElementById("hearts-list");
+    container.innerHTML = "";
+    for (let i = 0; i < GAME_CONFIG.INITIAL_HEARTS; i++) {
+        const isLost = i >= GameState.hearts;
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("viewBox", "0 0 24 24");
+        svg.setAttribute("class", `heart-svg ${isLost ? "lost" : ""}`);
+        svg.innerHTML = `<path fill="#e63946" stroke="#195658" stroke-width="2" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>`;
+        container.appendChild(svg);
+    }
+}
+
+function updateHUD() {
+    renderHeartsHUD();
+    const sec = Math.ceil(GameState.timeLeft);
+    document.getElementById("time-display").textContent = `${sec}s`;
+    document.getElementById("score-display").textContent = GameState.score;
+
+    const timerBox = document.getElementById("timer-box");
+    // Chặng nước rút 55–60 giây (còn 5 giây cuối): bộ đếm ngược nổi bật
+    if (sec <= 5 && GameState.status === "PLAYING") {
+        timerBox.classList.add("urgent");
+    } else {
+        timerBox.classList.remove("urgent");
+    }
+}
+
+function startGame() {
+    sfx.init();
+    clearAllEntities();
+    Player.reset();
+
+    GameState.status = "PLAYING";
+    GameState.elapsedTime = 0;
+    GameState.timeLeft = GAME_CONFIG.GAME_DURATION;
+    GameState.score = 0;
+    GameState.riceCollected = 0;
+    GameState.comboCount = 0;
+    GameState.hearts = GAME_CONFIG.INITIAL_HEARTS;
+    GameState.scrollSpeed = GAME_CONFIG.BASE_SCROLL_SPEED;
+    GameState.riceSpawnTimer = 0.5;
+    GameState.snakeSpawnTimer = 0;
+    GameState.eagleSpawnTimer = 0;
+
+    document.getElementById("start-screen").classList.add("hidden");
+    document.getElementById("end-screen").classList.add("hidden");
+    document.getElementById("completed-badge").classList.add("hidden");
+    document.getElementById("hud").classList.remove("hidden");
+    document.getElementById("touch-controls").classList.remove("hidden");
+
+    updateHUD();
+}
+
+function endGame(survived) {
+    GameState.status = "ENDED";
+    document.getElementById("touch-controls").classList.add("hidden");
+    document.getElementById("combo-banner").classList.remove("show");
+
+    const endTitle = document.getElementById("end-title");
+    const feedback = document.getElementById("end-feedback");
+
+    let stars = 1;
+    if (survived) {
+        sfx.playWin();
+        endTitle.textContent = "HOÀN THÀNH THỬ THÁCH!";
+        if (GameState.score >= 220 && GameState.hearts >= 2) {
+            stars = 3;
+            feedback.textContent = "Xuất sắc! Chuột đồng vừa thu thập thật nhiều lúa vừa né kẻ săn mồi cực giỏi!";
+        } else {
+            stars = 2;
+            feedback.textContent = "Rất tốt! Em đã giúp chuột đồng sống sót an toàn qua 60 giây trên cánh đồng!";
+        }
+    } else {
+        endTitle.textContent = "HÀNH TRÌNH KẾT THÚC!";
+        if (GameState.score >= 120) {
+            stars = 2;
+            feedback.textContent = "Khá lắm! Em đã thu thập được nhiều hạt lúa, hãy chú ý quan sát rắn và đại bàng hơn nhé!";
+        } else {
+            stars = 1;
+            feedback.textContent = "Đừng nản lòng! Hãy chuyển làn thật nhanh khi thấy rắn hoặc cảnh báo đại bàng nhé!";
+        }
+    }
+
+    const starNodes = document.querySelectorAll("#stars-container .star-icon");
+    starNodes.forEach((node, idx) => {
+        if (idx < stars) node.classList.add("earned");
+        else node.classList.remove("earned");
+    });
+
+    document.getElementById("final-score").textContent = GameState.score;
+    document.getElementById("final-rice").textContent = GameState.riceCollected;
+    document.getElementById("final-hearts").textContent = GameState.hearts;
+
+    document.getElementById("end-screen").classList.remove("hidden");
+}
+
+// Bàn phím: Phím ↑ / W chuyển lên, Phím ↓ / S chuyển xuống, chặn cuộn trang
+window.addEventListener("keydown", (e) => {
+    const key = e.key.toLowerCase();
+    if (["arrowup", "arrowdown", "w", "s", " "].includes(key)) {
+        e.preventDefault();
+    }
+    if (GameState.status !== "PLAYING") return;
+
+    if (key === "arrowup" || key === "w") {
+        Player.changeLane(-1);
+        document.getElementById("btn-up").classList.add("pressed");
+    } else if (key === "arrowdown" || key === "s") {
+        Player.changeLane(1);
+        document.getElementById("btn-down").classList.add("pressed");
+    }
+}, { passive: false });
+
+window.addEventListener("keyup", (e) => {
+    const key = e.key.toLowerCase();
+    if (key === "arrowup" || key === "w") {
+        document.getElementById("btn-up").classList.remove("pressed");
+    } else if (key === "arrowdown" || key === "s") {
+        document.getElementById("btn-down").classList.remove("pressed");
+    }
+});
+
+// Nút cảm ứng LÊN / XUỐNG
+const btnUp = document.getElementById("btn-up");
+const btnDown = document.getElementById("btn-down");
+
+btnUp.addEventListener("pointerdown", (e) => {
+    e.preventDefault();
+    Player.changeLane(-1);
+});
+btnDown.addEventListener("pointerdown", (e) => {
+    e.preventDefault();
+    Player.changeLane(1);
+});
+
+// Các nút điều khiển màn hình
+document.getElementById("btn-start").addEventListener("click", startGame);
+document.getElementById("btn-replay").addEventListener("click", startGame);
+document.getElementById("btn-finish").addEventListener("click", () => {
+    const badge = document.getElementById("completed-badge");
+    badge.classList.remove("hidden");
+    // Gửi thông điệp sự kiện nếu game được nhúng trong bài giảng lớn
+    if (window.parent && window.parent !== window) {
+        window.parent.postMessage({
+            type: "STEP_COMPLETED",
+            step: 13,
+            game: "CHUOT_DONG_SINH_TON",
+            score: GameState.score
+        }, "*");
+    }
+});
+
+// Tự động đồng bộ lại bộ đếm thời gian khi người chơi ẩn/hiện tab trình duyệt
+document.addEventListener("visibilitychange", () => {
+    GameState.lastFrameTime = performance.now();
+});
+
+// Khởi chạy vòng lặp hiển thị
+requestAnimationFrame(gameLoop);
+</script>
+</body>
+</html>
